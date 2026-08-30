@@ -1,0 +1,231 @@
+import {
+  AppState,
+  CustomerData,
+  GovernmentService,
+  ServiceHistoryItem,
+  SessionFile,
+  PrintJob,
+  ApplicationTemplate,
+  AdminActivityLog,
+} from '../types';
+import { INITIAL_SERVICES, INITIAL_STATES, INITIAL_AD_SLOTS } from '../data/initialData';
+import { INITIAL_APPLICATION_TEMPLATES } from '../data/initialTemplates';
+
+const STORAGE_KEY = 'CYBER_MITRA_DATA_V1';
+
+export const DEFAULT_CUSTOMER: CustomerData = {
+  id: 'cust_default',
+  name: '',
+  fatherMotherName: '',
+  dob: '',
+  gender: 'Male',
+  address: 'Sirs Tola ward 12',
+  villageTown: 'Tambour',
+  district: 'Sitapur',
+  state: 'Uttar Pradesh',
+  pincode: '261208',
+  mobile: '9956078419',
+  aadhaarNumber: '',
+  category: 'General',
+  purpose: '',
+  notes: '',
+  dateCreated: new Date().toISOString(),
+};
+
+export const DEFAULT_STATE: AppState = {
+  language: 'en',
+  selectedState: 'UP',
+  services: INITIAL_SERVICES,
+  favorites: ['uidai-aadhaar', 'pan-card-services', 'up-edistrict-services', 'pm-kisan-portal'],
+  recentlyUsed: [
+    {
+      id: 'rec-1',
+      itemId: 'uidai-aadhaar',
+      itemTitleHi: 'आधार कार्ड सेवाएं (UIDAI)',
+      itemTitleEn: 'Aadhaar Services (UIDAI)',
+      type: 'service',
+      timestamp: new Date().toISOString(),
+      url: 'https://myaadhaar.uidai.gov.in/',
+    },
+    {
+      id: 'rec-2',
+      itemId: 'up-edistrict-services',
+      itemTitleHi: 'यूपी ई-डिस्ट्रिक्ट (आय/जाति/निवास)',
+      itemTitleEn: 'UP eDistrict Services',
+      type: 'service',
+      timestamp: new Date().toISOString(),
+      url: 'https://edistrict.up.gov.in/',
+    },
+  ],
+  customer: DEFAULT_CUSTOMER,
+  activeFiles: [],
+  printQueue: [],
+  applicationTemplates: INITIAL_APPLICATION_TEMPLATES,
+  states: INITIAL_STATES,
+  adSlots: INITIAL_AD_SLOTS,
+  activityLogs: [
+    {
+      id: 'log-1',
+      actionHi: 'सिस्टम प्रारंभ',
+      actionEn: 'System Initialized',
+      details: 'Cyber Mitra Cyber Cafe Work Portal Ready.',
+      timestamp: new Date().toISOString(),
+    },
+  ],
+  isAdminLoggedIn: false,
+  activeView: 'home',
+  adminEmail: 'mohdshahnawaz.afaque@gmail.com',
+  adminPassword: 'Sh@sahiba9653',
+  autoCleanupMinutes: 60,
+  theme: 'professional',
+};
+
+export const loadAppState = (): AppState => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return DEFAULT_STATE;
+    const parsed = JSON.parse(raw);
+    // Merge new services that might have been added to INITIAL_SERVICES but are missing in local storage
+    const mergedServices = INITIAL_SERVICES.map(initService => {
+      const existing = parsed.services?.find((s: any) => s.id === initService.id);
+      return existing || initService;
+    });
+
+    return {
+      ...DEFAULT_STATE,
+      ...parsed,
+      activeView: parsed.activeView || 'home',
+      language: parsed.language || 'hi',
+      adminEmail: parsed.adminEmail || 'mohdshahnawaz.afaque@gmail.com',
+      adminPassword: parsed.adminPassword || 'Sh@sahiba9653',
+      theme: parsed.theme || 'professional',
+      services: mergedServices,
+      applicationTemplates: parsed.applicationTemplates?.length
+        ? parsed.applicationTemplates
+        : INITIAL_APPLICATION_TEMPLATES,
+      states: parsed.states?.length ? parsed.states : INITIAL_STATES,
+      adSlots: parsed.adSlots?.length ? parsed.adSlots : INITIAL_AD_SLOTS,
+      customer: parsed.customer || DEFAULT_CUSTOMER,
+      activeFiles: parsed.activeFiles || [],
+      printQueue: parsed.printQueue || [],
+      favorites: parsed.favorites || DEFAULT_STATE.favorites,
+      recentlyUsed: parsed.recentlyUsed || DEFAULT_STATE.recentlyUsed,
+      activityLogs: parsed.activityLogs || DEFAULT_STATE.activityLogs,
+    };
+  } catch (e) {
+    console.error('Failed to load Cyber Mitra state from localStorage', e);
+    return DEFAULT_STATE;
+  }
+};
+
+export const saveAppState = (state: AppState) => {
+  try {
+    // Only persist non-huge blobs in storage if possible
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.warn('Storage quota exceeded or error while saving state, trimming files', e);
+    try {
+      const trimmedState = {
+        ...state,
+        activeFiles: state.activeFiles.slice(-5), // keep last 5 active files
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmedState));
+    } catch (e2) {
+      console.error('Final fallback save failed', e2);
+    }
+  }
+};
+
+export const addHistoryLog = (
+  state: AppState,
+  item: Omit<ServiceHistoryItem, 'id' | 'timestamp'>
+): AppState => {
+  const newLog: ServiceHistoryItem = {
+    ...item,
+    id: 'hist_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+    timestamp: new Date().toISOString(),
+  };
+
+  const filtered = state.recentlyUsed.filter((h) => h.itemId !== item.itemId);
+  const updatedRecentlyUsed = [newLog, ...filtered].slice(0, 30);
+
+  const updatedState = {
+    ...state,
+    recentlyUsed: updatedRecentlyUsed,
+  };
+  saveAppState(updatedState);
+  return updatedState;
+};
+
+export const addAdminLog = (
+  state: AppState,
+  actionHi: string,
+  actionEn: string,
+  details: string
+): AppState => {
+  const newLog: AdminActivityLog = {
+    id: 'act_' + Date.now(),
+    actionHi,
+    actionEn,
+    details,
+    timestamp: new Date().toISOString(),
+  };
+  const updatedState = {
+    ...state,
+    activityLogs: [newLog, ...(state.activityLogs || [])].slice(0, 100),
+  };
+  saveAppState(updatedState);
+  return updatedState;
+};
+
+export const clearCustomerSessionData = (state: AppState): AppState => {
+  const clearedState: AppState = {
+    ...state,
+    customer: {
+      ...DEFAULT_CUSTOMER,
+      id: 'cust_' + Date.now(),
+      dateCreated: new Date().toISOString(),
+    },
+    activeFiles: [],
+  };
+  saveAppState(clearedState);
+  return clearedState;
+};
+
+export const clearCustomerSession = (state: AppState): AppState => {
+  return clearCustomerSessionData(state);
+};
+
+export const recordActivityLog = (state: AppState, actionEn: string, details: string): AppState => {
+  return addAdminLog(state, actionEn, actionEn, details);
+};
+
+export const exportBackupJSON = (state: AppState): string => {
+  const backupData = {
+    version: '1.0.0',
+    exportDate: new Date().toISOString(),
+    services: state.services,
+    applicationTemplates: state.applicationTemplates,
+    states: state.states,
+    adSlots: state.adSlots,
+    favorites: state.favorites,
+    activityLogs: state.activityLogs,
+  };
+  return JSON.stringify(backupData, null, 2);
+};
+
+export const importBackupJSON = (state: AppState, jsonString: string): AppState => {
+  const data = JSON.parse(jsonString);
+  const updatedState: AppState = {
+    ...state,
+    services: Array.isArray(data.services) ? data.services : state.services,
+    applicationTemplates: Array.isArray(data.applicationTemplates)
+      ? data.applicationTemplates
+      : state.applicationTemplates,
+    states: Array.isArray(data.states) ? data.states : state.states,
+    adSlots: Array.isArray(data.adSlots) ? data.adSlots : state.adSlots,
+    favorites: Array.isArray(data.favorites) ? data.favorites : state.favorites,
+  };
+  saveAppState(updatedState);
+  return updatedState;
+};

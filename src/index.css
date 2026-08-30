@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: "Rozha One", serif;
+  --font-hindi: "Yantramanav", "Plus Jakarta Sans", sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.theme-high-contrast {
+  filter: contrast(1.25) saturate(1.1);
+}
+.theme-high-contrast * {
+  text-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.1);
+}
+
