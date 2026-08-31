@@ -64,6 +64,7 @@ export default function App() {
   const [appState, setAppState] = useState<AppState>(() => loadAppState());
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState<boolean>(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState<boolean>(false);
 
@@ -83,6 +84,7 @@ export default function App() {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         setIsSearchOpen(true);
+        document.getElementById("btn-search-trigger")?.focus();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -258,6 +260,8 @@ export default function App() {
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         isSidebarOpen={isSidebarOpen}
         onOpenSearch={() => setIsSearchOpen(true)}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
 
       {/* 2. MAIN CONTAINER WITH SIDEBAR */}
@@ -285,6 +289,7 @@ export default function App() {
             {/* VIEW: HOME / SERVICES DASHBOARD */}
             {(!appState.activeView || appState.activeView === 'home' || appState.activeView === 'services') && (
               <ServicesDashboard
+          promos={appState.promos || []}
                 language={language}
                 services={appState.services}
                 favorites={appState.favorites}
@@ -507,7 +512,9 @@ export default function App() {
       {/* 4. MODALS & DRAWERS */}
       {/* Smart Universal Search Modal */}
       <SmartSearch
-        isOpen={isSearchOpen}
+        isOpen={isSearchOpen && searchQuery.trim().length > 0}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
         onClose={() => setIsSearchOpen(false)}
         language={language}
         services={appState.services}

@@ -33,6 +33,8 @@ interface NavbarProps {
   onToggleSidebar: () => void;
   isSidebarOpen: boolean;
   onOpenSearch: () => void;
+  searchQuery: string;
+  setSearchQuery: (val: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -53,6 +55,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleSidebar,
   isSidebarOpen,
   onOpenSearch,
+  searchQuery,
+  setSearchQuery,
 }) => {
   const isHindi = language === 'hi';
   const hasCustomer = !!customer.name.trim();
@@ -103,23 +107,31 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Center: Universal Search Button */}
           <div className="flex-1 max-w-lg mx-2 lg:mx-6">
-            <button
-              id="btn-search-trigger"
-              onClick={onOpenSearch}
-              className="w-full flex items-center justify-between pl-3.5 pr-2.5 py-2 bg-slate-100/90 hover:bg-slate-200/90 text-slate-600 rounded-xl text-xs sm:text-sm border border-slate-200 hover:border-slate-300 transition-all shadow-2xs group"
-            >
-              <div className="flex items-center gap-2.5 text-slate-500 group-hover:text-slate-800 truncate">
-                <Search className="w-4 h-4 text-blue-600 shrink-0" />
-                <span className="truncate">
-                  {isHindi
-                    ? 'खोजें: आधार, पैन, आय, निवास, फोटो रिसाइज, फॉर्म...'
-                    : 'Search Aadhaar, PAN, Certificates, Photo tools...'}
-                </span>
-              </div>
-              <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-semibold bg-white text-slate-500 rounded-md border border-slate-200 shadow-2xs shrink-0 ml-2">
-                Ctrl+K
-              </kbd>
-            </button>
+            <div className="relative">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-600" />
+              <input
+                id="btn-search-trigger"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => { const val = e.target.value; setSearchQuery(val); if (val.trim().length > 0 && !isSidebarOpen) onOpenSearch(); }}
+                onFocus={() => { if (searchQuery.trim().length > 0 && !isSidebarOpen) onOpenSearch(); }}
+                placeholder={isHindi ? 'खोजें: आधार, पैन, आय, निवास, फोटो रिसाइज, फॉर्म...' : 'Search Aadhaar, PAN, Certificates, Photo tools...'}
+                className="w-full pl-10 pr-12 py-2 bg-slate-100/90 hover:bg-slate-200/90 focus:bg-white text-slate-800 rounded-xl text-xs sm:text-sm border border-slate-200 focus:border-blue-500 transition-all shadow-2xs outline-none"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+              {!searchQuery && (
+                <kbd className="absolute right-2 top-1/2 -translate-y-1/2 hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-semibold bg-white text-slate-500 rounded-md border border-slate-200 shadow-2xs">
+                  Ctrl+K
+                </kbd>
+              )}
+            </div>
           </div>
 
           {/* Right Action Controls */}

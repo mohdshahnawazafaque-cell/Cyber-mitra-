@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useEffect, useRef, useState } from 'react';
 import { 
   ArrowRight, 
   CornerDownLeft, 
@@ -117,7 +119,7 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
     
     // STRICT SEARCH: ONLY match the title exactly or match the tags exactly
     // We removed subtitle matching and loose tag matching to prevent "extra" results
-    const matchesTitle = item.title.toLowerCase().includes(normalizedQuery) || item.subtitle.toLowerCase().includes(normalizedQuery);
+    const matchesTitle = item.title.toLowerCase().includes(normalizedQuery);
     const matchesTags = item.tags.some((tag) => tag.toLowerCase() === normalizedQuery || tag.toLowerCase().includes(normalizedQuery));
     
     return matchesTitle || matchesTags;
@@ -185,7 +187,7 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
   useEffect(() => {
     if (resultsContainerRef.current) {
       const selectedEl = resultsContainerRef.current.querySelector(
-        `[data-item-index="${selectedIndex}"]`
+        \`[data-item-index="\${selectedIndex}"]\`
       );
       if (selectedEl) {
         selectedEl.scrollIntoView({ block: 'nearest' });
@@ -197,9 +199,14 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
   if (!isOpen || !searchQuery.trim()) return null;
 
   return (
-    <>
-    <div className="fixed inset-0 z-[60]" onClick={onClose} />
-    <div className="fixed top-[65px] left-1/2 -translate-x-1/2 w-[90%] max-w-xl z-[70] bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-slate-200 overflow-hidden flex flex-col max-h-[70vh] animate-in fade-in slide-in-from-top-2 duration-200">
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 transition-all duration-200"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {/* We removed the backdrop bg-slate-950/20 so the user can easily click elsewhere without a blocking modal */}
+      <div className="w-full max-w-3xl bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200 ring-1 ring-black/5 overflow-hidden flex flex-col max-h-[84vh] animate-in fade-in slide-in-from-top-4 duration-200">
         
         {/* Results List with Enhanced Spacing & Visual Hierarchy */}
         <div
@@ -224,16 +231,16 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
                   data-item-index={index}
                   onClick={() => handleSelect(item)}
                   onMouseEnter={() => setSelectedIndex(index)}
-                  className={`w-full text-left p-3.5 rounded-xl transition-all flex items-center justify-between gap-3 group border ${
+                  className={\`w-full text-left p-3.5 rounded-xl transition-all flex items-center justify-between gap-3 group border \${
                     isSelected
                       ? 'bg-blue-50/90 border-blue-200/80 shadow-2xs'
                       : 'bg-white/60 hover:bg-slate-50 border-transparent'
-                  }`}
+                  }\`}
                 >
                   <div className="flex items-start gap-3.5 min-w-0">
                     {/* Visual Icon Badge */}
                     <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 shadow-2xs border transition-colors ${
+                      className={\`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 shadow-2xs border transition-colors \${
                         item.type === 'service'
                           ? isSelected
                             ? 'bg-blue-600 text-white border-blue-600'
@@ -253,7 +260,7 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
                           : isSelected
                           ? 'bg-sky-600 text-white border-sky-600'
                           : 'bg-sky-50 text-sky-600 border-sky-100'
-                      }`}
+                      }\`}
                     >
                       {item.type === 'service' && <Landmark className="w-4 h-4" />}
                       {item.type === 'tool' && <Wrench className="w-4 h-4" />}
@@ -265,14 +272,14 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <span
-                          className={`font-bold text-sm truncate ${
+                          className={\`font-bold text-sm truncate \${
                             isSelected ? 'text-blue-900' : 'text-slate-800'
-                          }`}
+                          }\`}
                         >
                           {item.title}
                         </span>
                         <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                          className={\`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider \${
                             item.type === 'service'
                               ? 'bg-blue-100/80 text-blue-700'
                               : item.type === 'tool'
@@ -282,7 +289,7 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
                               : item.type === 'template'
                               ? 'bg-emerald-100/80 text-emerald-700'
                               : 'bg-sky-100/80 text-sky-700'
-                          }`}
+                          }\`}
                         >
                           {item.type === 'service'
                             ? isHindi
@@ -324,7 +331,10 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
             })
           )}
         </div>
+      </div>
     </div>
-    </>
   );
 };
+`
+fs.writeFileSync('src/components/common/SmartSearch.tsx', code);
+console.log("Rewrote SmartSearch");

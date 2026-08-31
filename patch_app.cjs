@@ -1,64 +1,32 @@
 const fs = require('fs');
+let code = fs.readFileSync('src/App.tsx', 'utf8');
 
-// Patch App.tsx
-let appCode = fs.readFileSync('src/App.tsx', 'utf8');
-
-// Add Lazy import for AwasCertificate
-if (!appCode.includes('AwasCertificate')) {
-  appCode = appCode.replace(
-    "const PromoDesigner = lazy(() => import('./components/tools/PromoDesigner')",
-    "const PromoDesigner = lazy(() => import('./components/tools/PromoDesigner').then(module => ({ default: module.PromoDesigner })));\nconst AwasCertificate = lazy(() => import('./components/tools/AwasCertificate').then(module => ({ default: module.AwasCertificate })));\n// "
-  );
-}
-
-// Add view case
-const awasCase = `            {appState.activeView === 'awas_certificate' && (
-              <AwasCertificate language={language} />
-            )}
-
-            {/* VIEW: PROMO DESIGNER */}`;
-
-appCode = appCode.replace("{/* VIEW: PROMO DESIGNER */}", awasCase);
-
-fs.writeFileSync('src/App.tsx', appCode);
-
-// Patch Sidebar.tsx
-let sidebarCode = fs.readFileSync('src/components/layout/Sidebar.tsx', 'utf8');
-
-if (!sidebarCode.includes("awas_certificate")) {
-  // we will add it after daily khata
-  const sidebarReplace = `{
-      id: 'daily_khata',
-      view: 'daily_khata',
-      icon: IndianRupee,
-      titleHi: 'डेली खाता बुक',
-      titleEn: 'Daily Khata Book',
-      descHi: 'कमाई व उधार का हिसाब',
-      descEn: 'Earnings & Pending Dues',
-      color: 'text-emerald-500'
-    },
-    {
-      id: 'awas_certificate',
-      view: 'awas_certificate',
-      icon: FileText,
-      titleHi: 'आवास प्रमाण-पत्र',
-      titleEn: 'Awas Certificate',
-      descHi: 'PMAY-U 2.0 जनरेटर',
-      descEn: 'PMAY-U 2.0 Generator',
-      color: 'text-purple-500'
-    },`;
+if (!code.includes('const [searchQuery, setSearchQuery]')) {
+    code = code.replace(
+      'const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);',
+      'const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);\n  const [searchQuery, setSearchQuery] = useState<string>(\'\');'
+    );
     
-  sidebarCode = sidebarCode.replace(`{
-      id: 'daily_khata',
-      view: 'daily_khata',
-      icon: IndianRupee,
-      titleHi: 'डेली खाता बुक',
-      titleEn: 'Daily Khata Book',
-      descHi: 'कमाई व उधार का हिसाब',
-      descEn: 'Earnings & Pending Dues',
-      color: 'text-emerald-500'
-    },`, sidebarReplace);
-
-  fs.writeFileSync('src/components/layout/Sidebar.tsx', sidebarCode);
+    // Pass it to Navbar
+    code = code.replace(
+      'onOpenSearch={() => setIsSearchOpen(true)}',
+      'onOpenSearch={() => setIsSearchOpen(true)}\n        searchQuery={searchQuery}\n        setSearchQuery={setSearchQuery}'
+    );
+    
+    // Pass it to SmartSearch
+    code = code.replace(
+      'isOpen={isSearchOpen}',
+      'isOpen={isSearchOpen}\n        searchQuery={searchQuery}\n        setSearchQuery={setSearchQuery}'
+    );
+    
+    // Add global ctrl+k to focus input
+    code = code.replace(
+      'setIsSearchOpen(true);',
+      'setIsSearchOpen(true);\n        document.getElementById("btn-search-trigger")?.focus();'
+    );
+    
+    fs.writeFileSync('src/App.tsx', code);
+    console.log("Patched App.tsx");
+} else {
+    console.log("Already patched");
 }
-

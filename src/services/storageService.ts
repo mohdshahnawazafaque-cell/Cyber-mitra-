@@ -32,6 +32,54 @@ export const DEFAULT_CUSTOMER: CustomerData = {
   dateCreated: new Date().toISOString(),
 };
 
+export const INITIAL_PROMOS: PromoItem[] = [
+  {
+    id: 'promo-1',
+    title: 'सभी सरकारी योजनाएं',
+    subtitle: 'PM किसान, पेंशन और अन्य आवेदन',
+    imageUrl: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    linkUrl: '#',
+    isActive: true,
+    order: 1
+  },
+  {
+    id: 'promo-2',
+    title: 'पैन कार्ड एवं पहचान पत्र',
+    subtitle: 'नया पैन कार्ड बनाएं या सुधार करें',
+    imageUrl: 'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    linkUrl: '#',
+    isActive: true,
+    order: 2
+  },
+  {
+    id: 'promo-3',
+    title: 'प्रोमो डिज़ाइनर व बिलिंग',
+    subtitle: 'बिज़नेस के लिए पोस्टर और बिल बनाएं',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    linkUrl: '#',
+    isActive: true,
+    order: 3
+  },
+  {
+    id: 'promo-4',
+    title: 'ई-डिस्ट्रिक्ट सेवाएं',
+    subtitle: 'आय, जाति, निवास व जन्म प्रमाण पत्र',
+    imageUrl: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    linkUrl: '#',
+    isActive: true,
+    order: 4
+  },
+  {
+    id: 'promo-5',
+    title: 'बैंकिंग व बिल भुगतान',
+    subtitle: 'बिजली बिल, मनी ट्रान्सफर और बीमा',
+    imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+    linkUrl: '#',
+    isActive: true,
+    order: 5
+  }
+];
+
 export const DEFAULT_STATE: AppState = {
   language: 'en',
   selectedState: 'UP',
@@ -78,6 +126,7 @@ export const DEFAULT_STATE: AppState = {
   adminPassword: 'Sh@sahiba9653',
   autoCleanupMinutes: 60,
   theme: 'professional',
+  promos: INITIAL_PROMOS,
 };
 
 export const loadAppState = (): AppState => {
@@ -99,6 +148,7 @@ export const loadAppState = (): AppState => {
       adminEmail: parsed.adminEmail || 'mohdshahnawaz.afaque@gmail.com',
       adminPassword: parsed.adminPassword || 'Sh@sahiba9653',
       theme: parsed.theme || 'professional',
+      promos: parsed.promos?.length ? parsed.promos : INITIAL_PROMOS,
       services: mergedServices,
       applicationTemplates: parsed.applicationTemplates?.length
         ? parsed.applicationTemplates
@@ -225,6 +275,7 @@ export const importBackupJSON = (state: AppState, jsonString: string): AppState 
     states: Array.isArray(data.states) ? data.states : state.states,
     adSlots: Array.isArray(data.adSlots) ? data.adSlots : state.adSlots,
     favorites: Array.isArray(data.favorites) ? data.favorites : state.favorites,
+    promos: Array.isArray(data.promos) ? data.promos : state.promos,
   };
   saveAppState(updatedState);
   return updatedState;

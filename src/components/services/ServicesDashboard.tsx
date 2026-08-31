@@ -39,12 +39,15 @@ import {
   QrCode,
   FileSpreadsheet,
 } from 'lucide-react';
-import { GovernmentService, Language } from '../../types';
+import { GovernmentService, Language, PromoItem } from '../../types';
+import { PromoBanner } from '../common/PromoBanner';
+import { SponsoredBanner } from '../ads/SponsoredBanner';
 import { ServiceCard } from './ServiceCard';
 
 interface ServicesDashboardProps {
   language: Language;
   services: GovernmentService[];
+  promos: PromoItem[];
   favorites: string[];
   selectedState: string;
   onToggleFavorite: (id: string) => void;
@@ -66,6 +69,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
   onApplyPreset,
   onNavigate,
   onOpenSearch,
+  promos,
 }) => {
   const isHindi = language === 'hi';
   const [activeCategory, setActiveCategory] = useState<string>(initialCategory);
@@ -346,6 +350,8 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* 0. SPONSORED BANNER */}
+      <SponsoredBanner />
       {/* 1. TOP OPERATOR STATUS & LIVE DIGITAL CLOCK BAR */}
       <div className="bg-white rounded-3xl p-4 sm:px-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">

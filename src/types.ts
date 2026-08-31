@@ -172,6 +172,16 @@ export interface StateItem {
   isDefault: boolean;
 }
 
+export interface PromoItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+  linkUrl: string;
+  isActive: boolean;
+  order: number;
+}
+
 export interface AppState {
   language: Language;
   selectedState: string;
@@ -182,6 +192,7 @@ export interface AppState {
   activeFiles: SessionFile[];
   printQueue: PrintJob[];
   applicationTemplates: ApplicationTemplate[];
+  promos: PromoItem[];
   states: StateItem[];
   adSlots: AdSlotConfig[];
   activityLogs: AdminActivityLog[];
