@@ -97,15 +97,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       descEn: 'Age, EMI, GST, Land',
       color: 'text-rose-400'
     },
-    { id: 'bulk_sms',
-      view: 'bulk_sms',
-      icon: MessageSquareText,
-      titleHi: 'SMS / WhatsApp अलर्ट',
-      titleEn: 'Bulk SMS Alerts',
-      descHi: 'स्टेटस और नोटिफिकेशन',
-      descEn: 'Send Status Updates',
-      color: 'text-pink-500'
-    },
 
     {
       id: 'daily_khata',
@@ -122,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       view: 'vanshavali_certificate',
       icon: FileText,
       titleHi: 'वंशावली प्रमाण-पत्र',
-      titleEn: 'Family Tree',
+      titleEn: 'Vanshavali Certificate',
       descHi: 'परिवार का विवरण',
       descEn: 'Family Details',
       color: 'text-indigo-500'

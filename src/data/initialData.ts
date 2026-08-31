@@ -409,9 +409,9 @@ export const INITIAL_SERVICES: GovernmentService[] = [
   {
     id: 'vanshavali-certificate-maker',
     titleHi: 'वंशावली प्रमाण-पत्र',
-    titleEn: 'Family Tree / Vanshavali',
+    titleEn: 'Vanshavali Certificate',
     descHi: 'परिवार के सदस्यों का वंशावली प्रमाण-पत्र पीडीएफ में तैयार करें और प्रिंट करें।',
-    descEn: 'Generate and print Family Tree / Pedigree certificate in PDF.',
+    descEn: 'Generate and print Vanshavali certificate in PDF.',
     category: 'certificates',
     stateCode: 'ALL',
     tags: ['vanshavali', 'family tree', 'वंशावली', 'प्रमाण-पत्र'],
@@ -419,8 +419,7 @@ export const INITIAL_SERVICES: GovernmentService[] = [
     active: true,
     isQuickAccess: true,
     order: 0,
-    presetSubject: 'vanshavali_certificate',
-    icon: '📜',
+    // presetSubject: 'vanshavali_certificate',
     officialLinks: {
       officialPortal: ''
     },

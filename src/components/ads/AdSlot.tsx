@@ -8,12 +8,6 @@ interface AdSlotProps {
 
 const DEFAULT_BANNERS = [
   {
-    title: 'Grow Your Cyber Cafe Business',
-    subtitle: 'Get 50% Off on Bulk SMS Plans. Reach local customers instantly.',
-    color: 'from-blue-600 to-indigo-700',
-    link: '#'
-  },
-  {
     title: 'New Service Alert: E-Shram & PAN Cards',
     subtitle: 'Start making documents directly from our portal. Fast & secure.',
     color: 'from-orange-500 to-red-600',

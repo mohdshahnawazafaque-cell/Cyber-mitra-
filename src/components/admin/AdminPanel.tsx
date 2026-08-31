@@ -24,8 +24,9 @@ import {
   ExternalLink,
   Link2,
   Search,
-  Plus,
   Edit3,
+  Image,
+  X,
 } from 'lucide-react';
 import {
   AdminActivityLog,

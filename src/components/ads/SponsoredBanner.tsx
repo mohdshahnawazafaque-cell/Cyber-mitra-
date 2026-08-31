@@ -52,12 +52,6 @@ export const SponsoredBanner: React.FC = () => {
           link: '#'
         },
         {
-          id: 'promo-6',
-          imageUrl: 'https://images.unsplash.com/photo-1621574539437-4b7b91384f5e?auto=format&fit=crop&q=80&w=1600&h=400',
-          title: 'Bulk SMS Plans for Local Marketing',
-          link: '#'
-        },
-        {
           id: 'promo-7',
           imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=1600&h=400',
           title: 'Flight & Train Ticket Booking Agent Access',

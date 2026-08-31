@@ -7,6 +7,7 @@ import {
   PrintJob,
   ApplicationTemplate,
   AdminActivityLog,
+  PromoItem,
 } from '../types';
 import { INITIAL_SERVICES, INITIAL_STATES, INITIAL_AD_SLOTS } from '../data/initialData';
 import { INITIAL_APPLICATION_TEMPLATES } from '../data/initialTemplates';

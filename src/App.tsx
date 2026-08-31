@@ -42,7 +42,6 @@ const AwasCertificate = lazy(() => import('./components/tools/AwasCertificate').
 const VanshavaliCertificate = lazy(() => import('./components/tools/VanshavaliCertificate').then(module => ({ default: module.VanshavaliCertificate })));
 // .then(module => ({ default: module.PromoDesigner })));
 const QuickLinksDashboard = lazy(() => import('./components/tools/QuickLinksDashboard').then(module => ({ default: module.QuickLinksDashboard })));
-const BulkSmsTool = lazy(() => import('./components/tools/BulkSmsTool').then(module => ({ default: module.BulkSmsTool })));
 const DailyKhata = lazy(() => import('./components/tools/DailyKhata').then(module => ({ default: module.DailyKhata })));
 const DownloadsHub = lazy(() => import('./components/tools/DownloadsHub').then(module => ({ default: module.DownloadsHub })));
 const QRBarcodeTools = lazy(() => import('./components/tools/QRBarcodeTools').then(module => ({ default: module.QRBarcodeTools })));
@@ -116,7 +115,6 @@ export default function App() {
     if (view === 'calculator' || view === 'calculators') resolvedView = 'calculator_hub';
     if (view === 'tools') resolvedView = 'tools_hub';
     if (view === 'khata' || view === 'cash_book') resolvedView = 'daily_khata';
-    if (view === 'sms' || view === 'whatsapp') resolvedView = 'bulk_sms';
     if (view === 'photo' || view === 'photos') resolvedView = 'photo_tools';
     if (view === 'pdf') resolvedView = 'pdf_tools';
     if (view === 'qr' || view === 'barcode') resolvedView = 'qr_tools';
@@ -312,13 +310,6 @@ export default function App() {
                 language={language}
                 onNavigate={handleNavigate}
               />
-            )}
-
-            
-            
-            {/* VIEW: BULK SMS */}
-            {appState.activeView === 'bulk_sms' && (
-              <BulkSmsTool language={language} />
             )}
 
             {/* VIEW: DAILY KHATA */}

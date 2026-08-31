@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState, useRef } from 'react';
 import { Download, Printer, RefreshCw, Plus, Trash2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
@@ -102,7 +104,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
       });
 
       pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
-      pdf.save(`Vanshavali_Certificate_${applicantName || 'Applicant'}.pdf`);
+      pdf.save(\`Vanshavali_Certificate_\${applicantName || 'Applicant'}.pdf\`);
     } catch (err) {
       console.error('PDF Generation failed:', err);
       alert('PDF तैयार करने में त्रुटि हुई।');
@@ -132,18 +134,18 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
   const getCalculatedAgeDisplay = (dob: string, isDeceased: boolean, dod: string): string => {
     const rawAge = getCalculatedAgeRaw(dob, isDeceased, dod);
     if (!rawAge) return '';
-    return `${rawAge} वर्ष लगभग`;
+    return \`\${rawAge} वर्ष लगभग\`;
   };
 
   const getDisplayRelation = (member: FamilyMember): string => {
     let rel = member.relation;
     
     if (member.gender === 'महिला' && (member.maritalStatus === 'अविवाहित' || member.maritalStatus === 'विवाहित')) {
-      rel = `${rel} (${member.maritalStatus})`;
+      rel = \`\${rel} (\${member.maritalStatus})\`;
     }
     
     if (member.isDeceased) {
-      rel = `${rel} (मृतक)`;
+      rel = \`\${rel} (मृतक)\`;
     }
     
     return rel;
@@ -153,7 +155,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-slate-800">
-          {isHindi ? 'वंशावली प्रमाण-पत्र मेकर' : 'Vanshavali Certificate Maker'}
+          {isHindi ? 'वंशावली प्रमाण-पत्र मेकर' : 'Family Tree Certificate Maker'}
         </h2>
       </div>
 
@@ -344,7 +346,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                       <label className="block text-[10px] font-bold text-slate-500 mb-1 uppercase">आयु (Auto-calculated)</label>
                       <div className="w-full px-2 py-1.5 bg-slate-200/70 border border-slate-200 rounded text-xs text-slate-700 font-bold h-[30px] flex items-center cursor-not-allowed">
                         {getCalculatedAgeRaw(member.dob, member.isDeceased, member.dod) 
-                          ? `${getCalculatedAgeRaw(member.dob, member.isDeceased, member.dod)} वर्ष` 
+                          ? \`\${getCalculatedAgeRaw(member.dob, member.isDeceased, member.dod)} वर्ष\` 
                           : '--'}
                       </div>
                     </div>
@@ -352,7 +354,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                     <div className="flex items-center space-x-2 h-[30px] pb-1 pl-1">
                       <input
                         type="checkbox"
-                        id={`deceased-${member.id}`}
+                        id={\`deceased-\${member.id}\`}
                         checked={member.isDeceased}
                         onChange={e => {
                           updateMember(member.id, 'isDeceased', e.target.checked);
@@ -360,7 +362,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                         }}
                         className="w-4 h-4 rounded border-slate-300 text-red-600 focus:ring-red-500"
                       />
-                      <label htmlFor={`deceased-${member.id}`} className="text-xs font-bold text-red-700 cursor-pointer">
+                      <label htmlFor={\`deceased-\${member.id}\`} className="text-xs font-bold text-red-700 cursor-pointer">
                         मृतक
                       </label>
                     </div>
@@ -466,10 +468,20 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                   {members.map((m, idx) => (
                     <tr key={m.id} className="border-b border-black last:border-b-0">
                       <td className="border-r border-black py-1.5 px-1">{idx + 1}</td>
-                      <td className="border-r border-black py-1.5 px-2 text-left">{m.name || ' '}</td>
-                      <td className="border-r border-black py-1.5 px-2 text-left">{m.fatherName || ' '}</td>
-                      <td className="border-r border-black py-1.5 px-2">{getDisplayRelation(m) || ' '}</td>
-                      <td className="py-1.5 px-2">{getCalculatedAgeDisplay(m.dob, m.isDeceased, m.dod) || ' '}</td>
+                      <td className="border-r border-black py-1.5 px-2 text-left">{m.name || '\u00A0'}</td>
+                      <td className="border-r border-black py-1.5 px-2 text-left">{m.fatherName || '\u00A0'}</td>
+                      <td className="border-r border-black py-1.5 px-2">{getDisplayRelation(m) || '\u00A0'}</td>
+                      <td className="py-1.5 px-2">{getCalculatedAgeDisplay(m.dob, m.isDeceased, m.dod) || '\u00A0'}</td>
+                    </tr>
+                  ))}
+                  {/* Fill empty rows to make it look standard if few members */}
+                  {Array.from({ length: Math.max(0, 5 - members.length) }).map((_, idx) => (
+                    <tr key={\`empty-\${idx}\`} className="border-b border-black last:border-b-0 h-9">
+                      <td className="border-r border-black py-1.5 px-1">{members.length + idx + 1}</td>
+                      <td className="border-r border-black py-1.5 px-2"></td>
+                      <td className="border-r border-black py-1.5 px-2"></td>
+                      <td className="border-r border-black py-1.5 px-2"></td>
+                      <td className="py-1.5 px-2"></td>
                     </tr>
                   ))}
                 </tbody>
@@ -491,7 +503,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
         </div>
       </div>
 
-      <style>{`
+      <style>{\`
         @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&display=swap');
         
         .custom-scrollbar::-webkit-scrollbar {
@@ -538,11 +550,14 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
             border: none !important;
             page-break-after: always;
           }
-          .print\\:hidden {
+          .print\\\\:hidden {
             display: none !important;
           }
         }
-      `}</style>
+      \`}</style>
     </div>
   );
 };
+`
+fs.writeFileSync('src/components/tools/VanshavaliCertificate.tsx', code);
+console.log("Updated VanshavaliCertificate.tsx");

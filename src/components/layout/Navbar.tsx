@@ -74,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="btn-toggle-sidebar"
               onClick={onToggleSidebar}
-              className="lg:hidden p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 focus:outline-none transition-colors"
+              className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 focus:outline-none transition-colors"
               title="Menu"
               aria-label="Toggle navigation"
             >

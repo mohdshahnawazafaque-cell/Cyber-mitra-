@@ -63,7 +63,6 @@ export const ToolsHub: React.FC<ToolsHubProps> = ({ language, onNavigate }) => {
     { id: 'typing-tools', category: 'typing', nameHi: 'हिंदी / इंग्लिश टाइपिंग टूल्स', nameEn: 'Typing Tools', descHi: 'टाइपिंग स्पीड टेस्ट और सर्टिफिकेट।', descEn: 'Typing tests and code conversions.', target: 'office_tools', subCategory: 'typing' },
 
     // Utilities
-    { id: 'bulk-sms', category: 'utility', nameHi: 'SMS / WhatsApp अलर्ट', nameEn: 'Bulk SMS Alerts', descHi: 'ग्राहकों को एक साथ मैसेज भेजें।', descEn: 'Send bulk status updates to customers.', target: 'bulk_sms', subCategory: 'utility' },
     { id: 'cibil-checker', category: 'utility', nameHi: 'फ्री सिबिल स्कोर चेक', nameEn: 'Free CIBIL Score Check', descHi: 'लोन या क्रेडिट कार्ड के लिए फ्री में CIBIL व Experian स्कोर चेक करें।', descEn: 'Check free CIBIL & Experian score for loan & credit card.', target: 'services', subCategory: 'finance' },
     { id: 'invoice-generator', category: 'utility', nameHi: 'बिल / इनवॉइस जनरेटर', nameEn: 'Universal Invoice Generator', descHi: 'अपनी दुकान या कंपनी के नाम से स्मार्ट बिल बनाएं और प्रिंट करें।', descEn: 'Create and print smart invoices/bills for your shop or company.', target: 'invoice_generator', subCategory: 'utility' },
     { id: 'vanshavali-certificate', category: 'utility', nameHi: 'वंशावली प्रमाण-पत्र', nameEn: 'Vanshavali Certificate', descHi: 'परिवार के सदस्यों का वंशावली विवरण बनाएं और प्रिंट करें।', descEn: 'Generate Family Tree Certificate.', target: 'vanshavali_certificate', subCategory: 'utility' },
