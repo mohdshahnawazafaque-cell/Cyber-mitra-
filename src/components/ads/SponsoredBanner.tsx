@@ -38,6 +38,48 @@ export const SponsoredBanner: React.FC = () => {
           imageUrl: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1600&h=400',
           title: 'Partner with us for Digital Services',
           link: '#'
+        },
+        {
+          id: 'promo-4',
+          imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Start PAN Card Agency - Instant Approvals',
+          link: '#'
+        },
+        {
+          id: 'promo-5',
+          imageUrl: 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Become an Authorized AEPS Banking Point',
+          link: '#'
+        },
+        {
+          id: 'promo-6',
+          imageUrl: 'https://images.unsplash.com/photo-1621574539437-4b7b91384f5e?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Bulk SMS Plans for Local Marketing',
+          link: '#'
+        },
+        {
+          id: 'promo-7',
+          imageUrl: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Flight & Train Ticket Booking Agent Access',
+          link: '#'
+        },
+        {
+          id: 'promo-8',
+          imageUrl: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Get Premium Tech Support for CSC Operators',
+          link: '#'
+        },
+        {
+          id: 'promo-9',
+          imageUrl: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Aadhaar Print Services - High Quality PVC',
+          link: '#'
+        },
+        {
+          id: 'promo-10',
+          imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1600&h=400',
+          title: 'Income, Caste & Domicile Certificates - Fast Track',
+          link: '#'
         }
       ];
       

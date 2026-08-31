@@ -1,11 +1,9 @@
 const fs = require('fs');
-
 let code = fs.readFileSync('src/components/tools/ToolsHub.tsx', 'utf8');
 
-const newItem = `{ id: 'awas-certificate', category: 'utility', nameHi: 'आवास प्रमाण-पत्र', nameEn: 'Awas Certificate Generator', descHi: 'प्रधानमंत्री आवास योजना-शहरी 2.0 का प्रमाण-पत्र बनाएं।', descEn: 'Generate PMAY-U 2.0 certificate.', target: 'awas_certificate', subCategory: 'utility' },
-    { id: 'promo-designer',`;
+const targetStr = "{ id: 'awas-certificate', category: 'utility'";
+const replacement = "{ id: 'vanshavali-certificate', category: 'utility', nameHi: 'वंशावली प्रमाण-पत्र', nameEn: 'Vanshavali Certificate', descHi: 'परिवार के सदस्यों का वंशावली विवरण बनाएं और प्रिंट करें।', descEn: 'Generate Family Tree Certificate.', target: 'vanshavali_certificate', subCategory: 'utility' },\n    " + targetStr;
 
-if(!code.includes('awas-certificate')) {
-  code = code.replace("{ id: 'promo-designer',", newItem);
-  fs.writeFileSync('src/components/tools/ToolsHub.tsx', code);
-}
+code = code.replace(targetStr, replacement);
+fs.writeFileSync('src/components/tools/ToolsHub.tsx', code);
+console.log("Patched ToolsHub.tsx");

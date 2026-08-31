@@ -39,6 +39,7 @@ const CalculatorHub = lazy(() => import('./components/tools/CalculatorHub').then
 const InvoiceGenerator = lazy(() => import('./components/tools/InvoiceGenerator').then(module => ({ default: module.InvoiceGenerator })));
 const PromoDesigner = lazy(() => import('./components/tools/PromoDesigner').then(module => ({ default: module.PromoDesigner })));
 const AwasCertificate = lazy(() => import('./components/tools/AwasCertificate').then(module => ({ default: module.AwasCertificate })));
+const VanshavaliCertificate = lazy(() => import('./components/tools/VanshavaliCertificate').then(module => ({ default: module.VanshavaliCertificate })));
 // .then(module => ({ default: module.PromoDesigner })));
 const QuickLinksDashboard = lazy(() => import('./components/tools/QuickLinksDashboard').then(module => ({ default: module.QuickLinksDashboard })));
 const BulkSmsTool = lazy(() => import('./components/tools/BulkSmsTool').then(module => ({ default: module.BulkSmsTool })));
@@ -346,6 +347,10 @@ export default function App() {
 
                         {appState.activeView === 'awas_certificate' && (
               <AwasCertificate language={language} />
+            )}
+
+            {appState.activeView === 'vanshavali_certificate' && (
+              <VanshavaliCertificate language={language} />
             )}
 
             {/* VIEW: PROMO DESIGNER */}

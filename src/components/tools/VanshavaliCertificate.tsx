@@ -1,0 +1,419 @@
+import React, { useState, useRef } from 'react';
+import { Download, Printer, RefreshCw, Plus, Trash2 } from 'lucide-react';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
+import { Language } from '../../types';
+
+interface FamilyMember {
+  id: string;
+  name: string;
+  fatherName: string;
+  relation: string;
+  age: string;
+}
+
+interface VanshavaliCertificateProps {
+  language: Language;
+}
+
+export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ language }) => {
+  const isHindi = language === 'hi';
+  const previewRef = useRef<HTMLDivElement>(null);
+
+  // Form State
+  const [applicantName, setApplicantName] = useState('');
+  const [fatherName, setFatherName] = useState('');
+  const [address, setAddress] = useState('');
+  const [panchayat, setPanchayat] = useState('नगर पंचायत तम्बौर अहमदाबाद');
+  const [tehsil, setTehsil] = useState('लहरपुर');
+  const [district, setDistrict] = useState('सीतापुर');
+  
+  // Signatory State
+  const [signDesignation, setSignDesignation] = useState('अध्यक्ष');
+  const [signAuthority, setSignAuthority] = useState('नगर पंचायत तम्बौर अहमदाबाद');
+  const [signDistrict, setSignDistrict] = useState('जनपद सीतापुर');
+
+  // Family Members
+  const [members, setMembers] = useState<FamilyMember[]>([
+    { id: '1', name: '', fatherName: '', relation: 'स्वयं', age: '' }
+  ]);
+
+  const addMember = () => {
+    const newId = Date.now().toString();
+    setMembers([...members, { id: newId, name: '', fatherName: '', relation: '', age: '' }]);
+  };
+
+  const removeMember = (id: string) => {
+    if (members.length > 1) {
+      setMembers(members.filter(m => m.id !== id));
+    }
+  };
+
+  const updateMember = (id: string, field: keyof FamilyMember, value: string) => {
+    setMembers(members.map(m => m.id === id ? { ...m, [field]: value } : m));
+  };
+
+  const resetForm = () => {
+    if (window.confirm(isHindi ? 'क्या आप फॉर्म रीसेट करना चाहते हैं?' : 'Are you sure you want to reset?')) {
+      setApplicantName('');
+      setFatherName('');
+      setAddress('');
+      setMembers([{ id: Date.now().toString(), name: '', fatherName: '', relation: 'स्वयं', age: '' }]);
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleDownloadPDF = async () => {
+    if (!previewRef.current) return;
+    
+    try {
+      const canvas = await html2canvas(previewRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+      pdf.save(`Vanshavali_Certificate_${applicantName || 'Applicant'}.pdf`);
+    } catch (err) {
+      console.error('PDF Generation failed:', err);
+      alert('PDF तैयार करने में त्रुटि हुई।');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-slate-800">
+          {isHindi ? 'वंशावली प्रमाण-पत्र मेकर' : 'Family Tree Certificate Maker'}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+        
+        {/* FORM SECTION */}
+        <div className="xl:col-span-4 space-y-5 print:hidden max-h-[800px] overflow-y-auto pr-2">
+          
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <h3 className="font-bold text-slate-800 border-b pb-2">आवेदक का विवरण (Applicant Details)</h3>
+            
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">प्रार्थी का नाम</label>
+                <input
+                  type="text"
+                  value={applicantName}
+                  onChange={e => setApplicantName(e.target.value)}
+                  placeholder="उदा. कामरान"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">पिता/पति का नाम</label>
+                <input
+                  type="text"
+                  value={fatherName}
+                  onChange={e => setFatherName(e.target.value)}
+                  placeholder="उदा. नसीर खां"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">निवासी (मोहल्ला/ग्राम)</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={e => setAddress(e.target.value)}
+                  placeholder="उदा. मो0 अहमदाबाद गंज"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">नगर पंचायत/ब्लॉक</label>
+                  <input
+                    type="text"
+                    value={panchayat}
+                    onChange={e => setPanchayat(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">तहसील</label>
+                  <input
+                    type="text"
+                    value={tehsil}
+                    onChange={e => setTehsil(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">जनपद (District)</label>
+                <input
+                  type="text"
+                  value={district}
+                  onChange={e => setDistrict(e.target.value)}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="flex items-center justify-between border-b pb-2">
+              <h3 className="font-bold text-slate-800">परिवार का विवरण (Family Details)</h3>
+              <button 
+                onClick={addMember}
+                className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-2 py-1 rounded"
+              >
+                <Plus className="w-3 h-3" /> जोड़ें
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              {members.map((member, index) => (
+                <div key={member.id} className="relative p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                  <div className="absolute -top-2 -left-2 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold">
+                    {index + 1}
+                  </div>
+                  {members.length > 1 && (
+                    <button 
+                      onClick={() => removeMember(member.id)}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 p-1"
+                      title="हटाएं"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                  
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    <div>
+                      <input
+                        type="text"
+                        value={member.name}
+                        onChange={e => updateMember(member.id, 'name', e.target.value)}
+                        placeholder="नाम"
+                        className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        value={member.fatherName}
+                        onChange={e => updateMember(member.id, 'fatherName', e.target.value)}
+                        placeholder="पिता/पति का नाम"
+                        className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        value={member.relation}
+                        onChange={e => updateMember(member.id, 'relation', e.target.value)}
+                        placeholder="सम्बन्ध (उदा. पुत्र)"
+                        className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        value={member.age}
+                        onChange={e => updateMember(member.id, 'age', e.target.value)}
+                        placeholder="आयु (उदा. 43 वर्ष)"
+                        className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <h3 className="font-bold text-slate-800 border-b pb-2">हस्ताक्षरकर्ता (Signatory)</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">पद (Designation)</label>
+                <input
+                  type="text"
+                  value={signDesignation}
+                  onChange={e => setSignDesignation(e.target.value)}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">निकाय/संस्था</label>
+                <input
+                  type="text"
+                  value={signAuthority}
+                  onChange={e => setSignAuthority(e.target.value)}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">स्थान/जनपद</label>
+                <input
+                  type="text"
+                  value={signDistrict}
+                  onChange={e => setSignDistrict(e.target.value)}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="grid grid-cols-2 gap-3 sticky bottom-0 bg-slate-50 p-2 pb-4 pt-4 border-t border-slate-200">
+            <button
+              onClick={handlePrint}
+              className="col-span-1 px-3 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-md transition-colors flex items-center justify-center gap-1.5"
+            >
+              <Printer className="w-4 h-4" /> प्रिंट करें
+            </button>
+            <button
+              onClick={handleDownloadPDF}
+              className="col-span-1 px-3 py-2.5 bg-slate-800 hover:bg-black text-white font-bold rounded-xl text-sm shadow-md transition-colors flex items-center justify-center gap-1.5"
+            >
+              <Download className="w-4 h-4" /> PDF डाउनलोड
+            </button>
+            <button
+              onClick={resetForm}
+              className="col-span-2 px-3 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold rounded-xl text-sm transition-colors flex items-center justify-center gap-1.5"
+            >
+              <RefreshCw className="w-4 h-4" /> रीसेट करें
+            </button>
+          </div>
+        </div>
+
+        {/* LIVE PREVIEW SECTION */}
+        <div className="xl:col-span-8 bg-slate-100 p-2 sm:p-8 rounded-xl border border-slate-200 overflow-x-auto w-full flex justify-center">
+          <div 
+            className="print-exact bg-white shadow-2xl relative text-black flex flex-col shrink-0"
+            style={{ 
+              width: '210mm',
+              minHeight: '297mm',
+              padding: '25mm 20mm', // Standard margins for A4
+              fontFamily: '"Tiro Devanagari Hindi", Arial, sans-serif'
+            }}
+            ref={previewRef}
+          >
+            
+            {/* Title */}
+            <div className="flex justify-center mb-10">
+              <h1 className="text-[34px] font-black border-b-[3px] border-black pb-1 px-4 tracking-wide">
+                वंशावली प्रमाण-पत्र
+              </h1>
+            </div>
+
+            {/* Declaration Body */}
+            <div className="text-[17px] leading-[1.8] text-justify mb-8 font-medium">
+              <p>
+                प्रमाणित किया जाता है कि प्रार्थी <strong>{applicantName || '____________________'}</strong> पुत्र/पुत्री/पत्नी <strong>{fatherName || '____________________'}</strong> निवासी <strong>{address || '____________________'} {panchayat}</strong> तह० <strong>{tehsil}</strong> जिला <strong>{district}</strong> के परिवार का विवरण गवाहों व वार्ड सदस्य की आख्या के अनुसार निम्नवत है। यदि प्रस्तुत साक्ष्य में किसी प्रकार का कोई तथ्य छिपाया गया या इसमें कोई त्रुटि पाई जाती है। तो उसका उत्तरदायित्व शपथकर्ता / शपथकर्ती का होगा। जो निम्नवत है-
+              </p>
+            </div>
+
+            {/* Table */}
+            <div className="mb-16">
+              <table className="w-full border-collapse border border-black text-center text-[15px] font-medium">
+                <thead>
+                  <tr className="border-b border-black">
+                    <th className="border-r border-black py-2 px-1 w-[8%] font-bold">क्रo सo</th>
+                    <th className="border-r border-black py-2 px-2 w-[25%] font-bold">नाम</th>
+                    <th className="border-r border-black py-2 px-2 w-[25%] font-bold">पिता/पति का नाम</th>
+                    <th className="border-r border-black py-2 px-2 w-[17%] font-bold">सम्बन्ध</th>
+                    <th className="py-2 px-2 w-[25%] font-bold">आयु</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {members.map((m, idx) => (
+                    <tr key={m.id} className="border-b border-black last:border-b-0">
+                      <td className="border-r border-black py-1.5 px-1">{idx + 1}</td>
+                      <td className="border-r border-black py-1.5 px-2">{m.name || '\u00A0'}</td>
+                      <td className="border-r border-black py-1.5 px-2">{m.fatherName || '\u00A0'}</td>
+                      <td className="border-r border-black py-1.5 px-2">{m.relation || '\u00A0'}</td>
+                      <td className="py-1.5 px-2">{m.age || '\u00A0'}</td>
+                    </tr>
+                  ))}
+                  {/* Fill empty rows to make it look standard if few members */}
+                  {Array.from({ length: Math.max(0, 5 - members.length) }).map((_, idx) => (
+                    <tr key={`empty-${idx}`} className="border-b border-black last:border-b-0 h-9">
+                      <td className="border-r border-black py-1.5 px-1">{members.length + idx + 1}</td>
+                      <td className="border-r border-black py-1.5 px-2"></td>
+                      <td className="border-r border-black py-1.5 px-2"></td>
+                      <td className="border-r border-black py-1.5 px-2"></td>
+                      <td className="py-1.5 px-2"></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Signatures */}
+            <div className="mt-auto flex justify-end pr-8">
+              <div className="flex flex-col items-center w-[40%] text-center">
+                <div className="text-[17px] font-bold leading-snug">
+                  {signDesignation}<br/>
+                  {signAuthority}<br/>
+                  {signDistrict}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&display=swap');
+        
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 0;
+          }
+          body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+          }
+          body * {
+            visibility: hidden;
+          }
+          .print-exact, .print-exact * {
+            visibility: visible;
+          }
+          .print-exact {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 210mm !important;
+            height: 297mm !important;
+            transform: none !important;
+            margin: 0 !important;
+            padding: 25mm 20mm !important;
+            box-shadow: none !important;
+            border: none !important;
+          }
+          .print\\:hidden {
+            display: none !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+};

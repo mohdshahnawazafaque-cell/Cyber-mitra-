@@ -1,15 +1,22 @@
 const fs = require('fs');
 let code = fs.readFileSync('src/components/layout/Sidebar.tsx', 'utf8');
 
-// Modernize sidebar
-code = code.replace(
-  'className={`fixed lg:static inset-y-0 left-0 z-50 w-[280px] bg-slate-900 text-white flex flex-col',
-  'className={`fixed lg:static inset-y-0 left-0 z-50 w-[280px] bg-slate-900 bg-[url("https://www.transparenttextures.com/patterns/cubes.png")] text-white flex flex-col'
-);
+const awasBlock = `    {
+      id: 'awas_certificate',
+      icon: <Building2 className="w-5 h-5" />,
+      titleHi: 'आवास प्रमाण-पत्र',
+      titleEn: 'Awas Certificate',
+      view: 'awas_certificate'
+    }`;
+    
+const replacement = awasBlock + `,\n    {
+      id: 'vanshavali_certificate',
+      icon: <FileCheck className="w-5 h-5" />,
+      titleHi: 'वंशावली प्रमाण-पत्र',
+      titleEn: 'Vanshavali Certificate',
+      view: 'vanshavali_certificate'
+    }`;
 
-code = code.replace(
-  'className="flex items-center gap-3 w-full"',
-  'className="flex items-center gap-3 w-full bg-slate-800/50 p-2 rounded-xl border border-slate-700/50"'
-);
-
+code = code.replace(awasBlock, replacement);
 fs.writeFileSync('src/components/layout/Sidebar.tsx', code);
+console.log("Patched Sidebar.tsx");
