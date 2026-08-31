@@ -788,9 +788,9 @@ export const INITIAL_SERVICES: GovernmentService[] = [
     requiredDocsEn: ['Aadhaar Card', 'Passport Photo', 'Local Recommendation Letter', 'Govt Fee Rs. 50'],
     officialLinks: {
       officialPortal: 'https://cctnsup.gov.in/citizenportal/login.aspx',
-      newApply: 'https://cctnsup.gov.in/citizenportal/login.aspxlogin.aspx',
-      status: 'https://cctnsup.gov.in/citizenportal/login.aspxlogin.aspx',
-      download: 'https://cctnsup.gov.in/citizenportal/login.aspxlogin.aspx',
+      newApply: 'https://cctnsup.gov.in/citizenportal/login.aspx',
+      status: 'https://cctnsup.gov.in/citizenportal/login.aspx',
+      download: 'https://cctnsup.gov.in/citizenportal/login.aspx',
     },
   },
 
