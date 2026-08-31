@@ -308,4 +308,98 @@ This certificate is issued upon request for the purpose of {{purpose}}.`,
     requiredDocumentsHi: ['आधार कार्ड', '2 पासपोर्ट फोटो'],
     requiredDocumentsEn: ['Aadhaar Card', '2 Passport Photos'],
   },
+
+  // 8. Application to SDM (Sub-Divisional Magistrate)
+  {
+    id: 'tpl-sdm-general',
+    titleHi: 'उपजिलाधिकारी (SDM) महोदय को प्रार्थना पत्र',
+    titleEn: 'Application to SDM (Sub-Divisional Magistrate)',
+    category: 'applications',
+    descriptionHi: 'जमीन विवाद, पैमाइश, अवैध कब्जा, या शांति भंग की आशंका के संबंध में SDM को शिकायत/प्रार्थना पत्र।',
+    descriptionEn: 'Complaint/Request letter to SDM regarding land dispute, measurement, or illegal possession.',
+    recipientHi: 'सेवा में,\nश्रीमान उपजिलाधिकारी (SDM) महोदय,\nतहसील - {{tehsil}}, जनपद - {{district}} (उ०प्र०)',
+    recipientEn: 'To,\nThe Sub-Divisional Magistrate (SDM),\nTehsil - {{tehsil}}, District - {{district}} (U.P.)',
+    subjectHi: 'विषय: {{subjectMatters}} के सम्बन्ध में उचित कार्यवाही हेतु।',
+    subjectEn: 'Subject: Regarding {{subjectMatters}} and request for appropriate action.',
+    templateBodyHi: `महोदय,
+सविनय निवेदन है कि प्रार्थी {{name}}, पिता/पति श्री {{fatherMotherName}}, निवासी- {{address}}, ग्राम/मोहल्ला- {{villageTown}}, तहसील- {{tehsil}}, जनपद- {{district}} का मूल निवासी है।
+
+प्रार्थी के साथ निम्न समस्या उत्पन्न हो गई है:
+"{{complaintDetails}}"
+
+प्रार्थी ने इससे पूर्व भी संबंधित अधिकारियों (थाना / लेखपाल) को अवगत कराया था परंतु अभी तक कोई उचित कार्यवाही नहीं हुई है। जिस कारण प्रार्थी को काफी मानसिक व आर्थिक परेशानी का सामना करना पड़ रहा है।
+
+अतः श्रीमान जी से विनम्र निवेदन है कि मामले की गंभीरता को देखते हुए संबंधित राजस्व कर्मी / थानाध्यक्ष को निर्देशित कर त्वरित एवं उचित कार्यवाही कराने की कृपा करें।
+
+संलग्नक:
+1. आधार कार्ड की छायाप्रति
+2. प्रार्थना पत्र से सम्बंधित दस्तावेज (खतौनी / फोटो / रसीद)`,
+    templateBodyEn: `Respected Sir,
+I, {{name}}, S/o / W/o Shri {{fatherMotherName}}, resident of {{address}}, {{villageTown}}, Tehsil: {{tehsil}}, District: {{district}}, bring to your kind notice that:
+
+"{{complaintDetails}}"
+
+I have previously informed the concerned lower authorities but no action has been taken yet, causing me significant distress.
+
+Therefore, I kindly request you to look into this matter urgently and direct the concerned officials to take immediate and appropriate action.
+
+Enclosures:
+1. Copy of Aadhaar Card
+2. Related documents (Land records/Photos/Receipts)`,
+    fields: [
+      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: 'सदर' },
+      { id: 'subjectMatters', labelHi: 'विषय / मुख्य बिंदु', labelEn: 'Subject Matter', type: 'text', required: true, defaultValue: 'जमीन पर अवैध कब्जे की शिकायत', placeholderHi: 'जैसे: भूमि विवाद / पैमाइश / रास्ता विवाद' },
+      { id: 'complaintDetails', labelHi: 'शिकायत का पूरा विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: 'विपक्षीगणों द्वारा प्रार्थी की पुश्तैनी जमीन/रास्ते पर जबरन अवैध कब्जा करने का प्रयास किया जा रहा है और मना करने पर गाली-गलौज व जान से मारने की धमकी दे रहे हैं।' },
+    ],
+    requiredDocumentsHi: ['आधार कार्ड', 'संबंधित साक्ष्य (खतौनी / फोटो)'],
+    requiredDocumentsEn: ['Aadhaar Card', 'Relevant Evidence (Land records / Photos)'],
+  },
+
+  // 9. Application to DM (District Magistrate)
+  {
+    id: 'tpl-dm-general',
+    titleHi: 'जिलाधिकारी (DM) महोदय को प्रार्थना / शिकायत पत्र',
+    titleEn: 'Application / Complaint to DM (District Magistrate)',
+    category: 'applications',
+    descriptionHi: 'जिले के किसी भी विभाग में भ्रष्टाचार, जनसमस्या, पुलिस कार्यवाही न होने, या अन्य गंभीर मामलों के लिए पत्र।',
+    descriptionEn: 'Complaint to District Magistrate regarding severe public grievances, police inaction, or corruption.',
+    recipientHi: 'सेवा में,\nश्रीमान जिलाधिकारी (DM) महोदय,\nजनपद - {{district}} (उ०प्र०)',
+    recipientEn: 'To,\nThe District Magistrate (DM),\nDistrict - {{district}} (U.P.)',
+    subjectHi: 'विषय: {{subjectMatters}} के सम्बन्ध में निष्पक्ष जांच एवं कार्यवाही हेतु।',
+    subjectEn: 'Subject: Request for fair investigation and action regarding {{subjectMatters}}.',
+    templateBodyHi: `महोदय,
+सविनय निवेदन है कि प्रार्थी {{name}}, पिता/पति श्री {{fatherMotherName}}, निवासी- {{address}}, ग्राम/मोहल्ला- {{villageTown}}, तहसील- {{tehsil}}, जनपद- {{district}} का स्थायी निवासी है।
+
+महोदय, प्रार्थी अत्यंत दुःख एवं परेशानी के साथ आपको अवगत कराना चाहता है कि:
+"{{complaintDetails}}"
+
+इस सम्बन्ध में प्रार्थी द्वारा निचले स्तर के सम्बंधित अधिकारियों को भी लिखित रूप में शिकायत दी जा चुकी है, परंतु समस्या का कोई समाधान नहीं हुआ है और प्रार्थी दर-दर भटकने को मजबूर है।
+
+अतः श्रीमान जी से करबद्ध प्रार्थना है कि जनहित एवं न्यायहित में मामले का संज्ञान लेते हुए, किसी सक्षम अधिकारी से निष्पक्ष जांच कराकर प्रार्थी को न्याय दिलाने की कृपा करें। इसके लिए प्रार्थी सदैव आपका आभारी रहेगा।
+
+संलग्नक:
+1. आधार कार्ड की छायाप्रति
+2. पूर्व में दी गई शिकायतों की पावती / रसीद
+3. सम्बंधित साक्ष्य एवं दस्तावेज`,
+    templateBodyEn: `Respected Sir,
+I, {{name}}, S/o / W/o Shri {{fatherMotherName}}, resident of {{address}}, {{villageTown}}, Tehsil: {{tehsil}}, District: {{district}}, humbly state that:
+
+"{{complaintDetails}}"
+
+I have already complained to the lower concerned authorities regarding this issue, but no solution has been provided so far.
+
+Therefore, it is my humble request to kindly take cognizance of the matter, conduct a fair inquiry through a competent officer, and provide justice to the applicant. I shall be highly obliged.
+
+Enclosures:
+1. Copy of Aadhaar Card
+2. Receipts of previous complaints
+3. Relevant evidence and documents`,
+    fields: [
+      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: 'सदर' },
+      { id: 'subjectMatters', labelHi: 'विषय / मुख्य बिंदु', labelEn: 'Subject Matter', type: 'text', required: true, defaultValue: 'थाने स्तर पर न्याय न मिलने की शिकायत', placeholderHi: 'जैसे: पुलिस द्वारा कार्यवाही न करना / आवास योजना में धांधली' },
+      { id: 'complaintDetails', labelHi: 'शिकायत का पूरा विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: 'प्रार्थी के साथ हुई उक्त घटना के संबंध में स्थानीय थाने/विभाग में कई बार प्रार्थना पत्र दिया गया, लेकिन संबंधित अधिकारियों द्वारा कोई संतोषजनक कार्यवाही नहीं की जा रही है।' },
+    ],
+    requiredDocumentsHi: ['आधार कार्ड', 'पूर्व शिकायतों की प्रति', 'अन्य साक्ष्य'],
+    requiredDocumentsEn: ['Aadhaar Card', 'Previous Complaints Copy', 'Other Evidence'],
+  },
 ];

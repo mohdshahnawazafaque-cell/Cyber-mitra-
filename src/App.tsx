@@ -200,7 +200,18 @@ export default function App() {
     }
     // Record audit log
     recordActivityLog(appState, `Open Portal: ${title}`, `Clicked ${actionType} -> ${url}`);
-    window.open(url, '_blank', 'noopener,noreferrer');
+    
+    try {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      window.location.href = url;
+    }
   };
 
   // Quick preset bridge
@@ -225,7 +236,7 @@ export default function App() {
   const footerAdSlot = appState.adSlots.find((s) => s.id === 'ad-footer' || s.id === 'footer-banner');
 
   return (
-    <div className={`min-h-screen flex flex-col bg-[#f8fafc] text-slate-800 antialiased font-sans ${appState.theme === 'high-contrast' ? 'theme-high-contrast' : ''}`}>
+    <div className={`min-h-screen flex flex-col bg-slate-50 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.15),rgba(255,255,255,0))] text-slate-800 antialiased font-sans ${appState.theme === 'high-contrast' ? 'theme-high-contrast' : ''}`}>
       {/* 1. TOP HEADER NAVBAR */}
       <Navbar
         language={language}
@@ -358,7 +369,7 @@ export default function App() {
               />
             )}
 
-            {/* VIEW: APPLICATION LETTER BUILDER */}
+            {/* VIEW: APPLICATION Application Builder */}
             {appState.activeView === 'application_builder' && (
               <ApplicationBuilder
                 language={language}
@@ -495,22 +506,8 @@ export default function App() {
         language={language}
         services={appState.services}
         templates={appState.applicationTemplates}
-        onSelectService={(service) => {
-          handleOpenLink(
-            service.officialLinks.newApply ||
-              service.officialLinks.apply ||
-              service.officialLinks.officialPortal ||
-              '#',
-            isHindi ? service.titleHi : service.titleEn,
-            'Universal Search'
-          );
-        }}
-        onSelectTemplate={(tpl) => {
-          handleNavigate('application_builder');
-        }}
-        onNavigateTool={(toolView) => {
-          handleNavigate(toolView);
-        }}
+        onNavigate={handleNavigate}
+        onOpenServiceLink={(url, title) => handleOpenLink(url, title, 'Universal Search')}
       />
 
       {/* Customer Session Modal */}

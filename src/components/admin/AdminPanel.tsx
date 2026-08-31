@@ -93,18 +93,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
     const cleanEmail = emailInput.trim().toLowerCase();
     const cleanCurrentEmail = currentEmail.trim().toLowerCase();
 
-    const isEmailValid =
-      !emailInput.trim() ||
-      cleanEmail === cleanCurrentEmail ||
-      cleanEmail === 'mohdshahnawaz.afaque@gmail.com' ||
-      cleanEmail === 'admin' ||
-      cleanEmail === 'mohdshahnawaz.afaque@gmail.com';
-
-    const isPassValid =
-      passwordInput === currentPass ||
-      passwordInput === 'Sh@sahiba9653' ||
-      passwordInput === 'Sh@sahiba9653' ||
-      passwordInput === 'cybermitra';
+        const isEmailValid = cleanEmail === cleanCurrentEmail || cleanEmail === 'mohdshahnawaz.afaque@gmail.com';
+    const isPassValid = passwordInput === currentPass || passwordInput === 'Sh@sahiba9653';
 
     if (isEmailValid && isPassValid) {
       onUpdateState({ ...appState, isAdminLoggedIn: true });
@@ -493,7 +483,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="email"
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
-                    placeholder="admin@example.com"
+                    placeholder="mohdshahnawaz.afaque@gmail.com"
                     className="w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:outline-none bg-slate-50/50 hover:bg-slate-50 focus:bg-white transition-all placeholder:text-slate-400"
                     required
                   />

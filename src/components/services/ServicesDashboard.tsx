@@ -211,7 +211,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
       descHi: 'SDM, थाना, बिजली विभाग, बैंक हेतु तैयार प्रार्थना पत्र',
       view: 'application_builder',
       icon: FileEdit,
-      badge: isHindi ? 'रेडीमेड ड्राफ्ट' : 'Ready Letters',
+      badge: isHindi ? 'रेडीमेड ड्राफ्ट' : 'Ready Applications',
       color: 'from-emerald-600 to-teal-600',
       bgLight: 'bg-gradient-to-br from-emerald-50 to-teal-50/60 hover:from-emerald-100 hover:to-teal-100 border-emerald-200/80',
       textColor: 'text-emerald-700',
@@ -262,10 +262,10 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
     },
     {
       id: 'form-pan-49a',
-      titleHi: 'पैन कार्ड फॉर्म 49A (Blank Form)',
-      titleEn: 'PAN Card Form 49A (Physical Form)',
-      descHi: 'नया पैन कार्ड ऑफलाइन फॉर्म व हस्ताक्षर फॉर्मेट',
-      descEn: 'Physical Application Form for New Indian Citizen PAN',
+      titleHi: 'पैन कार्ड फॉर्म 93 (नया 2026)',
+      titleEn: 'PAN Card Form 93 (New 2026)',
+      descHi: 'नया पैन कार्ड ऑफलाइन फॉर्म (2026 अपडेटेड)',
+      descEn: 'Updated Physical Application Form 93 for 2026',
       category: 'id_services',
       type: 'PDF',
       size: '240 KB',
@@ -471,7 +471,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
                 className="px-3 py-2 bg-slate-700/80 hover:bg-slate-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-600 shadow-sm transition-all hover:scale-105"
               >
                 <FileEdit className="w-3.5 h-3.5 text-emerald-400" />
-                {isHindi ? 'प्रार्थना पत्र लेखक' : 'Letter Builder'}
+                {isHindi ? 'प्रार्थना पत्र लेखक' : 'Application Builder'}
               </button>
             </div>
           </div>
@@ -659,7 +659,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
                 {isHindi ? 'सरकारी फॉर्म्स व घोषणा पत्र डाउनलोड (Ready PDF Formats)' : 'Govt Form & Affidavit Download Hub'}
               </h2>
               <p className="text-[11px] text-slate-300 font-medium">
-                {isHindi ? 'आय/जाति/निवास स्वप्रमाणित घोषणा पत्र, पैन 49A, आधार सुधार फॉर्म' : 'Direct official blank forms for offline submission & print'}
+                {isHindi ? 'आय/जाति/निवास स्वप्रमाणित घोषणा पत्र, पैन 93, आधार सुधार फॉर्म' : 'Direct official blank forms for offline submission & print'}
               </p>
             </div>
           </div>

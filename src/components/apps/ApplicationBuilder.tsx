@@ -137,7 +137,7 @@ export const ApplicationBuilder: React.FC<ApplicationBuilderProps> = ({
               <FileCode className="w-5 h-5" />
             </span>
             <h1 className="text-xl sm:text-2xl font-black text-slate-800">
-              {isHindi ? 'आवेदन पत्र निर्माता (Application Letter Builder)' : 'Application Letter Builder'}
+              {isHindi ? 'आवेदन पत्र निर्माता (Application Builder)' : 'Application Builder'}
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">

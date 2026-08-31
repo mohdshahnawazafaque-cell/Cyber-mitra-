@@ -1,3 +1,4 @@
+import { getLocalFallbackResponse } from '../../utils/localAiBot';
 import React, { useState } from 'react';
 import {
   Bot,
@@ -56,20 +57,47 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userQuery: query,
-          language,
-          customerContext: {
-            name: customer.name,
-            district: customer.district,
-          },
-        }),
-      });
+      const apiKey = localStorage.getItem('gemini_api_key');
+      
+      let data;
+      if (apiKey) {
+        // Direct client-side fetch using Gemini REST API
+        const systemInstruction = isHindi 
+          ? 'आप Cyber Mitra AI हैं, जो सीएससी (CSC) और साइबर कैफे संचालकों के लिए एक स्मार्ट सहायक है। आप सरकारी योजनाओं, फॉर्म भरने, दस्तावेज़ों की सूची आदि की सटीक जानकारी देते हैं। हिंदी में उत्तर दें।'
+          : 'You are Cyber Mitra AI, a smart assistant for CSC and Cyber Cafe operators. You provide accurate information about govt schemes, forms, and documents. Reply in English.';
 
-      const data = await response.json();
+        const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: query }]
+              }
+            ],
+            systemInstruction: {
+              role: 'user',
+              parts: [{ text: systemInstruction }]
+            }
+          })
+        });
+        
+        if (!aiResponse.ok) {
+          throw new Error('API Key invalid or quota exceeded');
+        }
+        
+        const aiData = await aiResponse.json();
+        const textReply = aiData.candidates?.[0]?.content?.parts?.[0]?.text || 'Answer generated.';
+        data = { reply: textReply };
+      } else {
+        // Fallback to backend (if running locally with Express)
+        
+        await new Promise(resolve => setTimeout(resolve, 600));
+        data = { reply: getLocalFallbackResponse(query, isHindi) };
+      }
+
+
       setMessages((prev) => [
         ...prev,
         {
@@ -78,12 +106,15 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
           time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
-    } catch (err) {
+    } catch (err: any) {
+      const isMissingKey = err.message.includes('API Key invalid');
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
-          text: isHindi ? 'सेवा से संपर्क नहीं हो सका।' : 'Service temporarily unavailable.',
+          text: isMissingKey 
+            ? (isHindi ? '⚠️ AI चैट चलाने के लिए कृपया ऊपर ⚙️ Settings में अपनी Google Gemini API Key डालें (Netlify पर यह आवश्यक है)।' : '⚠️ Please click the ⚙️ Settings icon above and add your Gemini API Key to use AI Chat on Netlify.') 
+            : (isHindi ? 'सेवा से संपर्क नहीं हो सका।' : 'Service temporarily unavailable.'),
           time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -140,6 +171,25 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
             </div>
 
             <div className="flex items-center gap-1">
+              <button
+                onClick={() => {
+                  const currentKey = localStorage.getItem('gemini_api_key') || '';
+                  const newKey = window.prompt(
+                    isHindi 
+                      ? 'यहाँ अपनी Google Gemini API Key डालें:' 
+                      : 'Enter your Google Gemini API Key here:',
+                    currentKey
+                  );
+                  if (newKey !== null) {
+                    localStorage.setItem('gemini_api_key', newKey.trim());
+                    alert(isHindi ? 'API Key सेव हो गई! अब चैट काम करेगी।' : 'API Key saved! Chat will now work.');
+                  }
+                }}
+                title="Settings / API Key"
+                className="p-1.5 hover:bg-white/20 rounded-lg text-white transition-colors"
+              >
+                <span className="text-[14px]">⚙️</span>
+              </button>
               <button
                 onClick={() => {
                   setIsOpen(false);
@@ -229,7 +279,7 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
             </button>
             <button
               onClick={() => {
-                setInput(isHindi ? 'पैन कार्ड 49A vs CSF' : 'PAN 49A vs CSF rules');
+                setInput(isHindi ? 'पैन कार्ड 93 vs CSF' : 'PAN 93 vs CSF rules');
               }}
               className="shrink-0 bg-white border border-slate-300 px-2 py-0.5 rounded-full text-slate-700 hover:border-purple-500"
             >
@@ -241,7 +291,7 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
               }}
               className="shrink-0 bg-white border border-slate-300 px-2 py-0.5 rounded-full text-slate-700 hover:border-purple-500"
             >
-              ✍️ {isHindi ? 'पत्र लिखें' : 'Draft Letter'}
+              ✍️ {isHindi ? 'पत्र लिखें' : 'Draft application'}
             </button>
           </div>
 

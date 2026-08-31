@@ -96,7 +96,18 @@ export const BulkSmsTool: React.FC<BulkSmsToolProps> = ({ language }) => {
 
   const handleSendWhatsApp = (customer: Customer) => {
     const text = encodeURIComponent(getMessage(customer));
-    window.open(`https://wa.me/${customer.phone}?text=${text}`, '_blank');
+    const url = `https://wa.me/${customer.phone}?text=${text}`;
+    try {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      window.location.href = url;
+    }
   };
 
   const handleBulkSend = () => {

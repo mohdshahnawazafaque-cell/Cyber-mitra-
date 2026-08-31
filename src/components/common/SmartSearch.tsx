@@ -179,7 +179,7 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
   const handleSelect = (item: SearchResultItem) => {
     onClose();
     if (item.type === 'service' && item.url) {
-      onNavigate('services', item.subCategory);
+      onOpenServiceLink(item.url, item.title);
     } else {
       onNavigate(item.targetView, item.subCategory);
     }
@@ -237,22 +237,22 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
   const quickPills = [
     { label: isHindi ? 'आधार सेवाएं' : 'Aadhaar Card', query: 'aadhaar' },
     { label: isHindi ? 'पैन कार्ड (PAN)' : 'PAN Card', query: 'pan' },
+    { label: isHindi ? 'किसान सेवाएं (Kisan)' : 'Kisan Services', query: 'kisan' },
     { label: isHindi ? 'फोटो 20KB रिसाइज' : 'Photo 20KB', query: 'photo' },
     { label: isHindi ? 'हस्ताक्षर क्लीन' : 'Signature Clean', query: 'signature' },
     { label: isHindi ? 'AI पत्र लेखन' : 'AI Letter', query: 'letter' },
-    { label: isHindi ? 'आय / जाति प्रमाण' : 'Income / Caste', query: 'certificate' },
   ];
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center pt-10 sm:pt-16 px-4 bg-slate-950/65 backdrop-blur-md transition-all duration-200"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-14 sm:pt-16 px-4 transition-all duration-200"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-2xl bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/60 ring-1 ring-black/5 overflow-hidden flex flex-col max-h-[84vh] animate-in fade-in zoom-in-95 duration-150">
-        {/* Top Search Input Box with Glass Glow */}
-        <div className="p-4 sm:p-5 border-b border-slate-200/80 flex items-center gap-3.5 bg-white/80">
+      <div className="w-full max-w-3xl bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200 ring-1 ring-black/5 overflow-hidden flex flex-col max-h-[84vh] animate-in fade-in slide-in-from-top-4 duration-200">
+        {/* Top Search Input Box */}
+        <div className="p-3 sm:p-4 border-b border-slate-200 flex items-center gap-3 bg-white">
           <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 shadow-2xs border border-blue-100">
             <Search className="w-5 h-5" />
           </div>

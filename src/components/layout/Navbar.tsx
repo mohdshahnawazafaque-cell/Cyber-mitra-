@@ -170,6 +170,33 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </div>
 
+            {/* Share Portal Button */}
+            <button
+              onClick={async () => {
+                try {
+                  if (navigator.share) {
+                    await navigator.share({
+                      title: 'Cyber Mitra - CSC & Digital Seva Portal',
+                      text: isHindi 
+                        ? 'सरकारी फॉर्म, फोटो रिसाइज, PDF टूल्स और AI चैट के लिए सबसे बेहतरीन वेबसाइट!' 
+                        : 'Best All-in-One portal for Govt Forms, Photo Resize, PDF tools, and AI Chat!',
+                      url: 'https://cebermitra.netlify.app/',
+                    });
+                  } else {
+                    navigator.clipboard.writeText('https://cebermitra.netlify.app/');
+                    alert(isHindi ? 'लिंक कॉपी हो गया! अब आप इसे Facebook/WhatsApp पर शेयर कर सकते हैं।' : 'Link copied to clipboard! You can share it on Facebook/WhatsApp.');
+                  }
+                } catch (err) {
+                  console.error('Error sharing:', err);
+                }
+              }}
+              className="px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 font-bold text-xs transition-all border bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200"
+              title={isHindi ? 'पोर्टल शेयर करें' : 'Share Portal'}
+            >
+              <Globe className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="hidden sm:inline font-extrabold">{isHindi ? 'शेयर करें' : 'Share'}</span>
+            </button>
+
             {/* AI Chat Direct Action Button */}
             <button
               id="btn-ai-chat-nav"

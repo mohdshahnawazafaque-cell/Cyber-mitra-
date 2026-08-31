@@ -42,9 +42,10 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
   const docs = isHindi ? service.requiredDocsHi : service.requiredDocsEn;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] transition-all flex flex-col justify-between overflow-hidden group hover:border-slate-200">
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-blue-300 relative">
       {/* Top Header Card */}
-      <div className="p-4 sm:p-5">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div className="p-4 sm:p-5 pt-5">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-1.5 flex-wrap mb-3">
             <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-50 text-slate-500 border border-slate-100">
@@ -142,11 +143,11 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       </div>
 
       {/* Complete Official Link Action Panel */}
-      <div className="p-3 bg-slate-50/90 border-t border-slate-200/80 flex flex-wrap items-center gap-1.5">
+      <div className="p-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center gap-2">
         {links.newApply && (
           <button
             onClick={() => onOpenLink(links.newApply!, title, 'New Apply')}
-            className="flex-1 min-w-[95px] flex items-center justify-center gap-1 px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
+            className="flex-1 min-w-[95px] flex items-center justify-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border border-blue-700/50 font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>{isHindi ? 'नया आवेदन' : 'New Apply'}</span>

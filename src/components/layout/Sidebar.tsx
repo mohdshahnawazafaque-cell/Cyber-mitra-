@@ -142,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       view: 'application_builder',
       icon: FileCode,
       titleHi: 'प्रार्थना पत्र निर्माता',
-      titleEn: 'Letter Builder',
+      titleEn: 'Application Builder',
       descHi: 'SDM, बैंक एप्लीकेशन',
       descEn: 'Automated Applications',
       color: 'text-teal-400'

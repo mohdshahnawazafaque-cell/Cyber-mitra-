@@ -1,3 +1,4 @@
+import { getLocalFallbackResponse } from '../../utils/localAiBot';
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Bot,
@@ -54,14 +55,14 @@ const QUICK_PROMPTS_EN = [
     icon: '📑',
   },
   {
-    title: 'PAN Card 49A vs CSF',
+    title: 'PAN Card 93 vs CSF',
     desc: 'New PAN vs correction guide',
-    prompt: 'Explain the difference between PAN Form 49A and CSF Correction form, along with required photo and signature dimensions.',
+    prompt: 'Explain the difference between PAN Form 93 and CSF Correction form, along with required photo and signature dimensions.',
     icon: '💳',
   },
   {
     title: 'SDM Formal Application',
-    desc: 'Draft letter for land / records',
+    desc: 'Draft application for land / records',
     prompt: 'Please draft a formal official application to the Sub-Divisional Magistrate (SDM) requesting correction in revenue land records (खतौनी में नाम सुधार).',
     icon: '✍️',
   },
@@ -158,7 +159,7 @@ export const AiChat: React.FC<AiChatProps> = ({
       role: 'assistant',
       content: isHindi
         ? `### 🙏 नमस्ते! मैं **Cyber Mitra AI** सहायक हूँ।\n\nमैं भारत भर के साइबर कैफे, CSC और जन सेवा केंद्र संचालकों का संपूर्ण डिजिटल सहायक हूँ।\n\n**आप मुझसे क्या पूछ सकते हैं?**\n- 📑 **सरकारी प्रमाण पत्र:** आय, जाति, निवास, ईडब्ल्यूएस के नियम व दस्तावेज।\n- 🆔 **पहचान सेवाएं:** आधार, पैन कार्ड, वोटर आईडी, राशन कार्ड संशोधन।\n- 🌾 **सरकारी योजनाएं:** PM किसान, आयुष्मान भारत, बिजली बिल निवारण।\n- ✍️ **तत्काल प्रार्थना पत्र:** SDM, तहसीलदार, पुलिस, बैंक अधिकारियों हेतु प्रार्थना पत्र।\n- 🖼️ **फोटो/हस्ताक्षर साइज:** विभिन्न भर्ती परीक्षाओं के सटीक KB व पिक्सल।\n\n*नीचे दिए गए किसी भी त्वरित विषय पर क्लिक करें या अपना प्रश्न टाइप करें:*`
-        : `### 🤖 Welcome to **Cyber Mitra AI Assistant**!\n\nI am your dedicated digital co-pilot for Cyber Cafe, CSC, and Jan Seva Kendra operations across India.\n\n**What can I assist you with today?**\n- 📑 **Government Certificates:** Exact document checklists & eligibility for Income, Caste, Domicile, EWS, Birth/Death certificates.\n- 🆔 **Identity Portals:** UIDAI Aadhaar, PAN Card (49A / CSF), Voter ID Form 6/8, Ration Card.\n- 🌾 **Schemes & Utilities:** PM Kisan eKYC, Ayushman Bharat, UPPCL Electricity corrections.\n- ✍️ **Instant Letter Drafting:** Pristine legal & administrative applications for SDM, Tehsildar, Police, Electricity SDO, and Banks.\n- 🖼️ **Photo & Signature Presets:** Exact KB sizes, DPI, and dimensions for all govt recruitments.\n\n*Click on any quick topic below or type your inquiry:*`,
+        : `### 🤖 Welcome to **Cyber Mitra AI Assistant**!\n\nI am your dedicated digital co-pilot for Cyber Cafe, CSC, and Jan Seva Kendra operations across India.\n\n**What can I assist you with today?**\n- 📑 **Government Certificates:** Exact document checklists & eligibility for Income, Caste, Domicile, EWS, Birth/Death certificates.\n- 🆔 **Identity Portals:** UIDAI Aadhaar, PAN Card (93 / CSF), Voter ID Form 6/8, Ration Card.\n- 🌾 **Schemes & Utilities:** PM Kisan eKYC, Ayushman Bharat, UPPCL Electricity corrections.\n- ✍️ **Instant Letter Drafting:** Pristine legal & administrative applications for SDM, Tehsildar, Police, Electricity SDO, and Banks.\n- 🖼️ **Photo & Signature Presets:** Exact KB sizes, DPI, and dimensions for all govt recruitments.\n\n*Click on any quick topic below or type your inquiry:*`,
       timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
       modelBadge: 'Gemini 3.7 Flash',
     },
@@ -273,35 +274,64 @@ export const AiChat: React.FC<AiChatProps> = ({
     setIsLoading(true);
 
     try {
-      // Prepare message history for backend
-      const historyPayload = messages
-        .filter((m) => m.id !== 'welcome')
-        .slice(-8)
-        .map((m) => ({
-          role: m.role === 'assistant' ? 'model' : 'user',
-          text: m.content,
-        }));
+      const apiKey = localStorage.getItem('gemini_api_key');
+      
+      let aiReply = '';
+      let poweredBy = 'Gemini 2.5 Flash';
 
-      const response = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: historyPayload,
-          userQuery: textToSend,
-          language,
-          customerContext: {
-            name: customer.name,
-            fatherName: customer.fatherMotherName,
-            district: customer.district,
-            state: customer.state,
-            mobile: customer.mobile,
-          },
-        }),
-      });
+      if (apiKey) {
+        // Prepare history for Gemini REST API
+        const historyPayload = messages
+          .filter((m) => m.id !== 'welcome')
+          .slice(-8)
+          .map((m) => ({
+            role: m.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: m.content }],
+          }));
+        
+        historyPayload.push({
+          role: 'user',
+          parts: [{ text: textToSend }],
+        });
 
-      const data = await response.json();
-      const aiReply = data.reply || data.text || 'Received empty response from assistant.';
-      const poweredBy = data.poweredBy || 'Gemini 3.7 Flash';
+        const systemInstruction = isHindi 
+          ? 'आप Cyber Mitra AI हैं, जो सीएससी (CSC) और साइबर कैफे संचालकों के लिए एक स्मार्ट सहायक है। आप सरकारी योजनाओं, फॉर्म भरने, दस्तावेज़ों की सूची आदि की सटीक जानकारी देते हैं। हिंदी में उत्तर दें।'
+          : 'You are Cyber Mitra AI, a smart assistant for CSC and Cyber Cafe operators. You provide accurate information about govt schemes, forms, and documents. Reply in English.';
+
+        const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: historyPayload,
+            systemInstruction: {
+              role: 'user',
+              parts: [{ text: systemInstruction }]
+            }
+          })
+        });
+        
+        if (!aiResponse.ok) {
+          throw new Error('API Key invalid or quota exceeded');
+        }
+        
+        const aiData = await aiResponse.json();
+        aiReply = aiData.candidates?.[0]?.content?.parts?.[0]?.text || 'Answer generated.';
+      } else {
+        // Fallback to backend (if running locally with Express)
+        const historyPayload = messages
+          .filter((m) => m.id !== 'welcome')
+          .slice(-8)
+          .map((m) => ({
+            role: m.role === 'assistant' ? 'model' : 'user',
+            text: m.content,
+          }));
+
+        
+        await new Promise(resolve => setTimeout(resolve, 600));
+        aiReply = getLocalFallbackResponse(textToSend, isHindi);
+        poweredBy = 'Smart Local Bot';
+
+      }
 
       const assistantMessage: Message = {
         id: 'msg_' + (Date.now() + 1),
@@ -314,12 +344,15 @@ export const AiChat: React.FC<AiChatProps> = ({
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err: any) {
       console.error('Chat error:', err);
+      const isMissingKey = err.message.includes('API Key invalid');
       const errorMessage: Message = {
         id: 'msg_' + (Date.now() + 1),
         role: 'assistant',
-        content: isHindi
+        content: isMissingKey 
+          ? (isHindi ? '⚠️ **AI चैट चलाने के लिए कृपया ऊपर ⚙️ (Settings) बटन पर क्लिक करके अपनी Google Gemini API Key डालें।** Netlify पर चैट चलाने के लिए यह आवश्यक है।' : '⚠️ **Please click the ⚙️ Settings icon above and add your Gemini API Key to use AI Chat on Netlify.**')
+          : (isHindi
           ? `⚠️ **सेवा से संपर्क करने में समस्या हुई।**\n\nकृपया सुनिश्चित करें कि सर्वर सक्रिय है और आवश्यकतानुसार सेटिंग्स में \`GEMINI_API_KEY\` कॉन्फ़िगर है।`
-          : `⚠️ **Unable to reach the AI service.**\n\nPlease ensure your server is active and the \`GEMINI_API_KEY\` is configured in Settings > Secrets if needed.`,
+          : `⚠️ **Unable to reach the AI service.**\n\nPlease ensure your server is active and the \`GEMINI_API_KEY\` is configured in Settings > Secrets if needed.`),
         timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
         modelBadge: 'System Error',
       };
@@ -487,6 +520,25 @@ export const AiChat: React.FC<AiChatProps> = ({
             </button>
 
             <button
+              onClick={() => {
+                const currentKey = localStorage.getItem('gemini_api_key') || '';
+                const newKey = window.prompt(
+                  isHindi 
+                    ? 'यहाँ अपनी Google Gemini API Key डालें:' 
+                    : 'Enter your Google Gemini API Key here:',
+                  currentKey
+                );
+                if (newKey !== null) {
+                  localStorage.setItem('gemini_api_key', newKey.trim());
+                  alert(isHindi ? 'API Key सेव हो गई! अब चैट काम करेगी।' : 'API Key saved! Chat will now work.');
+                }
+              }}
+              title="Settings / API Key"
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors border border-white/10"
+            >
+              <span className="text-[14px]">⚙️</span>
+            </button>
+            <button
               onClick={handleClearChat}
               title="Clear chat history"
               className="p-2 rounded-xl bg-white/10 hover:bg-rose-500/20 text-slate-300 hover:text-rose-200 text-xs font-semibold flex items-center gap-1.5 transition-colors border border-white/10"
@@ -626,7 +678,7 @@ export const AiChat: React.FC<AiChatProps> = ({
                           className="px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 font-bold text-[11px] flex items-center gap-1 transition-colors"
                         >
                           <FileText className="w-3 h-3" />
-                          <span>{isHindi ? 'प्रार्थना पत्र मेकर में खोलें' : 'Open in Letter Builder'}</span>
+                          <span>{isHindi ? 'प्रार्थना पत्र मेकर में खोलें' : 'Open in Application Builder'}</span>
                           <ArrowRight className="w-2.5 h-2.5" />
                         </button>
                       )}
@@ -694,7 +746,7 @@ export const AiChat: React.FC<AiChatProps> = ({
                 placeholder={
                   isHindi
                     ? 'कोई भी सरकारी योजना, दस्तावेज नियम, या पत्र लिखने को कहें...'
-                    : 'Ask about any govt portal rules, document checklist, or draft letter...'
+                    : 'Ask about any govt portal rules, document checklist, or Draft application...'
                 }
                 disabled={isLoading}
                 className="w-full px-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm font-medium focus:ring-2 focus:ring-purple-600 focus:outline-none placeholder:text-slate-400 disabled:bg-slate-100 shadow-inner"

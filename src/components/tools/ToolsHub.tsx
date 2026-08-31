@@ -48,7 +48,7 @@ export const ToolsHub: React.FC<ToolsHubProps> = ({ language, onNavigate }) => {
     { id: 'pdf-compress', category: 'pdf', nameHi: 'PDF कंप्रेस (PDF Compress)', nameEn: 'PDF Compress', descHi: 'PDF का साइज (MB/KB) कम करें।', descEn: 'Reduce PDF file size.', target: 'pdf_tools' },
 
     // Forms & Applications
-    { id: 'application-builder', category: 'forms', nameHi: 'प्रार्थना पत्र जनरेटर (Letter Maker)', nameEn: 'Letter / Application Generator', descHi: 'SDM, तहसीलदार, बैंक आदि के लिए एप्लीकेशन लिखें।', descEn: 'Generate official applications instantly.', target: 'application_builder' },
+    { id: 'application-builder', category: 'forms', nameHi: 'प्रार्थना पत्र जनरेटर (Application Maker)', nameEn: 'Letter / Application Generator', descHi: 'SDM, तहसीलदार, बैंक आदि के लिए एप्लीकेशन लिखें।', descEn: 'Generate official applications instantly.', target: 'application_builder' },
     
     // Calculators
     { id: 'calc-hub', category: 'calculator', nameHi: 'स्मार्ट कैलकुलेटर हब (Smart Calculators)', nameEn: 'Smart Calculator Hub', descHi: 'Age, EMI, GST, Interest, Income Tax आदि कैलकुलेटर।', descEn: 'Age, EMI, GST, SIP, and Tax Calculators.', target: 'calculator_hub' },
