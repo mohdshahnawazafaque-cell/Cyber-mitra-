@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+
+import React, { useState, useRef, useMemo } from 'react';
 import { Download, Printer, RefreshCw, Plus, Trash2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
@@ -9,12 +10,20 @@ interface FamilyMember {
   name: string;
   fatherName: string;
   relation: string;
-  age: string;
+  dob: string;
+  gender: string;
+  maritalStatus: string;
+  isDeceased: boolean;
+  dod: string;
 }
 
 interface VanshavaliCertificateProps {
   language: Language;
 }
+
+const RELATIONS = ['स्वयं', 'पिता', 'माता', 'पति', 'पत्नी', 'पुत्र', 'पुत्री', 'भाई', 'बहन', 'दादा', 'दादी', 'पोता', 'पोती', 'अन्य'];
+const GENDERS = ['पुरुष', 'महिला', 'अन्य'];
+const MARITAL_STATUS = ['लागू नहीं', 'विवाहित', 'अविवाहित', 'विधवा', 'विधुर', 'तलाकशुदा'];
 
 export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ language }) => {
   const isHindi = language === 'hi';
@@ -30,17 +39,25 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
   
   // Signatory State
   const [signDesignation, setSignDesignation] = useState('अध्यक्ष');
-  const [signAuthority, setSignAuthority] = useState('नगर पंचायत तम्बौर अहमदाबाद');
-  const [signDistrict, setSignDistrict] = useState('जनपद सीतापुर');
 
-  // Family Members
-  const [members, setMembers] = useState<FamilyMember[]>([
-    { id: '1', name: '', fatherName: '', relation: 'स्वयं', age: '' }
-  ]);
+  const initialMember = (): FamilyMember => ({
+    id: Date.now().toString(),
+    name: '',
+    fatherName: '',
+    relation: 'स्वयं',
+    dob: '',
+    gender: 'पुरुष',
+    maritalStatus: 'लागू नहीं',
+    isDeceased: false,
+    dod: ''
+  });
+
+  const [members, setMembers] = useState<FamilyMember[]>([initialMember()]);
+
+  const today = new Date().toISOString().split('T')[0];
 
   const addMember = () => {
-    const newId = Date.now().toString();
-    setMembers([...members, { id: newId, name: '', fatherName: '', relation: '', age: '' }]);
+    setMembers([...members, initialMember()]);
   };
 
   const removeMember = (id: string) => {
@@ -49,7 +66,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
     }
   };
 
-  const updateMember = (id: string, field: keyof FamilyMember, value: string) => {
+  const updateMember = <K extends keyof FamilyMember>(id: string, field: K, value: FamilyMember[K]) => {
     setMembers(members.map(m => m.id === id ? { ...m, [field]: value } : m));
   };
 
@@ -58,7 +75,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
       setApplicantName('');
       setFatherName('');
       setAddress('');
-      setMembers([{ id: Date.now().toString(), name: '', fatherName: '', relation: 'स्वयं', age: '' }]);
+      setMembers([initialMember()]);
     }
   };
 
@@ -91,6 +108,37 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
     }
   };
 
+  const getCalculatedAge = (dob: string, isDeceased: boolean, dod: string): string => {
+    if (!dob) return '';
+    const birthDate = new Date(dob);
+    const endDate = (isDeceased && dod) ? new Date(dod) : new Date();
+    
+    if (birthDate > endDate) return '';
+
+    let ageYears = endDate.getFullYear() - birthDate.getFullYear();
+    const m = endDate.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && endDate.getDate() < birthDate.getDate())) {
+      ageYears--;
+    }
+    
+    if (ageYears < 0) return '';
+    return `${ageYears} वर्ष लगभग`;
+  };
+
+  const getDisplayRelation = (member: FamilyMember): string => {
+    let rel = member.relation;
+    
+    if (member.gender === 'महिला' && (member.maritalStatus === 'अविवाहित' || member.maritalStatus === 'विवाहित')) {
+      rel = `${rel} (${member.maritalStatus})`;
+    }
+    
+    if (member.isDeceased) {
+      rel = `${rel} (मृतक)`;
+    }
+    
+    return rel;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -102,7 +150,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         
         {/* FORM SECTION */}
-        <div className="xl:col-span-4 space-y-5 print:hidden max-h-[800px] overflow-y-auto pr-2">
+        <div className="xl:col-span-4 space-y-5 print:hidden max-h-[800px] overflow-y-auto pr-2 custom-scrollbar">
           
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <h3 className="font-bold text-slate-800 border-b pb-2">आवेदक का विवरण (Applicant Details)</h3>
@@ -176,33 +224,34 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div className="flex items-center justify-between border-b pb-2">
-              <h3 className="font-bold text-slate-800">परिवार का विवरण (Family Details)</h3>
+              <h3 className="font-bold text-slate-800">परिवार के सदस्य (Family Members)</h3>
               <button 
                 onClick={addMember}
-                className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-2 py-1 rounded"
+                className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-2 py-1 rounded transition-colors"
               >
-                <Plus className="w-3 h-3" /> जोड़ें
+                <Plus className="w-3 h-3" /> सदस्य जोड़ें
               </button>
             </div>
             
             <div className="space-y-4">
               {members.map((member, index) => (
-                <div key={member.id} className="relative p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                <div key={member.id} className="relative p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3">
                   <div className="absolute -top-2 -left-2 w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold">
                     {index + 1}
                   </div>
                   {members.length > 1 && (
                     <button 
                       onClick={() => removeMember(member.id)}
-                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 p-1"
+                      className="absolute top-2 right-2 text-slate-400 hover:text-red-600 transition-colors p-1"
                       title="हटाएं"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   )}
                   
-                  <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
                     <div>
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">नाम</label>
                       <input
                         type="text"
                         value={member.name}
@@ -212,6 +261,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                       />
                     </div>
                     <div>
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">पिता/पति का नाम</label>
                       <input
                         type="text"
                         value={member.fatherName}
@@ -220,25 +270,84 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                         className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
                       />
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     <div>
-                      <input
-                        type="text"
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">सम्बन्ध</label>
+                      <select
                         value={member.relation}
                         onChange={e => updateMember(member.id, 'relation', e.target.value)}
-                        placeholder="सम्बन्ध (उदा. पुत्र)"
                         className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
-                      />
+                      >
+                        {RELATIONS.map(rel => <option key={rel} value={rel}>{rel}</option>)}
+                      </select>
                     </div>
                     <div>
-                      <input
-                        type="text"
-                        value={member.age}
-                        onChange={e => updateMember(member.id, 'age', e.target.value)}
-                        placeholder="आयु (उदा. 43 वर्ष)"
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">लिंग</label>
+                      <select
+                        value={member.gender}
+                        onChange={e => updateMember(member.id, 'gender', e.target.value)}
                         className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
-                      />
+                      >
+                        {GENDERS.map(g => <option key={g} value={g}>{g}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">वैवाहिक स्थिति</label>
+                      <select
+                        value={member.maritalStatus}
+                        onChange={e => updateMember(member.id, 'maritalStatus', e.target.value)}
+                        className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
+                      >
+                        {MARITAL_STATUS.map(ms => <option key={ms} value={ms}>{ms}</option>)}
+                      </select>
                     </div>
                   </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-end">
+                    <div>
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">जन्म तिथि (DOB)</label>
+                      <input
+                        type="date"
+                        max={today}
+                        value={member.dob}
+                        onChange={e => updateMember(member.id, 'dob', e.target.value)}
+                        className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500 text-slate-700"
+                      />
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 h-[30px]">
+                      <input
+                        type="checkbox"
+                        id={`deceased-${member.id}`}
+                        checked={member.isDeceased}
+                        onChange={e => {
+                          updateMember(member.id, 'isDeceased', e.target.checked);
+                          if (!e.target.checked) updateMember(member.id, 'dod', '');
+                        }}
+                        className="w-3.5 h-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <label htmlFor={`deceased-${member.id}`} className="text-xs font-bold text-slate-700 cursor-pointer">
+                        मृतक
+                      </label>
+                    </div>
+                  </div>
+
+                  {member.isDeceased && (
+                    <div className="pt-2 border-t border-slate-200 mt-2">
+                      <label className="block text-[10px] font-bold text-slate-600 mb-1 uppercase">मृत्यु की तिथि (DOD - Optional)</label>
+                      <input
+                        type="date"
+                        max={today}
+                        value={member.dod}
+                        onChange={e => updateMember(member.id, 'dod', e.target.value)}
+                        className="w-full sm:w-1/2 px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500 text-slate-700"
+                      />
+                      <p className="text-[10px] text-slate-500 mt-1">मृत्यु के समय की उम्र निकालने हेतु (यदि ज्ञात हो)।</p>
+                    </div>
+                  )}
+
                 </div>
               ))}
             </div>
@@ -256,29 +365,11 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none"
                 />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">निकाय/संस्था</label>
-                <input
-                  type="text"
-                  value={signAuthority}
-                  onChange={e => setSignAuthority(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">स्थान/जनपद</label>
-                <input
-                  type="text"
-                  value={signDistrict}
-                  onChange={e => setSignDistrict(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none"
-                />
-              </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="grid grid-cols-2 gap-3 sticky bottom-0 bg-slate-50 p-2 pb-4 pt-4 border-t border-slate-200">
+          <div className="grid grid-cols-2 gap-3 sticky bottom-0 bg-slate-50 p-2 pb-4 pt-4 border-t border-slate-200 z-10">
             <button
               onClick={handlePrint}
               className="col-span-1 px-3 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-md transition-colors flex items-center justify-center gap-1.5"
@@ -316,14 +407,14 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
             {/* Title */}
             <div className="flex justify-center mb-10">
               <h1 className="text-[34px] font-black border-b-[3px] border-black pb-1 px-4 tracking-wide">
-                वंशावली प्रमाण-पत्र
+                वंशावली प्रमाण–पत्र
               </h1>
             </div>
 
             {/* Declaration Body */}
             <div className="text-[17px] leading-[1.8] text-justify mb-8 font-medium">
               <p>
-                प्रमाणित किया जाता है कि प्रार्थी <strong>{applicantName || '____________________'}</strong> पुत्र/पुत्री/पत्नी <strong>{fatherName || '____________________'}</strong> निवासी <strong>{address || '____________________'} {panchayat}</strong> तह० <strong>{tehsil}</strong> जिला <strong>{district}</strong> के परिवार का विवरण गवाहों व वार्ड सदस्य की आख्या के अनुसार निम्नवत है। यदि प्रस्तुत साक्ष्य में किसी प्रकार का कोई तथ्य छिपाया गया या इसमें कोई त्रुटि पाई जाती है। तो उसका उत्तरदायित्व शपथकर्ता / शपथकर्ती का होगा। जो निम्नवत है-
+                प्रमाणित किया जाता है कि प्रार्थी <strong>{applicantName || '____________________'}</strong> पुत्र/पुत्री/पत्नी <strong>{fatherName || '____________________'}</strong> निवासी <strong>{address || '____________________'} {panchayat}</strong> तहसील <strong>{tehsil}</strong> जिला <strong>{district}</strong> के परिवार का विवरण गवाहों व वार्ड सदस्य की आख्या के अनुसार निम्नवत है। यदि प्रस्तुत साक्ष्य में किसी प्रकार का कोई तथ्य छिपाया गया या इसमें कोई त्रुटि पाई जाती है। तो उसका उत्तरदायित्व शपथकर्ता / शपथकर्ती का होगा। जो निम्नवत है।
               </p>
             </div>
 
@@ -333,20 +424,20 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                 <thead>
                   <tr className="border-b border-black">
                     <th className="border-r border-black py-2 px-1 w-[8%] font-bold">क्रo सo</th>
-                    <th className="border-r border-black py-2 px-2 w-[25%] font-bold">नाम</th>
-                    <th className="border-r border-black py-2 px-2 w-[25%] font-bold">पिता/पति का नाम</th>
-                    <th className="border-r border-black py-2 px-2 w-[17%] font-bold">सम्बन्ध</th>
-                    <th className="py-2 px-2 w-[25%] font-bold">आयु</th>
+                    <th className="border-r border-black py-2 px-2 w-[28%] font-bold">नाम</th>
+                    <th className="border-r border-black py-2 px-2 w-[28%] font-bold">पिता/पति का नाम</th>
+                    <th className="border-r border-black py-2 px-2 w-[18%] font-bold">सम्बन्ध</th>
+                    <th className="py-2 px-2 w-[18%] font-bold">आयु</th>
                   </tr>
                 </thead>
                 <tbody>
                   {members.map((m, idx) => (
                     <tr key={m.id} className="border-b border-black last:border-b-0">
                       <td className="border-r border-black py-1.5 px-1">{idx + 1}</td>
-                      <td className="border-r border-black py-1.5 px-2">{m.name || '\u00A0'}</td>
-                      <td className="border-r border-black py-1.5 px-2">{m.fatherName || '\u00A0'}</td>
-                      <td className="border-r border-black py-1.5 px-2">{m.relation || '\u00A0'}</td>
-                      <td className="py-1.5 px-2">{m.age || '\u00A0'}</td>
+                      <td className="border-r border-black py-1.5 px-2 text-left">{m.name || ' '}</td>
+                      <td className="border-r border-black py-1.5 px-2 text-left">{m.fatherName || ' '}</td>
+                      <td className="border-r border-black py-1.5 px-2">{getDisplayRelation(m) || ' '}</td>
+                      <td className="py-1.5 px-2">{getCalculatedAge(m.dob, m.isDeceased, m.dod) || ' '}</td>
                     </tr>
                   ))}
                   {/* Fill empty rows to make it look standard if few members */}
@@ -368,8 +459,8 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
               <div className="flex flex-col items-center w-[40%] text-center">
                 <div className="text-[17px] font-bold leading-snug">
                   {signDesignation}<br/>
-                  {signAuthority}<br/>
-                  {signDistrict}
+                  {panchayat}<br/>
+                  जनपद {district}
                 </div>
               </div>
             </div>
@@ -381,6 +472,21 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&display=swap');
         
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: #f1f5f9;
+          border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #cbd5e1;
+          border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #94a3b8;
+        }
+
         @media print {
           @page {
             size: A4 portrait;
@@ -402,12 +508,13 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
             left: 0;
             top: 0;
             width: 210mm !important;
-            height: 297mm !important;
+            min-height: 297mm !important;
             transform: none !important;
             margin: 0 !important;
             padding: 25mm 20mm !important;
             box-shadow: none !important;
             border: none !important;
+            page-break-after: always;
           }
           .print\\:hidden {
             display: none !important;

@@ -20,7 +20,7 @@ interface SmartSearchProps {
   services: AppState['services'];
   templates: AppState['applicationTemplates'];
   onNavigate: (view: string, subCategory?: string) => void;
-  onOpenServiceLink: (url: string, title: string) => void;
+  onOpenServiceLink: (url: string, title: string, isLogged?: boolean) => void;
 }
 
 type SearchResultItem = {

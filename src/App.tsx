@@ -63,7 +63,7 @@ const ViewLoader = ({ isHindi }: { isHindi: boolean }) => (
 
 export default function App() {
   const [appState, setAppState] = useState<AppState>(() => loadAppState());
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => window.innerWidth >= 1024);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState<boolean>(false);
@@ -527,7 +527,7 @@ export default function App() {
         services={appState.services}
         templates={appState.applicationTemplates}
         onNavigate={handleNavigate}
-        onOpenServiceLink={(url, title) => handleOpenLink(url, title, 'Universal Search')}
+        onOpenServiceLink={(url, title, isLogged) => handleOpenLink(url, title, isLogged ? 'Logged' : 'Universal Search')}
       />
 
       {/* Customer Session Modal */}

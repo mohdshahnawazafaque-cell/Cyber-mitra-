@@ -138,10 +138,8 @@ export const loadAppState = (): AppState => {
     const mergedServices = INITIAL_SERVICES.map(initService => {
       const existing = parsed.services?.find((s: any) => s.id === initService.id);
       if (existing) {
-        // Ensure officialLinks exists even if it was saved without it
-        if (!existing.officialLinks) {
-          existing.officialLinks = { ...initService.officialLinks };
-        }
+        // Always force update officialLinks from INITIAL_SERVICES so any bug fixes or URL updates apply immediately
+        existing.officialLinks = { ...initService.officialLinks };
         return existing;
       }
       return initService;

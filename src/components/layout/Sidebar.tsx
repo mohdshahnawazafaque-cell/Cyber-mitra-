@@ -14,7 +14,7 @@ import {
   FileText
 } from 'lucide-react';
 import { CustomerData, Language } from '../../types';
-import { MessageSquareText, Globe } from 'lucide-react';
+import { MessageSquareText, Globe, ChevronLeft } from 'lucide-react';
 import { IndianRupee, Download as DownloadIcon } from 'lucide-react';
 
 interface SidebarProps {
@@ -202,7 +202,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       <aside
         className={`fixed lg:static top-0 bottom-0 left-0 z-40 w-64 sm:w-68 bg-white border-r border-slate-200 flex flex-col shrink-0 transition-transform duration-200 ease-in-out print:hidden ${
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:hidden'
         } shadow-[4px_0_24px_rgba(0,0,0,0.02)] lg:shadow-none`}
       >
         <div className="p-5 border-b border-slate-100 flex items-center justify-between">
@@ -219,9 +219,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900 lg:hidden"
+            className="p-1.5 rounded-lg bg-slate-50 text-slate-400 hover:text-slate-900 transition-colors border border-slate-200"
+            title={language === 'hi' ? 'नेविगेशन बंद करें' : 'Close Navigation'}
           >
-            ✕
+            <ChevronLeft className="w-4 h-4 hidden lg:block" />
+            <span className="lg:hidden text-lg leading-none">✕</span>
           </button>
         </div>
 
