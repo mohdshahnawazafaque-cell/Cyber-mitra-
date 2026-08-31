@@ -145,64 +145,64 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       {/* Complete Official Link Action Panel */}
       <div className="p-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center gap-2">
         {links.newApply && (
-          <button
-            onClick={() => onOpenLink(links.newApply!, title, 'New Apply')}
+          <a href={links.newApply!} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); if (links.newApply! === '#' || !links.newApply!) e.preventDefault(); onOpenLink(links.newApply!, title, 'Logged'); }}
             className="flex-1 min-w-[95px] flex items-center justify-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border border-blue-700/50 font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>{isHindi ? 'नया आवेदन' : 'New Apply'}</span>
-          </button>
+          </a>
         )}
 
         {links.apply && !links.newApply && (
-          <button
-            onClick={() => onOpenLink(links.apply!, title, 'Apply')}
+          <a href={links.apply!} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); if (links.apply! === '#' || !links.apply!) e.preventDefault(); onOpenLink(links.apply!, title, 'Logged'); }}
             className="flex-1 min-w-[95px] flex items-center justify-center gap-1 px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>{isHindi ? 'आवेदन' : 'Apply Online'}</span>
-          </button>
+          </a>
         )}
 
         {links.correction && (
-          <button
-            onClick={() => onOpenLink(links.correction!, title, 'Correction')}
+          <a href={links.correction!} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); if (links.correction! === '#' || !links.correction!) e.preventDefault(); onOpenLink(links.correction!, title, 'Logged'); }}
             className="flex-1 min-w-[80px] flex items-center justify-center gap-1 px-2 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <Edit3 className="w-3.5 h-3.5" />
             <span>{isHindi ? 'सुधार' : 'Correction'}</span>
-          </button>
+          </a>
         )}
 
         {links.status && (
-          <button
-            onClick={() => onOpenLink(links.status!, title, 'Status')}
+          <a href={links.status!} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); if (links.status! === '#' || !links.status!) e.preventDefault(); onOpenLink(links.status!, title, 'Logged'); }}
             className="flex-1 min-w-[80px] flex items-center justify-center gap-1 px-2 py-1.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <Search className="w-3.5 h-3.5" />
             <span>{isHindi ? 'स्टेटस' : 'Status'}</span>
-          </button>
+          </a>
         )}
 
         {links.download && (
-          <button
-            onClick={() => onOpenLink(links.download!, title, 'Download')}
+          <a href={links.download!} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); if (links.download! === '#' || !links.download!) e.preventDefault(); onOpenLink(links.download!, title, 'Logged'); }}
             className="flex-1 min-w-[80px] flex items-center justify-center gap-1 px-2 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>{isHindi ? 'डाउनलोड' : 'Download'}</span>
-          </button>
+          </a>
         )}
 
         {links.officialPortal && (
-          <button
-            onClick={() => onOpenLink(links.officialPortal!, title, 'Portal')}
+          <a href={links.officialPortal!} target="_blank" rel="noopener noreferrer"
+            onClick={(e) => { e.stopPropagation(); if (links.officialPortal! === '#' || !links.officialPortal!) e.preventDefault(); onOpenLink(links.officialPortal!, title, 'Logged'); }}
             className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white hover:bg-slate-100 text-slate-700 font-semibold rounded-lg text-xs transition-colors border border-slate-300"
             title={isHindi ? 'आधिकारिक पोर्टल खोलें' : 'Open Official Govt Portal'}
           >
             <Globe className="w-3.5 h-3.5 text-slate-500" />
             <span className="hidden sm:inline">{isHindi ? 'पोर्टल' : 'Portal'}</span>
-          </button>
+          </a>
         )}
       </div>
     </div>

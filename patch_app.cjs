@@ -1,17 +1,40 @@
 const fs = require('fs');
 let code = fs.readFileSync('src/App.tsx', 'utf8');
 
-if (!code.includes('VanshavaliCertificate')) {
-  code = code.replace(
-    "const AwasCertificate = lazy(() => import('./components/tools/AwasCertificate').then(module => ({ default: module.AwasCertificate })));",
-    "const AwasCertificate = lazy(() => import('./components/tools/AwasCertificate').then(module => ({ default: module.AwasCertificate })));\nconst VanshavaliCertificate = lazy(() => import('./components/tools/VanshavaliCertificate').then(module => ({ default: module.VanshavaliCertificate })));"
-  );
+const targetStr = `  const handleOpenLink = (url: string, title: string, actionType: string) => {
+    if (!url || url === '#') {
+      alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon');
+      return;
+    }
+    // Record audit log
+    recordActivityLog(appState, \`Open Portal: \${title}\`, \`Clicked \${actionType} -> \${url}\`);
+    
+    try {
+      window.open(url, '_blank');
+    } catch (err) {
+      window.location.href = url;
+    }
+  };`;
 
-  code = code.replace(
-    "            {appState.activeView === 'awas_certificate' && (\n              <AwasCertificate language={language} />\n            )}",
-    "            {appState.activeView === 'awas_certificate' && (\n              <AwasCertificate language={language} />\n            )}\n\n            {appState.activeView === 'vanshavali_certificate' && (\n              <VanshavaliCertificate language={language} />\n            )}"
-  );
-  
-  fs.writeFileSync('src/App.tsx', code);
-  console.log("Patched App.tsx");
-}
+const replacement = `  const handleOpenLink = (url: string, title: string, actionType: string) => {
+    if (!url || url === '#') {
+      alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon');
+      return;
+    }
+    // Record audit log
+    recordActivityLog(appState, \`Open Portal: \${title}\`, \`Clicked \${actionType} -> \${url}\`);
+    
+    if (actionType !== 'Logged') {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };`;
+
+code = code.replace(targetStr, replacement);
+fs.writeFileSync('src/App.tsx', code);
+console.log("Patched App.tsx");

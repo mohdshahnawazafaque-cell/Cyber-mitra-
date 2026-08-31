@@ -19,12 +19,12 @@ export const DEFAULT_CUSTOMER: CustomerData = {
   fatherMotherName: '',
   dob: '',
   gender: 'Male',
-  address: 'Sirs Tola ward 12',
-  villageTown: 'Tambour',
-  district: 'Sitapur',
+  address: '',
+  villageTown: '',
+  district: '',
   state: 'Uttar Pradesh',
-  pincode: '261208',
-  mobile: '9956078419',
+  pincode: '',
+  mobile: '',
   aadhaarNumber: '',
   category: 'General',
   purpose: '',
@@ -137,7 +137,14 @@ export const loadAppState = (): AppState => {
     // Merge new services that might have been added to INITIAL_SERVICES but are missing in local storage
     const mergedServices = INITIAL_SERVICES.map(initService => {
       const existing = parsed.services?.find((s: any) => s.id === initService.id);
-      return existing || initService;
+      if (existing) {
+        // Ensure officialLinks exists even if it was saved without it
+        if (!existing.officialLinks) {
+          existing.officialLinks = { ...initService.officialLinks };
+        }
+        return existing;
+      }
+      return initService;
     });
 
     return {

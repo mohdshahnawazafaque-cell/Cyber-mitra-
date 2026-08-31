@@ -1,6 +1,50 @@
 import { ApplicationTemplate } from '../types';
 
 export const INITIAL_APPLICATION_TEMPLATES: ApplicationTemplate[] = [
+  {
+    id: 'tpl-custom-general',
+    titleHi: 'सामान्य प्रार्थना पत्र (Custom)',
+    titleEn: 'General Custom Application',
+    category: 'applications',
+    descriptionHi: 'किसी भी अधिकारी या विभाग को अपनी मर्जी से प्रार्थना पत्र लिखें।',
+    descriptionEn: 'Write a custom application to any officer or department.',
+    recipientHi: `सेवा में,
+श्रीमान {{addressee}},
+{{department}},
+जनपद - {{district}} (उ०प्र०)`,
+    recipientEn: `To,
+The {{addressee}},
+{{department}},
+District - {{district}} (U.P.)`,
+    subjectHi: 'विषय: {{subject}}',
+    subjectEn: 'Subject: {{subject}}',
+    templateBodyHi: `महोदय,
+
+सविनय निवेदन है कि प्रार्थी {{name}}, पिता/पति श्री {{fatherMotherName}}, निवासी- {{address}}, ग्राम/मोहल्ला- {{villageTown}}, जनपद- {{district}} का स्थायी निवासी है।
+
+{{body}}
+
+अतः श्रीमान जी से करबद्ध प्रार्थना है कि उक्त विषय का संज्ञान लेते हुए आवश्यक/उचित कार्यवाही करने की कृपा करें।
+
+धन्यवाद।`,
+    templateBodyEn: `Respected Sir/Madam,
+
+I, {{name}}, S/o / W/o Shri {{fatherMotherName}}, resident of {{address}}, Village/Town: {{villageTown}}, District: {{district}}, humbly state that:
+
+{{body}}
+
+Therefore, it is my humble request to kindly take cognizance of the matter and take necessary action.
+
+Thanking You.`,
+    fields: [
+      { id: 'addressee', labelHi: 'प्राप्तकर्ता का पद (जैसे- थाना प्रभारी / उपजिलाधिकारी)', labelEn: 'Addressee Designation', type: 'text', required: true, defaultValue: '' },
+      { id: 'department', labelHi: 'विभाग / कार्यालय (जैसे- कोतवाली / तहसील)', labelEn: 'Department/Office', type: 'text', required: true, defaultValue: '' },
+      { id: 'subject', labelHi: 'विषय (Subject)', labelEn: 'Subject', type: 'text', required: true, defaultValue: '' },
+      { id: 'body', labelHi: 'प्रार्थना पत्र का मुख्य विवरण', labelEn: 'Application Details', type: 'textarea', required: true, defaultValue: '' },
+    ],
+    requiredDocumentsHi: ['आधार कार्ड', 'अन्य संबंधित साक्ष्य'],
+    requiredDocumentsEn: ['Aadhaar Card', 'Other Related Evidence'],
+  },
   // 1. Income Certificate Request
   {
     id: 'tpl-income-cert',
@@ -36,10 +80,10 @@ Enclosures:
 2. Copy of Aadhaar Card
 3. Copy of Ration Card / Electricity Bill`,
     fields: [
-      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: 'सदर', placeholderHi: 'जैसे: सदर / नवाबगंज' },
-      { id: 'annualIncome', labelHi: 'कुल वार्षिक आय (रुपये में)', labelEn: 'Annual Income (in Rs.)', type: 'number', required: true, defaultValue: '48000', placeholderHi: 'जैसे: 48000' },
-      { id: 'annualIncomeWords', labelHi: 'वार्षिक आय (शब्दों में)', labelEn: 'Annual Income (in Words)', type: 'text', required: true, defaultValue: 'अड़तालीस हजार', placeholderHi: 'जैसे: अड़तालीस हजार' },
-      { id: 'purpose', labelHi: 'प्रमाण पत्र की आवश्यकता (उद्देश्य)', labelEn: 'Purpose for Certificate', type: 'text', required: true, defaultValue: 'छात्रवृत्ति एवं सरकारी योजना हेतु', placeholderHi: 'जैसे: छात्रवृत्ति हेतु / राशन कार्ड हेतु' },
+      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: सदर / नवाबगंज' },
+      { id: 'annualIncome', labelHi: 'कुल वार्षिक आय (रुपये में)', labelEn: 'Annual Income (in Rs.)', type: 'number', required: true, defaultValue: '', placeholderHi: 'जैसे: 48000' },
+      { id: 'annualIncomeWords', labelHi: 'वार्षिक आय (शब्दों में)', labelEn: 'Annual Income (in Words)', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: अड़तालीस हजार' },
+      { id: 'purpose', labelHi: 'प्रमाण पत्र की आवश्यकता (उद्देश्य)', labelEn: 'Purpose for Certificate', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: छात्रवृत्ति हेतु / राशन कार्ड हेतु' },
     ],
     requiredDocumentsHi: ['आधार कार्ड छायाप्रति', 'स्वप्रमाणित घोषणा पत्र', 'राशन कार्ड या सभासद/प्रधान प्रमाण पत्र'],
     requiredDocumentsEn: ['Aadhaar Card Copy', 'Self Declaration Form', 'Ration Card / Local Recommendation'],
@@ -80,11 +124,11 @@ Enclosures:
 2. Family Register Extract / Land Record
 3. Self Declaration Form`,
     fields: [
-      { id: 'tehsil', labelHi: 'तहसील', labelEn: 'Tehsil', type: 'text', required: true, defaultValue: 'सदर' },
-      { id: 'casteSubCategory', labelHi: 'आरक्षण श्रेणी', labelEn: 'Category', type: 'select', options: ['अन्य पिछड़ा वर्ग (OBC)', 'अनुसूचित जाति (SC)', 'अनुसूचित जनजाति (ST)', 'आर्थिक रूप से कमजोर वर्ग (EWS)'], required: true, defaultValue: 'अन्य पिछड़ा वर्ग (OBC)' },
+      { id: 'tehsil', labelHi: 'तहसील', labelEn: 'Tehsil', type: 'text', required: true, defaultValue: '' },
+      { id: 'casteSubCategory', labelHi: 'आरक्षण श्रेणी', labelEn: 'Category', type: 'select', options: ['अन्य पिछड़ा वर्ग (OBC)', 'अनुसूचित जाति (SC)', 'अनुसूचित जनजाति (ST)', 'आर्थिक रूप से कमजोर वर्ग (EWS)'], required: true, defaultValue: '' },
       { id: 'casteName', labelHi: 'जाति का नाम', labelEn: 'Caste Name', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: मौर्य / यादव / चौरसिया / कुर्मी' },
       { id: 'subCaste', labelHi: 'उपजाति', labelEn: 'Sub Caste', type: 'text', required: false, defaultValue: '', placeholderHi: 'यदि कोई हो' },
-      { id: 'purpose', labelHi: 'आवश्यकता का कारण', labelEn: 'Purpose', type: 'text', required: true, defaultValue: 'शैक्षणिक प्रवेश एवं सरकारी अभिलेख हेतु' },
+      { id: 'purpose', labelHi: 'आवश्यकता का कारण', labelEn: 'Purpose', type: 'text', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['आधार कार्ड', 'परिवार रजिस्टर नकल / पुरानी जाति प्रमाण प्रति', 'स्वप्रमाणित शपथ पत्र'],
     requiredDocumentsEn: ['Aadhaar Card', 'Family Register Extract', 'Self Declaration'],
@@ -125,9 +169,9 @@ Enclosures:
 2. Electricity Bill / Address Proof
 3. School / Educational Records`,
     fields: [
-      { id: 'tehsil', labelHi: 'तहसील', labelEn: 'Tehsil', type: 'text', required: true, defaultValue: 'सदर' },
-      { id: 'yearsLiving', labelHi: 'निवास की अवधि (वर्षों में)', labelEn: 'Years of Residence', type: 'text', required: true, defaultValue: 'जन्म से', placeholderHi: 'जैसे: जन्म से या 15 वर्ष' },
-      { id: 'purpose', labelHi: 'प्रमाण पत्र का उपयोग', labelEn: 'Purpose', type: 'text', required: true, defaultValue: 'सरकारी सेवाओं एवं छात्रवृत्ति हेतु' },
+      { id: 'tehsil', labelHi: 'तहसील', labelEn: 'Tehsil', type: 'text', required: true, defaultValue: '' },
+      { id: 'yearsLiving', labelHi: 'निवास की अवधि (वर्षों में)', labelEn: 'Years of Residence', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: जन्म से या 15 वर्ष' },
+      { id: 'purpose', labelHi: 'प्रमाण पत्र का उपयोग', labelEn: 'Purpose', type: 'text', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['आधार कार्ड', 'बिजली बिल / मकान कर रसीद', 'स्वप्रमाणित घोषणा'],
     requiredDocumentsEn: ['Aadhaar Card', 'Electricity Bill / House Tax Receipt', 'Self Declaration'],
@@ -173,10 +217,10 @@ Enclosures:
 1. Copy of Ration Card
 2. Aadhaar / Birth Certificate of new member`,
     fields: [
-      { id: 'tehsil', labelHi: 'तहसील / ब्लॉक', labelEn: 'Tehsil / Block', type: 'text', required: true, defaultValue: 'सदर' },
+      { id: 'tehsil', labelHi: 'तहसील / ब्लॉक', labelEn: 'Tehsil / Block', type: 'text', required: true, defaultValue: '' },
       { id: 'rationCardNumber', labelHi: 'मौजूदा राशन कार्ड नंबर', labelEn: 'Ration Card Number', type: 'text', required: true, defaultValue: '', placeholderHi: '12 अंकों का राशन कार्ड नंबर' },
       { id: 'newMemberName', labelHi: 'नए सदस्य का नाम', labelEn: 'New Member Name', type: 'text', required: true, defaultValue: '', placeholderHi: 'नए सदस्य का पूरा नाम' },
-      { id: 'relationWithHead', labelHi: 'मुखिया से संबंध', labelEn: 'Relation with Head', type: 'text', required: true, defaultValue: 'पुत्र / पुत्री / पुत्रवधू', placeholderHi: 'जैसे: पत्नी / पुत्र / पुत्री' },
+      { id: 'relationWithHead', labelHi: 'मुखिया से संबंध', labelEn: 'Relation with Head', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: पत्नी / पुत्र / पुत्री' },
       { id: 'newMemberDob', labelHi: 'जन्म तिथि / आयु', labelEn: 'DOB / Age', type: 'text', required: true, defaultValue: '', placeholderHi: 'DD/MM/YYYY' },
       { id: 'newMemberAadhaar', labelHi: 'नए सदस्य का आधार नंबर', labelEn: 'New Member Aadhaar', type: 'text', required: true, defaultValue: '', placeholderHi: '12 अंकों का आधार नंबर' },
     ],
@@ -220,10 +264,10 @@ Enclosures:
 1. Copy of latest paid electricity bill
 2. Copy of Aadhaar Card`,
     fields: [
-      { id: 'substationName', labelHi: 'विद्युत उपकेंद्र / डिवीजन', labelEn: 'Substation / Division', type: 'text', required: true, defaultValue: 'विद्युत वितरण उपखंड' },
+      { id: 'substationName', labelHi: 'विद्युत उपकेंद्र / डिवीजन', labelEn: 'Substation / Division', type: 'text', required: true, defaultValue: '' },
       { id: 'consumerId', labelHi: 'उपभोक्ता खाता संख्या (Account ID)', labelEn: 'Consumer Account ID', type: 'text', required: true, defaultValue: '', placeholderHi: '10 अंकों का UPPCL अकाउंट नंबर' },
-      { id: 'complaintType', labelHi: 'समस्या का प्रकार', labelEn: 'Complaint Type', type: 'select', options: ['खराब/जले मीटर को बदलने', 'अत्यधिक गलत बिल संशोधन', 'नाम परिवर्तन / संयोजन ट्रांसफर', 'नया विद्युत मीटर अधिष्ठापन'], required: true, defaultValue: 'खराब/जले मीटर को बदलने' },
-      { id: 'complaintDetails', labelHi: 'समस्या का संक्षिप्त विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: 'मीटर डिस्प्ले खराब हो जाने के कारण वास्तविक रीडिंग प्रदर्शित नहीं हो रही है, जिससे अनुमानित बिल आ रहा है।' },
+      { id: 'complaintType', labelHi: 'समस्या का प्रकार', labelEn: 'Complaint Type', type: 'select', options: ['खराब/जले मीटर को बदलने', 'अत्यधिक गलत बिल संशोधन', 'नाम परिवर्तन / संयोजन ट्रांसफर', 'नया विद्युत मीटर अधिष्ठापन'], required: true, defaultValue: '' },
+      { id: 'complaintDetails', labelHi: 'समस्या का संक्षिप्त विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['नवीनतम भुगतान रसीद', 'आधार कार्ड', 'मीटर फोटो'],
     requiredDocumentsEn: ['Latest Paid Bill Receipt', 'Aadhaar Card', 'Meter Photo'],
@@ -266,11 +310,11 @@ Enclosures:
 2. Copy of Bank Passbook
 3. Two recent passport photographs`,
     fields: [
-      { id: 'bankName', labelHi: 'बैंक का नाम', labelEn: 'Bank Name', type: 'text', required: true, defaultValue: 'भारतीय स्टेट बैंक (SBI)', placeholderHi: 'जैसे: SBI / PNB / BOB' },
-      { id: 'branchName', labelHi: 'वर्तमान शाखा का नाम', labelEn: 'Current Branch Name', type: 'text', required: true, defaultValue: 'मुख्य शाखा' },
+      { id: 'bankName', labelHi: 'बैंक का नाम', labelEn: 'Bank Name', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: SBI / PNB / BOB' },
+      { id: 'branchName', labelHi: 'वर्तमान शाखा का नाम', labelEn: 'Current Branch Name', type: 'text', required: true, defaultValue: '' },
       { id: 'accountNumber', labelHi: 'बैंक खाता संख्या', labelEn: 'Account Number', type: 'text', required: true, defaultValue: '', placeholderHi: 'खाता संख्या दर्ज करें' },
-      { id: 'requestType', labelHi: 'आवेदन का उद्देश्य', labelEn: 'Request Type', type: 'select', options: ['शाखा स्थानांतरण (Branch Transfer)', 'केवाईसी / मोबाइल नंबर अपडेट', 'खाता पुनः सक्रिय (Reactivation)', 'एटीएम कार्ड जारी कराने'], required: true, defaultValue: 'शाखा स्थानांतरण (Branch Transfer)' },
-      { id: 'requestDescription', labelHi: 'विस्तृत विवरण', labelEn: 'Detailed Description', type: 'textarea', required: true, defaultValue: 'प्रार्थी का वर्तमान निवास स्थान परिवर्तित हो जाने के कारण प्रार्थी अपने खाते को नई शाखा में स्थानांतरित करवाना चाहता है।' },
+      { id: 'requestType', labelHi: 'आवेदन का उद्देश्य', labelEn: 'Request Type', type: 'select', options: ['शाखा स्थानांतरण (Branch Transfer)', 'केवाईसी / मोबाइल नंबर अपडेट', 'खाता पुनः सक्रिय (Reactivation)', 'एटीएम कार्ड जारी कराने'], required: true, defaultValue: '' },
+      { id: 'requestDescription', labelHi: 'विस्तृत विवरण', labelEn: 'Detailed Description', type: 'textarea', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['आधार कार्ड प्रति', 'पैन कार्ड प्रति', 'बैंक पासबुक प्रति', '2 फोटो'],
     requiredDocumentsEn: ['Aadhaar Copy', 'PAN Card Copy', 'Passbook Copy', '2 Photos'],
@@ -301,9 +345,9 @@ I have known them personally for the past {{knownYears}} years. To the best of m
 
 This certificate is issued upon request for the purpose of {{purpose}}.`,
     fields: [
-      { id: 'tehsil', labelHi: 'ब्लॉक / तहसील', labelEn: 'Block / Tehsil', type: 'text', required: true, defaultValue: 'सदर' },
-      { id: 'knownYears', labelHi: 'परिचय की अवधि (वर्षों में)', labelEn: 'Years Known', type: 'text', required: true, defaultValue: '10', placeholderHi: 'जैसे: 5 / 10 / जन्म से' },
-      { id: 'purpose', labelHi: 'प्रमाण पत्र का उपयोग', labelEn: 'Purpose', type: 'text', required: true, defaultValue: 'पुलिस चरित्र सत्यापन एवं सरकारी अभिलेख' },
+      { id: 'tehsil', labelHi: 'ब्लॉक / तहसील', labelEn: 'Block / Tehsil', type: 'text', required: true, defaultValue: '' },
+      { id: 'knownYears', labelHi: 'परिचय की अवधि (वर्षों में)', labelEn: 'Years Known', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: 5 / 10 / जन्म से' },
+      { id: 'purpose', labelHi: 'प्रमाण पत्र का उपयोग', labelEn: 'Purpose', type: 'text', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['आधार कार्ड', '2 पासपोर्ट फोटो'],
     requiredDocumentsEn: ['Aadhaar Card', '2 Passport Photos'],
@@ -347,9 +391,9 @@ Enclosures:
 1. Copy of Aadhaar Card
 2. Related documents (Land records/Photos/Receipts)`,
     fields: [
-      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: 'सदर' },
-      { id: 'subjectMatters', labelHi: 'विषय / मुख्य बिंदु', labelEn: 'Subject Matter', type: 'text', required: true, defaultValue: 'जमीन पर अवैध कब्जे की शिकायत', placeholderHi: 'जैसे: भूमि विवाद / पैमाइश / रास्ता विवाद' },
-      { id: 'complaintDetails', labelHi: 'शिकायत का पूरा विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: 'विपक्षीगणों द्वारा प्रार्थी की पुश्तैनी जमीन/रास्ते पर जबरन अवैध कब्जा करने का प्रयास किया जा रहा है और मना करने पर गाली-गलौज व जान से मारने की धमकी दे रहे हैं।' },
+      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: '' },
+      { id: 'subjectMatters', labelHi: 'विषय / मुख्य बिंदु', labelEn: 'Subject Matter', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: भूमि विवाद / पैमाइश / रास्ता विवाद' },
+      { id: 'complaintDetails', labelHi: 'शिकायत का पूरा विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['आधार कार्ड', 'संबंधित साक्ष्य (खतौनी / फोटो)'],
     requiredDocumentsEn: ['Aadhaar Card', 'Relevant Evidence (Land records / Photos)'],
@@ -395,9 +439,9 @@ Enclosures:
 2. Receipts of previous complaints
 3. Relevant evidence and documents`,
     fields: [
-      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: 'सदर' },
-      { id: 'subjectMatters', labelHi: 'विषय / मुख्य बिंदु', labelEn: 'Subject Matter', type: 'text', required: true, defaultValue: 'थाने स्तर पर न्याय न मिलने की शिकायत', placeholderHi: 'जैसे: पुलिस द्वारा कार्यवाही न करना / आवास योजना में धांधली' },
-      { id: 'complaintDetails', labelHi: 'शिकायत का पूरा विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: 'प्रार्थी के साथ हुई उक्त घटना के संबंध में स्थानीय थाने/विभाग में कई बार प्रार्थना पत्र दिया गया, लेकिन संबंधित अधिकारियों द्वारा कोई संतोषजनक कार्यवाही नहीं की जा रही है।' },
+      { id: 'tehsil', labelHi: 'तहसील का नाम', labelEn: 'Tehsil Name', type: 'text', required: true, defaultValue: '' },
+      { id: 'subjectMatters', labelHi: 'विषय / मुख्य बिंदु', labelEn: 'Subject Matter', type: 'text', required: true, defaultValue: '', placeholderHi: 'जैसे: पुलिस द्वारा कार्यवाही न करना / आवास योजना में धांधली' },
+      { id: 'complaintDetails', labelHi: 'शिकायत का पूरा विवरण', labelEn: 'Complaint Details', type: 'textarea', required: true, defaultValue: '' },
     ],
     requiredDocumentsHi: ['आधार कार्ड', 'पूर्व शिकायतों की प्रति', 'अन्य साक्ष्य'],
     requiredDocumentsEn: ['Aadhaar Card', 'Previous Complaints Copy', 'Other Evidence'],

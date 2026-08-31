@@ -1,37 +1,58 @@
 const fs = require('fs');
 let code = fs.readFileSync('src/components/common/SmartSearch.tsx', 'utf8');
 
-// 1. Remove quick pills entirely
-const quickPillsRegex = /const quickPills = \[[\s\S]*?\];/;
-code = code.replace(quickPillsRegex, '');
+const targetStr = `                <button
+                  key={item.id}
+                  data-item-index={index}
+                  onClick={() => handleExecute(item)}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                  className={\`w-full text-left flex items-center gap-3 p-3 transition-colors border-b border-slate-100 last:border-0 \${
+                    isSelected ? 'bg-indigo-50/80' : 'hover:bg-slate-50'
+                  }\`}`;
 
-// 2. Remove the activeFilter chips (they just clutter if they want exact search)
-// Actually, let's keep the filters but make the logic strict.
-code = code.replace(
-  'const matchesSubtitle = item.subtitle.toLowerCase().includes(normalizedQuery);',
-  '// removed subtitle matching'
-);
-code = code.replace(
-  'return matchesTitle || matchesSubtitle || matchesTags;',
-  'return matchesTitle || matchesTags;'
-);
+const replacement = `                {item.type === 'service' && item.url ? (
+                <a
+                  key={item.id}
+                  data-item-index={index}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => { e.stopPropagation(); onOpenServiceLink(item.url, item.title); onClose(); }}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                  className={\`w-full text-left flex items-center gap-3 p-3 transition-colors border-b border-slate-100 last:border-0 \${
+                    isSelected ? 'bg-indigo-50/80' : 'hover:bg-slate-50'
+                  }\`}
+                  style={{ display: 'flex' }}
+                >
+                  <div className={\`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center shadow-sm \${
+                    isSelected ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-500'
+                  }\`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className={\`font-bold text-[13px] truncate \${isSelected ? 'text-indigo-800' : 'text-slate-800'}\`}>
+                      {item.title}
+                    </div>
+                    {item.subtitle && (
+                      <div className="text-[10px] text-slate-500 truncate mt-0.5">
+                        {item.subtitle}
+                      </div>
+                    )}
+                  </div>
+                </a>
+                ) : (
+                <button
+                  key={item.id}
+                  data-item-index={index}
+                  onClick={() => handleExecute(item)}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                  className={\`w-full text-left flex items-center gap-3 p-3 transition-colors border-b border-slate-100 last:border-0 \${
+                    isSelected ? 'bg-indigo-50/80' : 'hover:bg-slate-50'
+                  }\`}
+                >`;
 
-// 3. Make sure it ONLY renders if searchQuery has text
-code = code.replace(
-  'if (!isOpen || !searchQuery.trim()) return null;',
-  'if (!isOpen || !searchQuery.trim()) return null;'
-);
-
-// 4. Update the empty state to not show quick pills or suggestions, just "No results"
-const emptyStateRegex = /\{filteredItems\.length === 0 \? \([\s\S]*?\) : \(/m;
-const newEmptyState = `{filteredItems.length === 0 ? (
-            <div className="p-8 text-center flex flex-col items-center justify-center">
-              <p className="text-sm font-bold text-slate-700">
-                {isHindi ? 'कोई परिणाम नहीं मिला' : 'No matching results found'}
-              </p>
-            </div>
-          ) : (`;
-// code = code.replace(emptyStateRegex, newEmptyState);
+code = code.replace(targetStr, replacement);
+code = code.replace(`                </button>\n              );`, `                </button>\n                )}\n              );`);
 
 fs.writeFileSync('src/components/common/SmartSearch.tsx', code);
-console.log("Patched SmartSearch");
+console.log("Patched SmartSearch.tsx");

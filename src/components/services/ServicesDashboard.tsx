@@ -614,18 +614,20 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
         {/* Quick Access Horizontal Scroll / Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
           {popularServices.slice(0, 12).map((service) => (
-            <button
+            <a
               key={service.id}
-              onClick={() =>
+              href={service.officialLinks.officialPortal || service.officialLinks.apply || service.officialLinks.download || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                const url = service.officialLinks.officialPortal || service.officialLinks.apply || service.officialLinks.download || '#';
+                if (url === '#') e.preventDefault();
                 onOpenLink(
-                  service.officialLinks.officialPortal ||
-                    service.officialLinks.apply ||
-                    service.officialLinks.download ||
-                    '#',
+                  url,
                   isHindi ? service.titleHi : service.titleEn,
-                  'Quick Launch'
-                )
-              }
+                  'Logged'
+                );
+              }}
               className="p-3 rounded-xl border border-slate-200/80 bg-slate-50/60 hover:bg-blue-50 hover:border-blue-300 transition-all text-left group flex flex-col justify-between hover:shadow-sm"
             >
               <div>
@@ -648,7 +650,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
                   <ExternalLink className="w-2.5 h-2.5" />
                 </div>
               </div>
-            </button>
+            </a>
           ))}
         </div>
       </div>

@@ -206,16 +206,18 @@ export default function App() {
     // Record audit log
     recordActivityLog(appState, `Open Portal: ${title}`, `Clicked ${actionType} -> ${url}`);
     
-    try {
-      const a = document.createElement('a');
-      a.href = url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (err) {
-      window.location.href = url;
+    if (actionType !== 'Logged') {
+      const win = window.open(url, '_blank');
+      if (!win) {
+        // Fallback if popup blocked
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
     }
   };
 

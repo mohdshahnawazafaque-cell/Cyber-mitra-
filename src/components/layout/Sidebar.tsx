@@ -118,6 +118,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
       color: 'text-emerald-500'
     },
     {
+      id: 'vanshavali_certificate',
+      view: 'vanshavali_certificate',
+      icon: FileText,
+      titleHi: 'वंशावली प्रमाण-पत्र',
+      titleEn: 'Family Tree',
+      descHi: 'परिवार का विवरण',
+      descEn: 'Family Details',
+      color: 'text-indigo-500'
+    },
+    {
       id: 'awas_certificate',
       view: 'awas_certificate',
       icon: FileText,
