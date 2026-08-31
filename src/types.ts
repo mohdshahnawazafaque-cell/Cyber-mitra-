@@ -19,6 +19,7 @@ export interface OfficialLinks {
   download?: string;
   print?: string;
   officialPortal?: string;
+  renewal?: string;
 }
 
 export interface ServiceLinkStatus {

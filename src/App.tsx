@@ -38,6 +38,8 @@ const ToolsHub = lazy(() => import('./components/tools/ToolsHub').then(module =>
 const CalculatorHub = lazy(() => import('./components/tools/CalculatorHub').then(module => ({ default: module.CalculatorHub })));
 const InvoiceGenerator = lazy(() => import('./components/tools/InvoiceGenerator').then(module => ({ default: module.InvoiceGenerator })));
 const PromoDesigner = lazy(() => import('./components/tools/PromoDesigner').then(module => ({ default: module.PromoDesigner })));
+const AwasCertificate = lazy(() => import('./components/tools/AwasCertificate').then(module => ({ default: module.AwasCertificate })));
+// .then(module => ({ default: module.PromoDesigner })));
 const QuickLinksDashboard = lazy(() => import('./components/tools/QuickLinksDashboard').then(module => ({ default: module.QuickLinksDashboard })));
 const BulkSmsTool = lazy(() => import('./components/tools/BulkSmsTool').then(module => ({ default: module.BulkSmsTool })));
 const DailyKhata = lazy(() => import('./components/tools/DailyKhata').then(module => ({ default: module.DailyKhata })));
@@ -335,6 +337,10 @@ export default function App() {
             {/* VIEW: INVOICE GENERATOR */}
             {appState.activeView === 'invoice_generator' && (
               <InvoiceGenerator language={language} />
+            )}
+
+                        {appState.activeView === 'awas_certificate' && (
+              <AwasCertificate language={language} />
             )}
 
             {/* VIEW: PROMO DESIGNER */}

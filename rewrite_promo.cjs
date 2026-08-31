@@ -1,4 +1,6 @@
-import React, { useState, useRef } from 'react';
+const fs = require('fs');
+
+const code = `import React, { useState, useRef } from 'react';
 import { Download, Printer, Share2, ImagePlus, LayoutTemplate, Phone, MessageCircle, Globe, RefreshCw } from 'lucide-react';
 import { Language } from '../../types';
 import html2canvas from 'html2canvas';
@@ -56,7 +58,7 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
     if (dataUrl) {
       const a = document.createElement('a');
       a.href = dataUrl;
-      a.download = `Parcha_${Date.now()}.jpg`;
+      a.download = \`Parcha_\${Date.now()}.jpg\`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -69,7 +71,7 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
     try {
       const response = await fetch(dataUrl);
       const blob = await response.blob();
-      const file = new File([blob], `Parcha_${Date.now()}.jpg`, { type: 'image/jpeg' });
+      const file = new File([blob], \`Parcha_\${Date.now()}.jpg\`, { type: 'image/jpeg' });
       
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
@@ -118,9 +120,8 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Editor Settings */}
         <div className="lg:col-span-4 space-y-6 print:hidden">
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-5">
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
             <h3 className="font-bold text-slate-800 border-b border-slate-100 pb-2">{isHindi ? 'पर्चा सेटिंग्स' : 'Parcha Settings'}</h3>
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             {/* Layout Size */}
             <div>
@@ -130,13 +131,13 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => setLayoutSize('Portrait')}
-                  className={`py-2 rounded-lg text-sm font-semibold border transition-colors ${layoutSize === 'Portrait' ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+                  className={\`py-2 rounded-lg text-sm font-semibold border transition-colors \${layoutSize === 'Portrait' ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}\`}
                 >
                   {isHindi ? 'पोर्ट्रेट (लंबा)' : 'Portrait'}
                 </button>
                 <button
                   onClick={() => setLayoutSize('Square')}
-                  className={`py-2 rounded-lg text-sm font-semibold border transition-colors ${layoutSize === 'Square' ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+                  className={\`py-2 rounded-lg text-sm font-semibold border transition-colors \${layoutSize === 'Square' ? 'bg-blue-50 border-blue-600 text-blue-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}\`}
                 >
                   {isHindi ? 'चौकोर (Square)' : 'Square (1:1)'}
                 </button>
@@ -213,8 +214,7 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
               </div>
             </div>
 
-            </div>
-{/* Description */}
+            {/* Description */}
             <div>
               <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                 {isHindi ? 'विवरण (वैकल्पिक)' : 'Description (Optional)'}
@@ -263,10 +263,10 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
             </div>
 
             {/* Canvas Container */}
-            <div className="bg-slate-100 p-4 sm:p-8 rounded-xl border border-slate-200 block overflow-x-auto text-center min-h-[500px]">
+            <div className="bg-slate-100 p-4 sm:p-8 rounded-xl border border-slate-200 flex justify-center overflow-x-auto min-h-[500px]">
               <div 
                 ref={previewRef}
-                className={`bg-white shadow-xl relative mx-auto flex flex-col ${layoutSize === 'Portrait' ? 'w-[400px] min-h-[565px] sm:w-[500px] sm:min-h-[707px]' : 'w-[400px] h-[400px] sm:w-[500px] sm:h-[500px]'} print-exact overflow-hidden`}
+                className={\`bg-white shadow-xl relative flex flex-col \${layoutSize === 'Portrait' ? 'w-[400px] min-h-[565px] sm:w-[500px] sm:min-h-[707px]' : 'w-[400px] h-[400px] sm:w-[500px] sm:h-[500px]'} print-exact overflow-hidden\`}
                 style={{
                   transform: 'scale(0.85)',
                   transformOrigin: 'top center',
@@ -329,7 +329,7 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
       </div>
       
       {/* Print Styles */}
-      <style>{`
+      <style>{\`
         @media print {
           @page {
             size: auto;
@@ -349,11 +349,13 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
             box-shadow: none !important;
             border: none !important;
           }
-          .print\:hidden {
+          .print\\:hidden {
             display: none !important;
           }
         }
-      `}</style>
+      \`}</style>
     </div>
   );
 };
+`
+fs.writeFileSync('src/components/tools/PromoDesigner.tsx', code);

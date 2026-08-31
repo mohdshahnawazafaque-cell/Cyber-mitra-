@@ -118,6 +118,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
       color: 'text-emerald-500'
     },
     {
+      id: 'awas_certificate',
+      view: 'awas_certificate',
+      icon: FileText,
+      titleHi: 'आवास प्रमाण-पत्र',
+      titleEn: 'Awas Certificate',
+      descHi: 'PMAY-U 2.0 जनरेटर',
+      descEn: 'PMAY-U 2.0 Generator',
+      color: 'text-purple-500'
+    },
+    {
       id: 'downloads_hub',
       view: 'downloads_hub',
       icon: DownloadIcon,

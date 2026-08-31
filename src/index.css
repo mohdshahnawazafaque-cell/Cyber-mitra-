@@ -6,6 +6,11 @@
   --font-hindi: "Yantramanav", "Plus Jakarta Sans", sans-serif;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: var(--font-sans);
 }
@@ -17,3 +22,13 @@ body {
   text-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.1);
 }
 
+
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}

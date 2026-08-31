@@ -42,6 +42,7 @@ export const SmartSearch: React.FC<SmartSearchProps> = ({
   services,
   templates,
   onNavigate,
+  onOpenServiceLink,
 }) => {
   const isHindi = language === 'hi';
   const [query, setQuery] = useState('');
