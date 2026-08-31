@@ -420,7 +420,7 @@ export const A4PhotoGenerator: React.FC<A4PhotoGeneratorProps> = ({
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   {showName && (
                     <input 
-                      type="text" placeholder="Name" value={nameText} onChange={(e) => setNameText(e.target.value)}
+                      type="text" placeholder={isHindi ? "नाम दर्ज करें" : "Enter Name"} value={nameText} onChange={(e) => setNameText(e.target.value)}
                       className="w-full px-2 py-1.5 border border-slate-300 rounded text-xs"
                     />
                   )}

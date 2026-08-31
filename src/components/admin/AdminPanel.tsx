@@ -62,9 +62,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [isAddingPromo, setIsAddingPromo] = useState<boolean>(false);
 
   // New Credentials State in Security Tab
-  const [newEmail, setNewEmail] = useState<string>(
-    appState.adminEmail || 'mohdshahnawaz.afaque@gmail.com'
-  );
+  const [newEmail, setNewEmail] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
@@ -109,8 +107,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       if (!isEmailValid) {
         setAuthError(
           isHindi
-            ? `गलत ईमेल! (सही ईमेल: ${currentEmail})`
-            : `Invalid email address! (Registered: ${currentEmail})`
+            ? `गलत ईमेल!`
+            : `Invalid email address!`
         );
       } else {
         setAuthError(
@@ -511,7 +509,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     type="email"
                     value={emailInput}
                     onChange={(e) => setEmailInput(e.target.value)}
-                    placeholder="mohdshahnawaz.afaque@gmail.com"
+                    placeholder={isHindi ? "ईमेल दर्ज करें" : "Enter Email"}
                     className="w-full px-4 py-3 border border-slate-200 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:outline-none bg-slate-50/50 hover:bg-slate-50 focus:bg-white transition-all placeholder:text-slate-400"
                     required
                   />
@@ -1418,7 +1416,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                               {isHindi ? 'एडमिन ईमेल:' : 'Admin Email:'}
                             </span>
                             <code className="px-2.5 py-0.5 bg-white border border-blue-200 rounded-md font-mono font-bold text-blue-800">
-                              {appState.adminEmail || 'mohdshahnawaz.afaque@gmail.com'}
+                              {(appState.adminEmail || 'mohdshahnawaz.afaque@gmail.com').replace(/(.{3})(.*)(@.*)/, '$1***$3')}
                             </code>
                           </div>
                           <div className="flex items-center gap-2 flex-wrap">
@@ -1459,7 +1457,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                         type="email"
                         value={newEmail}
                         onChange={(e) => setNewEmail(e.target.value)}
-                        placeholder="admin@example.com"
+                        placeholder={isHindi ? "नया ईमेल दर्ज करें" : "Enter new email"}
                         className="w-full px-3.5 py-2 border border-slate-300 rounded-xl text-xs font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
                         required
                       />
@@ -1520,13 +1518,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             adminEmail: 'mohdshahnawaz.afaque@gmail.com',
                             adminPassword: 'Sh@sahiba9653',
                           });
-                          setNewEmail('mohdshahnawaz.afaque@gmail.com');
+                          setNewEmail('');
                           setPasswordChangeSuccess(
                             isHindi
-                              ? 'ईमेल mohdshahnawaz.afaque@gmail.com और पासवर्ड Sh@sahiba9653 सेट हो गया!'
-                              : 'Reset to mohdshahnawaz.afaque@gmail.com & Sh@sahiba9653!'
+                              ? 'डिफ़ॉल्ट क्रेडेंशियल्स सेट हो गए!'
+                              : 'Reset to default credentials successfully!'
                           );
-                          showToast('Credentials set to mohdshahnawaz.afaque@gmail.com');
+                          showToast('Credentials reset to default');
                         }}
                         className="px-3.5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold rounded-xl text-xs transition-colors"
                       >

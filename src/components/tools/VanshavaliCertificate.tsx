@@ -172,7 +172,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                   type="text"
                   value={applicantName}
                   onChange={e => setApplicantName(e.target.value)}
-                  placeholder="उदा. कामरान"
+                  placeholder={isHindi ? "नाम दर्ज करें" : "Enter Name"}
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none transition-all"
                 />
               </div>
@@ -194,7 +194,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                     type="text"
                     value={fatherName}
                     onChange={e => setFatherName(e.target.value)}
-                    placeholder="उदा. नसीर खां"
+                    placeholder={isHindi ? "नाम दर्ज करें" : "Enter Name"}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none transition-all"
                   />
                 </div>
@@ -206,7 +206,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                   type="text"
                   value={address}
                   onChange={e => setAddress(e.target.value)}
-                  placeholder="उदा. मो0 अहमदाबाद गंज"
+                  placeholder={isHindi ? "पता दर्ज करें" : "Enter Address"}
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-blue-500 outline-none transition-all"
                 />
               </div>
@@ -278,7 +278,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                         type="text"
                         value={member.name}
                         onChange={e => updateMember(member.id, 'name', e.target.value)}
-                        placeholder="नाम"
+                        placeholder={isHindi ? "नाम दर्ज करें" : "Enter Name"}
                         className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
                       />
                     </div>
@@ -288,7 +288,7 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
                         type="text"
                         value={member.fatherName}
                         onChange={e => updateMember(member.id, 'fatherName', e.target.value)}
-                        placeholder="पिता/पति का नाम"
+                        placeholder={isHindi ? "नाम दर्ज करें" : "Enter Name"}
                         className="w-full px-2 py-1.5 bg-white border border-slate-200 rounded text-xs outline-none focus:border-blue-500"
                       />
                     </div>

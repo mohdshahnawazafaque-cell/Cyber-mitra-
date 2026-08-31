@@ -456,7 +456,7 @@ export const PrintCenter: React.FC<PrintCenterProps> = ({
                     type="text"
                     value={stampName}
                     onChange={(e) => setStampName(e.target.value)}
-                    placeholder={isHindi ? 'नाम (Name)' : 'Name'}
+                    placeholder={isHindi ? 'नाम दर्ज करें' : 'Enter Name'}
                     className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-semibold focus:outline-none"
                   />
                   <input

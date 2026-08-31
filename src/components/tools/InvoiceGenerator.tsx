@@ -162,7 +162,7 @@ export const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ language }) 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
                   type="text"
-                  placeholder={isHindi ? 'दुकान का नाम' : 'Shop Name'}
+                  placeholder={isHindi ? 'दुकान का नाम दर्ज करें' : 'Enter Shop Name'}
                   value={businessInfo.name}
                   onChange={(e) => setBusinessInfo({...businessInfo, name: e.target.value})}
                   className="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none sm:col-span-2"
@@ -206,7 +206,7 @@ export const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ language }) 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
                   type="text"
-                  placeholder={isHindi ? 'ग्राहक का नाम' : 'Customer Name'}
+                  placeholder={isHindi ? 'ग्राहक का नाम दर्ज करें' : 'Enter Customer Name'}
                   value={customerInfo.name}
                   onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
                   className="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none"
