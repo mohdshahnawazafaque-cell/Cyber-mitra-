@@ -42,6 +42,7 @@ import {
 import { GovernmentService, Language, PromoItem } from '../../types';
 import { PromoBanner } from '../common/PromoBanner';
 import { SponsoredBanner } from '../ads/SponsoredBanner';
+import { TutorialVideo } from '../common/TutorialVideo';
 import { ServiceCard } from './ServiceCard';
 
 interface ServicesDashboardProps {
@@ -352,6 +353,9 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
     <div className="space-y-6">
       {/* 0. SPONSORED BANNER */}
       <SponsoredBanner />
+      
+      {/* TUTORIAL VIDEO BANNER */}
+      
       {/* 1. TOP OPERATOR STATUS & LIVE DIGITAL CLOCK BAR */}
       <div className="bg-white rounded-3xl p-4 sm:px-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-100 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">

@@ -204,17 +204,10 @@ export default function App() {
     // Record audit log
     recordActivityLog(appState, `Open Portal: ${title}`, `Clicked ${actionType} -> ${url}`);
     
-    if (actionType !== 'Logged') {
+    if (actionType !== 'External_LogOnly') {
       const win = window.open(url, '_blank');
-      if (!win) {
-        // Fallback if popup blocked
-        const a = document.createElement('a');
-        a.href = url;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+    if (!win) {
+      alert(isHindi ? 'ब्राउज़र पॉप-अप ब्लॉक है! कृपया लिंक खोलने के लिए पॉप-अप चालू करें।' : 'Browser popup blocked! Please allow popups to open the link.');
       }
     }
   };
