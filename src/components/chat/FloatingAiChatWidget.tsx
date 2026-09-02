@@ -32,8 +32,8 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
     {
       role: 'assistant',
       text: isHindi
-        ? 'नमस्ते! मैं Cyber Mitra AI हूँ। किसी भी सरकारी सेवा या दस्तावेज के नियम पूछें।'
-        : 'Hi! I am Cyber Mitra AI. Ask me about any govt portal rules or document checklists.',
+        ? 'नमस्ते! मैं Cyber Cafe Mitra AI हूँ। किसी भी सरकारी सेवा या दस्तावेज के नियम पूछें।'
+        : 'Hi! I am Cyber Cafe Mitra AI. Ask me about any govt portal rules or document checklists.',
       time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -63,8 +63,8 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
       if (apiKey) {
         // Direct client-side fetch using Gemini REST API
         const systemInstruction = isHindi 
-          ? 'आप Cyber Mitra AI हैं, जो सीएससी (CSC) और साइबर कैफे संचालकों के लिए एक स्मार्ट सहायक है। आप सरकारी योजनाओं, फॉर्म भरने, दस्तावेज़ों की सूची आदि की सटीक जानकारी देते हैं। हिंदी में उत्तर दें।'
-          : 'You are Cyber Mitra AI, a smart assistant for CSC and Cyber Cafe operators. You provide accurate information about govt schemes, forms, and documents. Reply in English.';
+          ? 'आप Cyber Cafe Mitra AI हैं, जो सीएससी (CSC) और साइबर कैफे संचालकों के लिए एक स्मार्ट सहायक है। आप सरकारी योजनाओं, फॉर्म भरने, दस्तावेज़ों की सूची आदि की सटीक जानकारी देते हैं। हिंदी में उत्तर दें।'
+          : 'You are Cyber Cafe Mitra AI, a smart assistant for CSC and Cyber Cafe operators. You provide accurate information about govt schemes, forms, and documents. Reply in English.';
 
         const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
@@ -136,7 +136,7 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
         <button
           onClick={() => setIsOpen(true)}
           className="group relative flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-purple-600 via-indigo-600 to-slate-900 text-white rounded-full shadow-2xl hover:shadow-purple-500/25 hover:scale-105 transition-all border border-purple-400/40"
-          title="Open Cyber Mitra AI Assistant"
+          title="Open Cyber Cafe Mitra AI Assistant"
         >
           <div className="relative">
             <Bot className="w-5 h-5" />
@@ -144,7 +144,7 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
             <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 border-2 border-slate-900 rounded-full" />
           </div>
           <span className="font-bold text-xs tracking-wide">
-            {isHindi ? 'Cyber Mitra AI चैट' : 'AI Assistant'}
+            {isHindi ? 'Cyber Cafe Mitra AI चैट' : 'AI Assistant'}
           </span>
           <span className="bg-white/20 text-white text-[10px] px-1.5 py-0.5 rounded-full font-mono font-semibold hidden sm:inline">
             3.7
@@ -162,7 +162,7 @@ export const FloatingAiChatWidget: React.FC<FloatingAiChatWidgetProps> = ({
                 <Bot className="w-4 h-4 text-purple-200" />
               </div>
               <div>
-                <h3 className="font-bold text-xs text-white leading-tight">Cyber Mitra AI</h3>
+                <h3 className="font-bold text-xs text-white leading-tight">Cyber Cafe Mitra AI</h3>
                 <div className="flex items-center gap-1 text-[10px] text-emerald-300 font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   Gemini 3.7 Flash

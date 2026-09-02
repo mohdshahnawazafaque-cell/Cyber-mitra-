@@ -158,8 +158,8 @@ export const AiChat: React.FC<AiChatProps> = ({
       id: 'welcome',
       role: 'assistant',
       content: isHindi
-        ? `### 🙏 नमस्ते! मैं **Cyber Mitra AI** सहायक हूँ।\n\nमैं भारत भर के साइबर कैफे, CSC और जन सेवा केंद्र संचालकों का संपूर्ण डिजिटल सहायक हूँ।\n\n**आप मुझसे क्या पूछ सकते हैं?**\n- 📑 **सरकारी प्रमाण पत्र:** आय, जाति, निवास, ईडब्ल्यूएस के नियम व दस्तावेज।\n- 🆔 **पहचान सेवाएं:** आधार, पैन कार्ड, वोटर आईडी, राशन कार्ड संशोधन।\n- 🌾 **सरकारी योजनाएं:** PM किसान, आयुष्मान भारत, बिजली बिल निवारण।\n- ✍️ **तत्काल प्रार्थना पत्र:** SDM, तहसीलदार, पुलिस, बैंक अधिकारियों हेतु प्रार्थना पत्र।\n- 🖼️ **फोटो/हस्ताक्षर साइज:** विभिन्न भर्ती परीक्षाओं के सटीक KB व पिक्सल।\n\n*नीचे दिए गए किसी भी त्वरित विषय पर क्लिक करें या अपना प्रश्न टाइप करें:*`
-        : `### 🤖 Welcome to **Cyber Mitra AI Assistant**!\n\nI am your dedicated digital co-pilot for Cyber Cafe, CSC, and Jan Seva Kendra operations across India.\n\n**What can I assist you with today?**\n- 📑 **Government Certificates:** Exact document checklists & eligibility for Income, Caste, Domicile, EWS, Birth/Death certificates.\n- 🆔 **Identity Portals:** UIDAI Aadhaar, PAN Card (93 / CSF), Voter ID Form 6/8, Ration Card.\n- 🌾 **Schemes & Utilities:** PM Kisan eKYC, Ayushman Bharat, UPPCL Electricity corrections.\n- ✍️ **Instant Letter Drafting:** Pristine legal & administrative applications for SDM, Tehsildar, Police, Electricity SDO, and Banks.\n- 🖼️ **Photo & Signature Presets:** Exact KB sizes, DPI, and dimensions for all govt recruitments.\n\n*Click on any quick topic below or type your inquiry:*`,
+        ? `### 🙏 नमस्ते! मैं **Cyber Cafe Mitra AI** सहायक हूँ।\n\nमैं भारत भर के साइबर कैफे, CSC और जन सेवा केंद्र संचालकों का संपूर्ण डिजिटल सहायक हूँ।\n\n**आप मुझसे क्या पूछ सकते हैं?**\n- 📑 **सरकारी प्रमाण पत्र:** आय, जाति, निवास, ईडब्ल्यूएस के नियम व दस्तावेज।\n- 🆔 **पहचान सेवाएं:** आधार, पैन कार्ड, वोटर आईडी, राशन कार्ड संशोधन।\n- 🌾 **सरकारी योजनाएं:** PM किसान, आयुष्मान भारत, बिजली बिल निवारण।\n- ✍️ **तत्काल प्रार्थना पत्र:** SDM, तहसीलदार, पुलिस, बैंक अधिकारियों हेतु प्रार्थना पत्र।\n- 🖼️ **फोटो/हस्ताक्षर साइज:** विभिन्न भर्ती परीक्षाओं के सटीक KB व पिक्सल।\n\n*नीचे दिए गए किसी भी त्वरित विषय पर क्लिक करें या अपना प्रश्न टाइप करें:*`
+        : `### 🤖 Welcome to **Cyber Cafe Mitra AI Assistant**!\n\nI am your dedicated digital co-pilot for Cyber Cafe, CSC, and Jan Seva Kendra operations across India.\n\n**What can I assist you with today?**\n- 📑 **Government Certificates:** Exact document checklists & eligibility for Income, Caste, Domicile, EWS, Birth/Death certificates.\n- 🆔 **Identity Portals:** UIDAI Aadhaar, PAN Card (93 / CSF), Voter ID Form 6/8, Ration Card.\n- 🌾 **Schemes & Utilities:** PM Kisan eKYC, Ayushman Bharat, UPPCL Electricity corrections.\n- ✍️ **Instant Letter Drafting:** Pristine legal & administrative applications for SDM, Tehsildar, Police, Electricity SDO, and Banks.\n- 🖼️ **Photo & Signature Presets:** Exact KB sizes, DPI, and dimensions for all govt recruitments.\n\n*Click on any quick topic below or type your inquiry:*`,
       timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
       modelBadge: 'Gemini 3.7 Flash',
     },
@@ -295,8 +295,8 @@ export const AiChat: React.FC<AiChatProps> = ({
         });
 
         const systemInstruction = isHindi 
-          ? 'आप Cyber Mitra AI हैं, जो सीएससी (CSC) और साइबर कैफे संचालकों के लिए एक स्मार्ट सहायक है। आप सरकारी योजनाओं, फॉर्म भरने, दस्तावेज़ों की सूची आदि की सटीक जानकारी देते हैं। हिंदी में उत्तर दें।'
-          : 'You are Cyber Mitra AI, a smart assistant for CSC and Cyber Cafe operators. You provide accurate information about govt schemes, forms, and documents. Reply in English.';
+          ? 'आप Cyber Cafe Mitra AI हैं, जो सीएससी (CSC) और साइबर कैफे संचालकों के लिए एक स्मार्ट सहायक है। आप सरकारी योजनाओं, फॉर्म भरने, दस्तावेज़ों की सूची आदि की सटीक जानकारी देते हैं। हिंदी में उत्तर दें।'
+          : 'You are Cyber Cafe Mitra AI, a smart assistant for CSC and Cyber Cafe operators. You provide accurate information about govt schemes, forms, and documents. Reply in English.';
 
         const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
@@ -388,7 +388,7 @@ export const AiChat: React.FC<AiChatProps> = ({
 
   const handleExportChat = () => {
     const formatted = messages
-      .map((m) => `[${m.timestamp}] ${m.role === 'assistant' ? 'CYBER MITRA AI' : 'OPERATOR'}:\n${m.content}\n\n${'-'.repeat(50)}`)
+      .map((m) => `[${m.timestamp}] ${m.role === 'assistant' ? 'CYBER CAFE MITRA AI' : 'OPERATOR'}:\n${m.content}\n\n${'-'.repeat(50)}`)
       .join('\n\n');
 
     const blob = new Blob([formatted], { type: 'text/plain;charset=utf-8' });
@@ -484,7 +484,7 @@ export const AiChat: React.FC<AiChatProps> = ({
                 <Bot className="w-5 h-5" />
               </span>
               <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
-                Cyber Mitra AI Chat
+                Cyber Cafe Mitra AI Chat
                 <span className="text-[10px] uppercase font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   Gemini 3.7 Flash Active
@@ -610,7 +610,7 @@ export const AiChat: React.FC<AiChatProps> = ({
                     }`}
                   >
                     <span className="font-bold flex items-center gap-1">
-                      {isAi ? 'Cyber Mitra AI' : customer.name || (isHindi ? 'संचालक (You)' : 'Operator')}
+                      {isAi ? 'Cyber Cafe Mitra AI' : customer.name || (isHindi ? 'संचालक (You)' : 'Operator')}
                       {isAi && msg.modelBadge && (
                         <span className="bg-purple-100 text-purple-800 border border-purple-200 px-1.5 py-0.2 rounded font-semibold text-[9px]">
                           {msg.modelBadge}
@@ -698,7 +698,7 @@ export const AiChat: React.FC<AiChatProps> = ({
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 max-w-[80%] space-y-2">
                 <div className="flex items-center gap-2 text-xs font-bold text-purple-700">
                   <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-                  <span>{isHindi ? 'Cyber Mitra AI उत्तर तैयार कर रहा है...' : 'Cyber Mitra AI is thinking...'}</span>
+                  <span>{isHindi ? 'Cyber Cafe Mitra AI उत्तर तैयार कर रहा है...' : 'Cyber Cafe Mitra AI is thinking...'}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-purple-500 animate-bounce" />

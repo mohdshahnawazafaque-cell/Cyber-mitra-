@@ -38,8 +38,8 @@ export const getLocalFallbackResponse = (query: string, isHindi: boolean): strin
   }
   if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('नमस्ते') || q.includes('हेलो')) {
     return isHindi
-      ? 'नमस्ते! मैं साइबर मित्रा (Cyber Mitra) AI हूँ। आप मुझसे किसी भी सरकारी योजना, फॉर्म या पोर्टल के बारे में पूछ सकते हैं। मैं आपकी क्या मदद कर सकता हूँ?'
-      : 'Hello! I am Cyber Mitra AI. You can ask me about any government scheme, form, or portal. How can I help you today?';
+      ? 'नमस्ते! मैं साइबर मित्रा (Cyber Cafe Mitra) AI हूँ। आप मुझसे किसी भी सरकारी योजना, फॉर्म या पोर्टल के बारे में पूछ सकते हैं। मैं आपकी क्या मदद कर सकता हूँ?'
+      : 'Hello! I am Cyber Cafe Mitra AI. You can ask me about any government scheme, form, or portal. How can I help you today?';
   }
   
   return isHindi

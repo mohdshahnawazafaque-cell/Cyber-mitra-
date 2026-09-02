@@ -160,7 +160,7 @@ export const ApplicationBuilder: React.FC<ApplicationBuilderProps> = ({
       {/* Main Builder Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Template Selector & Custom Field Controls */}
-        <div className="lg:col-span-5 space-y-4">
+        <div className="lg:col-span-5 space-y-4 print:hidden">
           {/* 1. Template Picker */}
           <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs">
             <label className="block text-xs font-bold text-slate-700 mb-2">
@@ -274,7 +274,7 @@ export const ApplicationBuilder: React.FC<ApplicationBuilderProps> = ({
         {/* Right Column: Live Printable Document Preview */}
         <div className="lg:col-span-7 space-y-4">
           {/* Action Toolbar */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-3 flex flex-wrap items-center justify-between gap-2 shadow-xs">
+          <div className="bg-white rounded-2xl border border-slate-200 p-3 flex flex-wrap items-center justify-between gap-2 shadow-xs print:hidden">
             <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600">
               <Eye className="w-4 h-4 text-blue-600" />
               <span>{isHindi ? 'लाइव प्रिंट प्रारूप (A4 Format)' : 'A4 Document Preview'}</span>
@@ -310,8 +310,9 @@ export const ApplicationBuilder: React.FC<ApplicationBuilderProps> = ({
 
           {/* Actual Sheet Container (A4 Printable Canvas) */}
           <div
+            id="print-application-area"
             ref={printAreaRef}
-            className="bg-white rounded-2xl border border-slate-300 shadow-md p-6 sm:p-10 font-sans text-slate-900 leading-relaxed text-sm min-h-[580px]"
+            className="bg-white rounded-2xl border border-slate-300 shadow-md p-6 sm:p-10 font-sans text-slate-900 leading-relaxed text-sm min-h-[580px] print:border-none print:shadow-none print:p-0"
           >
             {/* Header Box */}
             <div className="text-center pb-4 mb-6 border-b-2 border-slate-800">

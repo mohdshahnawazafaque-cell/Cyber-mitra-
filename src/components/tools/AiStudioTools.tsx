@@ -55,8 +55,8 @@ export const AiStudioTools: React.FC<AiStudioToolsProps> = ({
     {
       sender: 'ai',
       text: isHindi
-        ? 'नमस्ते! मैं CYBER MITRA AI सहायक हूँ। आप मुझसे किसी भी सरकारी योजना की पात्रता, आवश्यक दस्तावेज, पोर्टल एरर (जैसे eDistrict, UIDAI, UPPCL) या नियम पूछ सकते हैं।'
-        : 'Hello! I am Cyber Mitra AI Assistant. Ask me anything about govt schemes eligibility, document checklists, or portal troubleshooting.',
+        ? 'नमस्ते! मैं CYBER CAFE MITRA AI सहायक हूँ। आप मुझसे किसी भी सरकारी योजना की पात्रता, आवश्यक दस्तावेज, पोर्टल एरर (जैसे eDistrict, UIDAI, UPPCL) या नियम पूछ सकते हैं।'
+        : 'Hello! I am Cyber Cafe Mitra AI Assistant. Ask me anything about govt schemes eligibility, document checklists, or portal troubleshooting.',
       time: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -243,7 +243,7 @@ Address: ${customer.district || '___________'}`;
               <Sparkles className="w-5 h-5" />
             </span>
             <h1 className="text-xl sm:text-2xl font-black text-slate-800">
-              {isHindi ? 'एआई टूल्स स्टूडियो (Cyber Mitra AI Studio)' : 'Cyber Mitra AI Studio'}
+              {isHindi ? 'एआई टूल्स स्टूडियो (Cyber Cafe Mitra AI Studio)' : 'Cyber Cafe Mitra AI Studio'}
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -450,7 +450,7 @@ Address: ${customer.district || '___________'}`;
 
               {generatedLetter && (
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span>CYBER MITRA AI Engine</span>
+                  <span>CYBER CAFE MITRA AI Engine</span>
                   <span className="text-emerald-700 font-semibold">✓ मानक सरकारी संरचना में सत्यापित</span>
                 </div>
               )}

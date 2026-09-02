@@ -117,7 +117,7 @@ export const DEFAULT_STATE: AppState = {
       id: 'log-1',
       actionHi: 'सिस्टम प्रारंभ',
       actionEn: 'System Initialized',
-      details: 'Cyber Mitra Cyber Cafe Work Portal Ready.',
+      details: 'Cyber Cafe Mitra Cyber Cafe Work Portal Ready.',
       timestamp: new Date().toISOString(),
     },
   ],
@@ -169,7 +169,7 @@ export const loadAppState = (): AppState => {
       activityLogs: parsed.activityLogs || DEFAULT_STATE.activityLogs,
     };
   } catch (e) {
-    console.error('Failed to load Cyber Mitra state from localStorage', e);
+    console.error('Failed to load Cyber Cafe Mitra state from localStorage', e);
     return DEFAULT_STATE;
   }
 };

@@ -42,7 +42,6 @@ import {
 import { GovernmentService, Language, PromoItem } from '../../types';
 import { PromoBanner } from '../common/PromoBanner';
 import { SponsoredBanner } from '../ads/SponsoredBanner';
-import { TutorialVideo } from '../common/TutorialVideo';
 import { ServiceCard } from './ServiceCard';
 
 interface ServicesDashboardProps {
@@ -152,7 +151,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
 
   const categories = [
     { id: 'all', labelHi: 'सभी सेवाएं', labelEn: 'All Services', icon: '🏛️' },
-    { id: 'id_services', labelHi: 'पहचान पत्र', labelEn: 'ID Services (UIDAI/PAN)', icon: '🪪' },
+    
     { id: 'certificates', labelHi: 'प्रमाण पत्र', labelEn: 'Certificates (e-District)', icon: '📜' },
     { id: 'schemes', labelHi: 'सरकारी योजनाएं', labelEn: 'Govt Schemes', icon: '🌾' },
     { id: 'applications', labelHi: 'आवेदन पोर्टल', labelEn: 'Applications (DL/Passport)', icon: '📝' },
@@ -236,20 +235,7 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
       textColor: 'text-amber-700',
       iconBg: 'bg-amber-600 text-white',
     },
-    {
-      id: 'quick-action-khata',
-      titleEn: 'Daily Cash Khata',
-      titleHi: 'दैनिक खाता व हिसाब',
-      descEn: 'Track daily earnings, expenses, online/cash collection',
-      descHi: 'दैनिक आमदनी, खर्च व ऑनलाइन/कैश गल्ले का हिसाब',
-      view: 'daily_khata',
-      icon: Wallet,
-      badge: isHindi ? 'गल्ला रजिस्टर' : 'Cash Book',
-      color: 'from-purple-600 to-violet-600',
-      bgLight: 'bg-gradient-to-br from-purple-50 to-violet-50/60 hover:from-purple-100 hover:to-violet-100 border-purple-200/80',
-      textColor: 'text-purple-700',
-      iconBg: 'bg-purple-600 text-white',
-    },
+    
   ];
 
   // Common Govt Application Formats for Direct Operator Download
@@ -265,28 +251,8 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
       size: '120 KB',
       directLink: 'https://edistrict.up.gov.in/edistrictup/Static_Pages/SelfDeclaration_Hindi.pdf',
     },
-    {
-      id: 'form-pan-49a',
-      titleHi: 'पैन कार्ड फॉर्म 93 (नया 2026)',
-      titleEn: 'PAN Card Form 93 (New 2026)',
-      descHi: 'नया पैन कार्ड ऑफलाइन फॉर्म (2026 अपडेटेड)',
-      descEn: 'Updated Physical Application Form 93 for 2026',
-      category: 'id_services',
-      type: 'PDF',
-      size: '240 KB',
-      directLink: 'https://incometaxindia.gov.in/forms/income-tax%20rules/103120000000007849.pdf',
-    },
-    {
-      id: 'form-aadhaar-update',
-      titleHi: 'आधार नामांकन / सुधार फॉर्म',
-      titleEn: 'Aadhaar Enrolment / Update Form',
-      descHi: 'आधार केंद्र हेतु आधिकारिक सुधार व नामांकन फॉर्म',
-      descEn: 'Official UIDAI Resident Enrolment & Update Form',
-      category: 'id_services',
-      type: 'PDF',
-      size: '480 KB',
-      directLink: 'https://uidai.gov.in/images/aadhaar_enrolment_correction_form_version_2.1.pdf',
-    },
+    
+    
     {
       id: 'form-ration-surrender',
       titleHi: 'राशन कार्ड नया / संशोधन फॉर्म',
@@ -374,8 +340,8 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
             </div>
             <p className="text-xs text-slate-500 font-medium hidden sm:block">
               {isHindi
-                ? 'आपका Cyber Mitra CSC वर्कस्टेशन तैयार है। सभी पोर्टल और टूल सक्रिय हैं।'
-                : 'Your Cyber Mitra CSC workstation is ready. Portals and tools are active.'}
+                ? 'आपका Cyber Cafe Mitra CSC वर्कस्टेशन तैयार है। सभी पोर्टल और टूल सक्रिय हैं।'
+                : 'Your Cyber Cafe Mitra CSC workstation is ready. Portals and tools are active.'}
             </p>
           </div>
         </div>
@@ -706,15 +672,17 @@ export const ServicesDashboard: React.FC<ServicesDashboardProps> = ({
               </div>
 
               <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between">
-                <a
-                  href={f.directLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!f.directLink || f.directLink === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); }
+                    else { onOpenLink(f.directLink, isHindi ? f.titleHi : f.titleEn, 'Download_Form'); }
+                  }}
                   className="w-full py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
-                  <span>{isHindi ? 'फॉर्म खोलें / डाउनलोड' : 'Download PDF'}</span>
-                </a>
+                  <span>{isHindi ? 'डाउनलोड' : 'Download'}</span>
+                </button>
               </div>
             </div>
           ))}

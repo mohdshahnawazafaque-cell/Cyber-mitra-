@@ -14,10 +14,9 @@ const CATEGORIES = [
   { id: 'photo', icon: Image, labelEn: 'Photo Studio', labelHi: 'फोटो स्टूडियो' },
   { id: 'a4_photo', icon: FileIcon, labelEn: 'A4 Photo Sheet', labelHi: 'A4 फोटो शीट' },
   { id: 'pdf', icon: FileText, labelEn: 'PDF Tools', labelHi: 'पीडीएफ टूल्स' },
-  { id: 'document', icon: FileIcon, labelEn: 'Document Tools', labelHi: 'डॉक्यूमेंट टूल्स' },
-  { id: 'gov_id', icon: Landmark, labelEn: 'Government/ID', labelHi: 'सरकारी / आईडी' },
+  
   { id: 'forms', icon: UserCheck, labelEn: 'Forms & Applications', labelHi: 'आवेदन फॉर्म' },
-  { id: 'resume', icon: Briefcase, labelEn: 'Resume & Documents', labelHi: 'रिज्यूमे व डॉक्यूमेंट' },
+  
   { id: 'typing', icon: Keyboard, labelEn: 'Typing', labelHi: 'टाइपिंग' },
   { id: 'calculator', icon: Calculator, labelEn: 'Calculators', labelHi: 'कैलकुलेटर' },
   { id: 'land', icon: Map, labelEn: 'Land Tools', labelHi: 'जमीन टूल्स' },
@@ -97,7 +96,7 @@ export const ToolsHub: React.FC<ToolsHubProps> = ({ language, onNavigate }) => {
           <div>
             <h1 className="text-2xl font-black text-slate-800 flex items-center gap-2">
               <Wrench className="w-7 h-7 text-blue-600" />
-              {isHindi ? 'साइबर मित्रा - टूल्स हब (Tools Hub)' : 'Cyber Mitra - Tools Hub'}
+              {isHindi ? 'साइबर मित्रा - टूल्स हब (Tools Hub)' : 'Cyber Cafe Mitra - Tools Hub'}
             </h1>
             <p className="text-slate-500 mt-1">
               {isHindi ? 'सभी साइबर कैफे और जन सेवा केंद्र के काम एक ही जगह पर।' : 'All Cyber Cafe and Jan Seva Kendra utilities in one place.'}

@@ -11,8 +11,8 @@ export const DownloadsHub: React.FC<DownloadsHubProps> = ({ language }) => {
   const [activeTab, setActiveTab] = useState<'forms' | 'drivers'>('forms');
 
   const forms = [
-    { title: 'Aadhaar Update Form (Blank)', desc: 'Official UIDAI Aadhaar Enrolment/Update Form', size: '1.2 MB' },
-    { title: 'PAN Card Form 93 (New 2026)', desc: 'New Application for Allotment of Permanent Account Number (Updated 2026)', size: '1.1 MB' },
+    
+    
     { title: 'Income Certificate Declaration', desc: 'Self Declaration for Income Certificate (UP)', size: '400 KB' },
     { title: 'SBI Account Opening Form', desc: 'State Bank of India Savings Account Form', size: '2.1 MB' },
     { title: 'RTGS / NEFT Slip (General)', desc: 'Standard slip for bank money transfer', size: '250 KB' }

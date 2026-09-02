@@ -145,64 +145,58 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
       {/* Complete Official Link Action Panel */}
       <div className="p-3 bg-slate-50 border-t border-slate-200 flex flex-wrap items-center gap-2">
         {links.newApply && (
-          <a href={links.newApply!} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); if(links.newApply === '#' || !links.newApply) { e.preventDefault(); onOpenLink(links.newApply, title, 'Blocked'); } else { onOpenLink(links.newApply, title, 'External_LogOnly'); } }}
+          <button onClick={(e) => { e.preventDefault(); if (!links.newApply || links.newApply === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); } else { onOpenLink(links.newApply!, title, 'Apply'); } }}
             className="flex-1 min-w-[95px] flex items-center justify-center gap-1 px-2.5 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white border border-blue-700/50 font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>{isHindi ? 'नया आवेदन' : 'New Apply'}</span>
-          </a>
+          </button>
         )}
 
         {links.apply && !links.newApply && (
-          <a href={links.apply!} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); if(links.apply === '#' || !links.apply) { e.preventDefault(); onOpenLink(links.apply, title, 'Blocked'); } else { onOpenLink(links.apply, title, 'External_LogOnly'); } }}
+          <button onClick={(e) => { e.preventDefault(); if (!links.apply || links.apply === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); } else { onOpenLink(links.apply!, title, 'Apply'); } }}
             className="flex-1 min-w-[95px] flex items-center justify-center gap-1 px-2.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>{isHindi ? 'आवेदन' : 'Apply Online'}</span>
-          </a>
+          </button>
         )}
 
         {links.correction && (
-          <a href={links.correction!} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); if(links.correction === '#' || !links.correction) { e.preventDefault(); onOpenLink(links.correction, title, 'Blocked'); } else { onOpenLink(links.correction, title, 'External_LogOnly'); } }}
+          <button onClick={(e) => { e.preventDefault(); if (!links.correction || links.correction === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); } else { onOpenLink(links.correction!, title, 'Apply'); } }}
             className="flex-1 min-w-[80px] flex items-center justify-center gap-1 px-2 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <Edit3 className="w-3.5 h-3.5" />
             <span>{isHindi ? 'सुधार' : 'Correction'}</span>
-          </a>
+          </button>
         )}
 
         {links.status && (
-          <a href={links.status!} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); if(links.status === '#' || !links.status) { e.preventDefault(); onOpenLink(links.status, title, 'Blocked'); } else { onOpenLink(links.status, title, 'External_LogOnly'); } }}
+          <button onClick={(e) => { e.preventDefault(); if (!links.status || links.status === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); } else { onOpenLink(links.status!, title, 'Apply'); } }}
             className="flex-1 min-w-[80px] flex items-center justify-center gap-1 px-2 py-1.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <Search className="w-3.5 h-3.5" />
             <span>{isHindi ? 'स्टेटस' : 'Status'}</span>
-          </a>
+          </button>
         )}
 
         {links.download && (
-          <a href={links.download!} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); if(links.download === '#' || !links.download) { e.preventDefault(); onOpenLink(links.download, title, 'Blocked'); } else { onOpenLink(links.download, title, 'External_LogOnly'); } }}
+          <button onClick={(e) => { e.preventDefault(); if (!links.download || links.download === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); } else { onOpenLink(links.download!, title, 'Apply'); } }}
             className="flex-1 min-w-[80px] flex items-center justify-center gap-1 px-2 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs transition-colors shadow-2xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>{isHindi ? 'डाउनलोड' : 'Download'}</span>
-          </a>
+          </button>
         )}
 
         {links.officialPortal && (
-          <a href={links.officialPortal!} target="_blank" rel="noopener noreferrer"
-            onClick={(e) => { e.stopPropagation(); if(links.officialPortal === '#' || !links.officialPortal) { e.preventDefault(); onOpenLink(links.officialPortal, title, 'Blocked'); } else { onOpenLink(links.officialPortal, title, 'External_LogOnly'); } }}
+          <button onClick={(e) => { e.preventDefault(); if (!links.officialPortal || links.officialPortal === '#') { alert(isHindi ? 'यह लिंक जल्द ही सक्रिय होगा' : 'Link will be available soon'); } else { onOpenLink(links.officialPortal!, title, 'Apply'); } }}
             className="flex items-center justify-center gap-1 px-2 py-1.5 bg-white hover:bg-slate-100 text-slate-700 font-semibold rounded-lg text-xs transition-colors border border-slate-300"
             title={isHindi ? 'आधिकारिक पोर्टल खोलें' : 'Open Official Govt Portal'}
           >
             <Globe className="w-3.5 h-3.5 text-slate-500" />
             <span className="hidden sm:inline">{isHindi ? 'पोर्टल' : 'Portal'}</span>
-          </a>
+          </button>
         )}
       </div>
     </div>

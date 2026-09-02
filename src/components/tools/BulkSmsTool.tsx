@@ -55,21 +55,21 @@ export const BulkSmsTool: React.FC<BulkSmsToolProps> = ({ language }) => {
       nameHi: 'काम पूरा हुआ (Ready)', 
       nameEn: 'Document Ready', 
       textHi: 'नमस्ते {name}, आपका {service} का काम पूरा हो गया है। कृपया आकर अपना दस्तावेज़ प्राप्त करें। - साइबर मित्रा',
-      textEn: 'Hello {name}, your {service} is ready. Please visit the center to collect your document. - Cyber Mitra'
+      textEn: 'Hello {name}, your {service} is ready. Please visit the center to collect your document. - Cyber Cafe Mitra'
     },
     { 
       id: 'pending', 
       nameHi: 'प्रगति पर (In Progress)', 
       nameEn: 'In Progress', 
       textHi: 'नमस्ते {name}, आपका {service} का फॉर्म सफलतापूर्वक सबमिट हो गया है। हम आपको अपडेट करेंगे। - साइबर मित्रा',
-      textEn: 'Hello {name}, your {service} application has been submitted successfully. We will update you soon. - Cyber Mitra'
+      textEn: 'Hello {name}, your {service} application has been submitted successfully. We will update you soon. - Cyber Cafe Mitra'
     },
     { 
       id: 'issue', 
       nameHi: 'समस्या (Action Required)', 
       nameEn: 'Action Required', 
       textHi: 'नमस्ते {name}, आपके {service} फॉर्म में कुछ समस्या है / OTP चाहिए। कृपया जल्द से जल्द कैफे पर संपर्क करें। - साइबर मित्रा',
-      textEn: 'Hello {name}, there is an issue with your {service} application. Please contact the center ASAP. - Cyber Mitra'
+      textEn: 'Hello {name}, there is an issue with your {service} application. Please contact the center ASAP. - Cyber Cafe Mitra'
     }
   ];
 

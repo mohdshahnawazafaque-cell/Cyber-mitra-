@@ -11,7 +11,7 @@ export const QRBarcodeTools: React.FC<QRBarcodeToolsProps> = ({ language }) => {
   const [qrText, setQrText] = useState('https://cybermitra.in');
   const [size, setSize] = useState('200');
 
-  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(qrText || 'Cyber Mitra')}`;
+  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(qrText || 'Cyber Cafe Mitra')}`;
 
   return (
     <div className="p-4 max-w-4xl mx-auto space-y-6">

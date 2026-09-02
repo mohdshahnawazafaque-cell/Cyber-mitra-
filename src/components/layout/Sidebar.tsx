@@ -98,16 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       color: 'text-rose-400'
     },
 
-    {
-      id: 'daily_khata',
-      view: 'daily_khata',
-      icon: IndianRupee,
-      titleHi: 'डेली खाता बुक',
-      titleEn: 'Daily Khata Book',
-      descHi: 'कमाई व उधार का हिसाब',
-      descEn: 'Earnings & Pending Dues',
-      color: 'text-emerald-500'
-    },
+    
     {
       id: 'vanshavali_certificate',
       view: 'vanshavali_certificate',
@@ -128,16 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       descEn: 'PMAY-U 2.0 Generator',
       color: 'text-purple-500'
     },
-    {
-      id: 'downloads_hub',
-      view: 'downloads_hub',
-      icon: DownloadIcon,
-      titleHi: 'ऑफलाइन फॉर्म व RD',
-      titleEn: 'Forms & Drivers',
-      descHi: 'खाली फॉर्म व बायोमेट्रिक सॉफ्टवेयर',
-      descEn: 'Blank forms & Biometric drivers',
-      color: 'text-indigo-400'
-    },
+    
     {
       id: 'ai_chat',
       view: 'ai_chat',
@@ -202,7 +184,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               C
             </div>
             <div className="flex flex-col">
-              <span className="text-[17px] font-extrabold tracking-tight text-slate-900 leading-tight">CYBER MITRA</span>
+              <span className="text-[17px] font-extrabold tracking-tight text-slate-900 leading-tight">CYBER CAFE MITRA</span>
               <p className="text-[9.5px] text-slate-500 uppercase tracking-[0.2em] font-bold">
                 {isHindi ? 'साइबर कैफे पोर्टल' : 'Professional Portal'}
               </p>

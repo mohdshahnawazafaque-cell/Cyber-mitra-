@@ -204,13 +204,13 @@ export default function App() {
     // Record audit log
     recordActivityLog(appState, `Open Portal: ${title}`, `Clicked ${actionType} -> ${url}`);
     
-    if (actionType !== 'External_LogOnly') {
-      const win = window.open(url, '_blank');
+    const win = window.open(url, '_blank');
     if (!win) {
-      alert(isHindi ? 'ब्राउज़र पॉप-अप ब्लॉक है! कृपया लिंक खोलने के लिए पॉप-अप चालू करें।' : 'Browser popup blocked! Please allow popups to open the link.');
-      }
+      alert(isHindi 
+        ? "सुरक्षा कारणों से पॉप-अप ब्लॉक हो गया है। कृपया इस लिंक को कॉपी करें और नए टैब में खोलें:\n\n" + url 
+        : "Pop-ups blocked. Please copy this link and open in a new tab:\n\n" + url);
     }
-  };
+  }
 
   // Quick preset bridge
   const handleApplyPresetFromService = (presetName: string) => {
@@ -259,7 +259,7 @@ export default function App() {
       />
 
       {/* 2. MAIN CONTAINER WITH SIDEBAR */}
-      <div className="flex-1 flex w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-5 gap-6">
+      <div className="flex-1 flex print:block w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-5 gap-6 print:px-0 print:py-0 print:m-0 print:max-w-none">
         {/* Left Sidebar */}
         <Sidebar
           language={language}
@@ -275,7 +275,7 @@ export default function App() {
         />
 
         {/* Center Main Work Area */}
-        <main className="flex-1 min-w-0 space-y-5">
+        <main className="flex-1 min-w-0 space-y-5 print:space-y-0 print:block">
           {/* Header Ad Slot (Compliant Google AdSense Placement) */}
           {headerAdSlot && <AdSlot slot={headerAdSlot} />}
 
@@ -465,7 +465,7 @@ export default function App() {
             <div className="w-6 h-6 rounded-md bg-blue-700 text-white flex items-center justify-center font-black text-xs">
               CM
             </div>
-            <span className="font-extrabold text-slate-800 tracking-tight">CYBER MITRA</span>
+            <span className="font-extrabold text-slate-800 tracking-tight">CYBER CAFE MITRA</span>
             <span className="text-slate-300">•</span>
             <span className="text-slate-600 font-medium">
               {isHindi ? 'डिजिटल सेवा एवं साइबर कैफे संचालक सहायक' : 'Digital Seva & Cyber Cafe Facilitator'}
@@ -495,7 +495,7 @@ export default function App() {
           </div>
 
           <p className="text-[11px] text-slate-400 font-medium">
-            © {new Date().getFullYear()} CYBER MITRA • CSC & Digital Seva Utility
+            © {new Date().getFullYear()} CYBER CAFE MITRA • CSC & Digital Seva Utility
           </p>
         </div>
       </footer>

@@ -91,7 +91,7 @@ export const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ language }) 
   };
 
   const handleWhatsAppShare = () => {
-    const text = `*INVOICE / BILL*%0A---------------------------%0ABill To: ${customerInfo.name || 'Customer'}%0ADate: ${new Date().toLocaleDateString()}%0ATotal Amount: Rs ${calculateSubtotal()}%0A---------------------------%0AThank you for your business!%0A- ${businessInfo.name || 'CYBER MITRA'}`;
+    const text = `*INVOICE / BILL*%0A---------------------------%0ABill To: ${customerInfo.name || 'Customer'}%0ADate: ${new Date().toLocaleDateString()}%0ATotal Amount: Rs ${calculateSubtotal()}%0A---------------------------%0AThank you for your business!%0A- ${businessInfo.name || 'CYBER CAFE MITRA'}`;
     const url = `https://wa.me/${customerInfo.phone}?text=${text}`;
     try {
       const a = document.createElement('a');

@@ -10,63 +10,7 @@ export const INITIAL_STATES: StateItem[] = [
 ];
 
 export const INITIAL_SERVICES: GovernmentService[] = [
-  // 1. UIDAI Aadhaar
-  {
-    id: 'uidai-aadhaar',
-    titleHi: 'आधार कार्ड सेवाएं (UIDAI myAadhaar)',
-    titleEn: 'Aadhaar Services (UIDAI myAadhaar)',
-    category: 'id_services',
-    stateCode: 'ALL',
-    descHi: 'आधार डाउनलोड, PVC कार्ड आर्डर, स्टेटस चेक, बायोमेट्रिक लॉक/अनलॉक और ऑथेंटिकेशन।',
-    descEn: 'Download Aadhaar, order PVC card, check status, verify Aadhaar, lock/unlock biometrics.',
-    isPopular: true,
-    isQuickAccess: true,
-    isFavorite: true,
-    order: 1,
-    active: true,
-    tags: ['aadhaar', 'uidai', 'myaadhaar', 'pvc card', 'आधार', 'डाउनलोड'],
-    requiredDocsHi: ['आधार नंबर / Enrolment ID', 'आधार लिंक्ड मोबाइल नंबर (OTP हेतु)'],
-    requiredDocsEn: ['Aadhaar Number / Enrolment ID', 'Aadhaar Registered Mobile Number for OTP'],
-    smartPresets: ['Aadhaar Photo (20-50 KB)', 'Passport Photo', 'Signature (10-20 KB)'],
-    officialLinks: {
-      officialPortal: 'https://myaadhaar.uidai.gov.in/',
-      download: 'https://myaadhaar.uidai.gov.in/genricDownloadAadhaar',
-      status: 'https://myaadhaar.uidai.gov.in/check-aadhaar-validity',
-      newApply: 'https://appointments.uidai.gov.in/easearch.aspx',
-      apply: 'https://myaadhaar.uidai.gov.in/genricPVC',
-      print: 'https://myaadhaar.uidai.gov.in/genricDownloadAadhaar',
-    },
-  },
-
-  // 2. PAN Card NSDL / UTIITSL
-  {
-    id: 'pan-card-services',
-    titleHi: 'पैन कार्ड सेवाएं (NSDL / UTIITSL / e-PAN)',
-    titleEn: 'PAN Card Services (NSDL / UTI / Instant e-PAN)',
-    category: 'id_services',
-    stateCode: 'ALL',
-    descHi: 'नया पैन कार्ड (Form 93), पैन सुधार (Correction), स्टेटस ट्रैक और आधार से पैन लिंक।',
-    descEn: 'Apply new PAN card, PAN correction/update, track PAN application, link Aadhaar with PAN.',
-    isPopular: true,
-    isQuickAccess: true,
-    isFavorite: true,
-    order: 2,
-    active: true,
-    tags: ['pan card', 'nsdl', 'uti', 'incometax', 'पैन कार्ड', 'ई-पैन'],
-    requiredDocsHi: ['आधार कार्ड', 'पासपोर्ट साइज फोटो (213x213 px)', 'हस्ताक्षर (Signature)', 'पहचान व पते का प्रमाण'],
-    requiredDocsEn: ['Aadhaar Card', 'Passport Photo (213x213 px 300 DPI)', 'Signature scan', 'Proof of Address'],
-    smartPresets: ['PAN Photo (213x213 px)', 'PAN Signature (400x200 px < 30KB)'],
-    officialLinks: {
-      officialPortal: 'https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html',
-      newApply: 'https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html',
-      apply: 'https://www.pan.utiitsl.com/PAN_ONLINE/panTracker.do',
-      correction: 'https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html',
-      status: 'https://tin.tin.nsdl.com/pantan/StatusTrack.html',
-      download: 'https://www.onlineservices.nsdl.com/paam/requestAndDownloadEPAN.html',
-    },
-  },
-
-  // 3. Voter ID / ECI NVSP
+  // 1. Voter ID / ECI NVSP
   {
     id: 'voter-id-services',
     titleHi: 'मतदाता पहचान पत्र (ECI Voters Portal / NVSP)',

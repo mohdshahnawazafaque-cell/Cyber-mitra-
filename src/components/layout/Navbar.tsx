@@ -92,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
                   <span className="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 font-sans">
-                    CYBER MITRA
+                    CYBER CAFE MITRA
                   </span>
                   <span className="hidden sm:inline-block px-1.5 py-0.2 text-[9px] font-bold bg-blue-50 text-blue-700 border border-blue-200 rounded uppercase tracking-wider">
                     CSC / DIGITAL SEVA
@@ -188,7 +188,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 try {
                   if (navigator.share) {
                     await navigator.share({
-                      title: 'Cyber Mitra - CSC & Digital Seva Portal',
+                      title: 'Cyber Cafe Mitra - CSC & Digital Seva Portal',
                       text: isHindi 
                         ? 'सरकारी फॉर्म, फोटो रिसाइज, PDF टूल्स और AI चैट के लिए सबसे बेहतरीन वेबसाइट!' 
                         : 'Best All-in-One portal for Govt Forms, Photo Resize, PDF tools, and AI Chat!',
