@@ -1,5 +1,6 @@
 import { getLocalFallbackResponse } from '../../utils/localAiBot';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { printElement } from '../../utils/printUtils';
 import {
   Sparkles,
   Send,
@@ -47,6 +48,7 @@ export const AiStudioTools: React.FC<AiStudioToolsProps> = ({
   const [tone, setTone] = useState<'formal' | 'urgent' | 'polite'>('formal');
   const [letterLanguage, setLetterLanguage] = useState<'hi' | 'en'>('hi');
   const [generatedLetter, setGeneratedLetter] = useState<string>('');
+  const letterRef = useRef<HTMLDivElement>(null);
   const [isWritingLoading, setIsWritingLoading] = useState<boolean>(false);
   const [letterError, setLetterError] = useState<string | null>(null);
 
@@ -55,7 +57,7 @@ export const AiStudioTools: React.FC<AiStudioToolsProps> = ({
     {
       sender: 'ai',
       text: isHindi
-        ? 'नमस्ते! मैं CYBER CAFE MITRA AI सहायक हूँ। आप मुझसे किसी भी सरकारी योजना की पात्रता, आवश्यक दस्तावेज, पोर्टल एरर (जैसे eDistrict, UIDAI, UPPCL) या नियम पूछ सकते हैं।'
+        ? 'नमस्ते! मैं Cyber Cafe Mitra AI सहायक हूँ। आप मुझसे किसी भी सरकारी योजना की पात्रता, आवश्यक दस्तावेज, पोर्टल एरर (जैसे eDistrict, UIDAI, UPPCL) या नियम पूछ सकते हैं।'
         : 'Hello! I am Cyber Cafe Mitra AI Assistant. Ask me anything about govt schemes eligibility, document checklists, or portal troubleshooting.',
       time: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' }),
     },
@@ -421,7 +423,7 @@ Address: ${customer.district || '___________'}`;
                         <span>{isHindi ? 'कॉपी' : 'Copy'}</span>
                       </button>
                       <button
-                        onClick={() => window.print()}
+                        onClick={() => letterRef.current ? printElement(letterRef.current, '@page { margin: 20mm; }') : window.print()}
                         className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-xs flex items-center gap-1"
                       >
                         <Printer className="w-3.5 h-3.5" />
@@ -442,7 +444,7 @@ Address: ${customer.district || '___________'}`;
                     </p>
                   </div>
                 ) : (
-                  <div className="whitespace-pre-line text-slate-800 text-sm leading-relaxed font-normal bg-slate-50 p-5 rounded-xl border border-slate-200">
+                  <div ref={letterRef} className="whitespace-pre-line text-slate-800 text-sm leading-relaxed font-normal bg-slate-50 p-5 rounded-xl border border-slate-200">
                     {generatedLetter}
                   </div>
                 )}
@@ -450,7 +452,7 @@ Address: ${customer.district || '___________'}`;
 
               {generatedLetter && (
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span>CYBER CAFE MITRA AI Engine</span>
+                  <span>Cyber Cafe Mitra AI Engine</span>
                   <span className="text-emerald-700 font-semibold">✓ मानक सरकारी संरचना में सत्यापित</span>
                 </div>
               )}

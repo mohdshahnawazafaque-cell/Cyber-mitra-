@@ -388,7 +388,7 @@ export const AiChat: React.FC<AiChatProps> = ({
 
   const handleExportChat = () => {
     const formatted = messages
-      .map((m) => `[${m.timestamp}] ${m.role === 'assistant' ? 'CYBER CAFE MITRA AI' : 'OPERATOR'}:\n${m.content}\n\n${'-'.repeat(50)}`)
+      .map((m) => `[${m.timestamp}] ${m.role === 'assistant' ? 'Cyber Cafe Mitra AI' : 'OPERATOR'}:\n${m.content}\n\n${'-'.repeat(50)}`)
       .join('\n\n');
 
     const blob = new Blob([formatted], { type: 'text/plain;charset=utf-8' });

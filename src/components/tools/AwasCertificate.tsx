@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { printElement } from '../../utils/printUtils';
 import { Download, Printer, RefreshCw, Upload, Image as ImageIcon } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
@@ -3596,7 +3597,11 @@ export const AwasCertificate: React.FC<AwasCertificateProps> = ({ language }) =>
 
   const handlePrint = () => {
     if (validateForm()) {
-      window.print();
+      if (previewRef.current) {
+        printElement(previewRef.current, '@page { margin: 10mm; }');
+      } else {
+        window.print();
+      }
     }
   };
 

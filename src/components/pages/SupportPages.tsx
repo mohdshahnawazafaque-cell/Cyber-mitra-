@@ -34,7 +34,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-black text-slate-900">
-                {isHindi ? 'हमारे बारे में (About CYBER CAFE MITRA)' : 'About CYBER CAFE MITRA'}
+                {isHindi ? 'हमारे बारे में (About Cyber Cafe Mitra)' : 'About Cyber Cafe Mitra'}
               </h1>
               <p className="text-xs text-slate-500">
                 {isHindi
@@ -48,7 +48,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
             {isHindi ? (
               <>
                 <p>
-                  <strong>CYBER CAFE MITRA</strong> भारत भर के साइबर कैफे, सीएससी (CSC) और जन सेवा केंद्र (Jan Seva Kendra) संचालकों के दैनिक कार्यों को तेज, सुगम और त्रुटिहीन बनाने के उद्देश्य से विकसित किया गया एक आधुनिक वर्क पोर्टल है।
+                  <strong>Cyber Cafe Mitra</strong> भारत भर के साइबर कैफे, सीएससी (CSC) और जन सेवा केंद्र (Jan Seva Kendra) संचालकों के दैनिक कार्यों को तेज, सुगम और त्रुटिहीन बनाने के उद्देश्य से विकसित किया गया एक आधुनिक वर्क पोर्टल है।
                 </p>
                 <p>
                   हमारा मुख्य उद्देश्य संचालक भाइयों को केंद्र एवं राज्य सरकारों (जैसे UIDAI, Income Tax PAN, UP eDistrict, Bhulekh, PM Kisan, UPPCL) की सभी आवश्यक सेवाओं के आधिकारिक लिंक्स, फोटो रिसाइजिंग टूल्स, सटीक KB कंप्रेसर, पासपोर्ट फोटो शीट मेकर और कानूनी प्रार्थना पत्र प्रारूप एक ही सुरक्षित प्लेटफॉर्म पर उपलब्ध कराना है।
@@ -66,7 +66,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
             ) : (
               <>
                 <p>
-                  <strong>CYBER CAFE MITRA</strong> is an all-in-one productivity and citizen service navigation platform built specifically for Cyber Cafe, CSC (Common Service Center), and Jan Seva Kendra operators across India.
+                  <strong>Cyber Cafe Mitra</strong> is an all-in-one productivity and citizen service navigation platform built specifically for Cyber Cafe, CSC (Common Service Center), and Jan Seva Kendra operators across India.
                 </p>
                 <p>
                   Our mission is to simplify daily operator workflows by providing verified direct links to central and state government portals (such as UIDAI myAadhaar, NSDL PAN, UP eDistrict, Bhulekh Land Records, PM Kisan, UPPCL Electricity Bill), precision client-side photo resizers with exact KB limit compressors, instant passport photo sheet generators, standard formal legal letter templates, and AI-powered document helpers.
@@ -191,7 +191,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
             <>
               <h3 className="font-bold text-slate-900 text-base">1. डेटा सुरक्षा एवं क्लाइंट-साइड प्रोसेसिंग</h3>
               <p>
-                CYBER CAFE MITRA पोर्टल पर प्रोसेस की जाने वाली सभी तस्वीरें, हस्ताक्षर, पीडीएफ और ग्राहक जानकारी आपके ब्राउज़र के भीतर (Client-side HTML5 Canvas/JS) ही प्रोसेस होती हैं। हम आपके ग्राहकों के आधार कार्ड, फोटो या व्यक्तिगत पहचान दस्तावेजों को अपने किसी भी केंद्रीय सर्वर पर अपलोड या संग्रहीत (Store) नहीं करते हैं।
+                Cyber Cafe Mitra पोर्टल पर प्रोसेस की जाने वाली सभी तस्वीरें, हस्ताक्षर, पीडीएफ और ग्राहक जानकारी आपके ब्राउज़र के भीतर (Client-side HTML5 Canvas/JS) ही प्रोसेस होती हैं। हम आपके ग्राहकों के आधार कार्ड, फोटो या व्यक्तिगत पहचान दस्तावेजों को अपने किसी भी केंद्रीय सर्वर पर अपलोड या संग्रहीत (Store) नहीं करते हैं।
               </p>
 
               <h3 className="font-bold text-slate-900 text-base">2. कुकीज़ एवं तृतीय-पक्ष विज्ञापन (Google AdSense)</h3>
@@ -208,7 +208,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
             <>
               <h3 className="font-bold text-slate-900 text-base">1. Zero-Server Data Processing & Client-Side Privacy</h3>
               <p>
-                All image resizing, KB compression, signature enhancement, PDF compilation, and customer forms processed on CYBER CAFE MITRA run strictly client-side inside your browser environment (HTML5 Canvas / Web APIs). We do not upload, transmit, or store your customers' Aadhaar cards, personal photos, or sensitive identity documents on any central server.
+                All image resizing, KB compression, signature enhancement, PDF compilation, and customer forms processed on Cyber Cafe Mitra run strictly client-side inside your browser environment (HTML5 Canvas / Web APIs). We do not upload, transmit, or store your customers' Aadhaar cards, personal photos, or sensitive identity documents on any central server.
               </p>
 
               <h3 className="font-bold text-slate-900 text-base">2. Cookies & Advertising (Google AdSense Compliance)</h3>
@@ -243,7 +243,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
           {isHindi ? (
             <>
               <p>
-                CYBER CAFE MITRA पोर्टल का उपयोग करते समय आप निम्नलिखित नियमों का पालन करने के लिए सहमत होते हैं:
+                Cyber Cafe Mitra पोर्टल का उपयोग करते समय आप निम्नलिखित नियमों का पालन करने के लिए सहमत होते हैं:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-xs text-slate-600">
                 <li>यह पोर्टल केवल अधिकृत साइबर कैफे संचालकों एवं नागरिकों के कार्य को सुलभ बनाने के लिए एक निःशुल्क सूचनात्मक एवं यूटिलिटी मंच है।</li>
@@ -254,7 +254,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
           ) : (
             <>
               <p>
-                By using the CYBER CAFE MITRA platform, you agree to comply with the following terms:
+                By using the Cyber Cafe Mitra platform, you agree to comply with the following terms:
               </p>
               <ul className="list-disc pl-5 space-y-2 text-xs text-slate-600">
                 <li>This portal is a free utility and informational indexing workstation created for cyber cafe operators, CSC VLEs, and citizens.</li>
@@ -283,7 +283,7 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
 
           <div className="p-4 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-xs sm:text-sm font-semibold space-y-2">
             <p>
-              ⚠️ <strong>{isHindi ? 'CYBER CAFE MITRA कोई सरकारी वेबसाइट या सरकारी विभाग नहीं है।' : 'CYBER CAFE MITRA is NOT an official government website or government agency.'}</strong>
+              ⚠️ <strong>{isHindi ? 'Cyber Cafe Mitra कोई सरकारी वेबसाइट या सरकारी विभाग नहीं है।' : 'Cyber Cafe Mitra is NOT an official government website or government agency.'}</strong>
             </p>
             <p>
               {isHindi

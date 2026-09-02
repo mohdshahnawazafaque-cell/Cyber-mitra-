@@ -465,7 +465,7 @@ export default function App() {
             <div className="w-6 h-6 rounded-md bg-blue-700 text-white flex items-center justify-center font-black text-xs">
               CM
             </div>
-            <span className="font-extrabold text-slate-800 tracking-tight">CYBER CAFE MITRA</span>
+            <span className="font-extrabold text-slate-800 tracking-tight">Cyber Cafe Mitra</span>
             <span className="text-slate-300">•</span>
             <span className="text-slate-600 font-medium">
               {isHindi ? 'डिजिटल सेवा एवं साइबर कैफे संचालक सहायक' : 'Digital Seva & Cyber Cafe Facilitator'}
@@ -495,7 +495,7 @@ export default function App() {
           </div>
 
           <p className="text-[11px] text-slate-400 font-medium">
-            © {new Date().getFullYear()} CYBER CAFE MITRA • CSC & Digital Seva Utility
+            © {new Date().getFullYear()} Cyber Cafe Mitra • CSC & Digital Seva Utility
           </p>
         </div>
       </footer>

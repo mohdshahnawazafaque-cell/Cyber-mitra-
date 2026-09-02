@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { printElement } from '../../utils/printUtils';
 import { Download, Printer, RefreshCw, Plus, Trash2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
@@ -81,7 +82,11 @@ export const VanshavaliCertificate: React.FC<VanshavaliCertificateProps> = ({ la
   };
 
   const handlePrint = () => {
-    window.print();
+    if (previewRef.current) {
+      printElement(previewRef.current, '@page { margin: 10mm; }');
+    } else {
+      window.print();
+    }
   };
 
   const handleDownloadPDF = async () => {

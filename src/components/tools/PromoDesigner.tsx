@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { printElement } from '../../utils/printUtils';
 import { Download, Printer, Share2, ImagePlus, LayoutTemplate, Phone, MessageCircle, Globe, RefreshCw } from 'lucide-react';
 import { Language } from '../../types';
 import html2canvas from 'html2canvas';
@@ -32,7 +33,11 @@ export const PromoDesigner: React.FC<PromoDesignerProps> = ({ language }) => {
   };
 
   const handlePrint = () => {
-    window.print();
+    if (previewRef.current) {
+      printElement(previewRef.current, '@page { margin: 10mm; }');
+    } else {
+      window.print();
+    }
   };
 
   const generateDataUrl = async () => {

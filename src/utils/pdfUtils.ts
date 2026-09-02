@@ -153,7 +153,7 @@ export const createApplicationPdf = (
   doc.setFontSize(7.5);
   doc.setTextColor(148, 163, 184);
   doc.text(
-    'Generated via CYBER CAFE MITRA Portal (Jan Seva Kendra Utility) - Verified Standard Format',
+    'Generated via Cyber Cafe Mitra Portal (Jan Seva Kendra Utility) - Verified Standard Format',
     pageWidth / 2,
     285,
     { align: 'center' }

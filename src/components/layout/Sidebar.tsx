@@ -184,7 +184,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               C
             </div>
             <div className="flex flex-col">
-              <span className="text-[17px] font-extrabold tracking-tight text-slate-900 leading-tight">CYBER CAFE MITRA</span>
+              <span className="text-[17px] font-extrabold tracking-tight text-slate-900 leading-tight">Cyber Cafe Mitra</span>
               <p className="text-[9.5px] text-slate-500 uppercase tracking-[0.2em] font-bold">
                 {isHindi ? 'साइबर कैफे पोर्टल' : 'Professional Portal'}
               </p>

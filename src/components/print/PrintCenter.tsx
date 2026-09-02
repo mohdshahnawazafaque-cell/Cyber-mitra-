@@ -191,7 +191,7 @@ export const PrintCenter: React.FC<PrintCenterProps> = ({
     win.document.write(`
       <html>
         <head>
-          <title>CYBER CAFE MITRA PRINT</title>
+          <title>Cyber Cafe Mitra PRINT</title>
           <style>
             @page { margin: 0; size: auto; }
             body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; }
@@ -537,7 +537,7 @@ export const PrintCenter: React.FC<PrintCenterProps> = ({
               {sheetPreviewUrl && (
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
                   <span>Standard 3.5 × 4.5 cm Ratio</span>
-                  <span className="font-semibold text-blue-700">CYBER CAFE MITRA Studio Print</span>
+                  <span className="font-semibold text-blue-700">Cyber Cafe Mitra Studio Print</span>
                 </div>
               )}
             </div>

@@ -87,11 +87,48 @@ export const InvoiceGenerator: React.FC<InvoiceGeneratorProps> = ({ language }) 
 
   
   const handlePrint = () => {
+    const printContent = printRef.current;
+    if (!printContent) return;
+    
+    const previous = document.getElementById('temp-print-container');
+    if (previous) previous.remove();
+    const previousStyle = document.getElementById('temp-print-style');
+    if (previousStyle) previousStyle.remove();
+
+    const printContainer = document.createElement('div');
+    printContainer.id = 'temp-print-container';
+    printContainer.innerHTML = printContent.outerHTML;
+    document.body.appendChild(printContainer);
+    
+    const style = document.createElement('style');
+    style.id = 'temp-print-style';
+    style.innerHTML = `
+      @media print {
+        body > *:not(#temp-print-container) { display: none !important; }
+        #temp-print-container {
+          display: block !important; position: absolute; left: 0; top: 0; width: 100%;
+          background: white; margin: 0; padding: 0;
+        }
+        #temp-print-container > div {
+          border: none !important; box-shadow: none !important; padding: 10mm !important;
+          margin: 0 !important; width: 100% !important; max-width: none !important;
+        }
+        @page { margin: 5mm; }
+      }
+      @media screen { #temp-print-container { display: none !important; } }
+    `;
+    document.head.appendChild(style);
+    
     window.print();
+    
+    setTimeout(() => {
+      if (document.body.contains(printContainer)) document.body.removeChild(printContainer);
+      if (document.head.contains(style)) document.head.removeChild(style);
+    }, 1000);
   };
 
   const handleWhatsAppShare = () => {
-    const text = `*INVOICE / BILL*%0A---------------------------%0ABill To: ${customerInfo.name || 'Customer'}%0ADate: ${new Date().toLocaleDateString()}%0ATotal Amount: Rs ${calculateSubtotal()}%0A---------------------------%0AThank you for your business!%0A- ${businessInfo.name || 'CYBER CAFE MITRA'}`;
+    const text = `*INVOICE / BILL*%0A---------------------------%0ABill To: ${customerInfo.name || 'Customer'}%0ADate: ${new Date().toLocaleDateString()}%0ATotal Amount: Rs ${calculateSubtotal()}%0A---------------------------%0AThank you for your business!%0A- ${businessInfo.name || 'Cyber Cafe Mitra'}`;
     const url = `https://wa.me/${customerInfo.phone}?text=${text}`;
     try {
       const a = document.createElement('a');
