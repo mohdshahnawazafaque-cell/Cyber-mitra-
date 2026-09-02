@@ -112,8 +112,8 @@ export const SupportPages: React.FC<SupportPagesProps> = ({
               </p>
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
                 <p><strong>{isHindi ? 'संस्थापक (Founder):' : 'Founder:'}</strong> Mohd Shahnawaz</p>
-                <p><strong>{isHindi ? 'ईमेल (Official Email):' : 'Official Email:'}</strong> support@example.com</p>
-                <p><strong>{isHindi ? 'संचालक हेल्पलाइन:' : 'Operator Helpline:'}</strong> +91 99560 78419 (10:00 AM - 6:00 PM)</p>
+                <p><strong>{isHindi ? 'ईमेल (Official Email):' : 'Official Email:'}</strong> shahnawaztechsolution@gmail.com</p>
+                <p><strong>{isHindi ? 'संचालक हेल्पलाइन:' : 'Operator Helpline:'}</strong> +91 98384 16560 (10:00 AM - 6:00 PM)</p>
                 <p><strong>{isHindi ? 'मुख्यालय:' : 'Headquarters:'}</strong> Sirs Tola ward 12, Tambour, Sitapur, Uttar Pradesh - 261208</p>
               </div>
             </div>
